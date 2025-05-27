@@ -1,0 +1,242 @@
+
+/* Estilos generales de la plantilla */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.hero {
+    position: relative;
+    height: 100vh;
+    background: url('/imagenes/fondo2.png') no-repeat center center/cover; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    flex-direction: column;
+}
+.hero h1 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+.hero p {
+    font-size: 1.5rem;
+}
+.navbar-toggler {
+    border: none;
+}
+.footer {
+    background-color: #000;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+.menu-section {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+}
+.menu-item {
+    background-color: #600;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    width: 120px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.menu-item i {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.menu-item a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+@media (max-width: 768px) {
+    .menu-section {
+        flex-direction: column;
+        bottom: -120px;
+    }
+}
+
+/* Estilos generales para el logo */
+.logo-img { 
+    width: 200px; /* Tamaño del logo */
+    position: absolute; /* Posición absoluta */
+    top: 90px;  /* Altura del logo más arriba */
+    left: 10%; /* Posición del logo desde la izquierda */
+    transform: translateX(-50%); /* Centra el logo */
+    z-index: 10; /* Asegura que el logo esté encima */
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    .logo-img {
+        width: 100px; /* Tamaño del logo más pequeño en móviles */
+        top: 70px; /* Reducir la altura para que no se vea demasiado grande */
+        left: 50%; /* Ajustar la posición a la izquierda */
+    }
+}
+
+/* Media query para pantallas medianas (tablets) */
+@media (max-width: 1024px) {
+    .logo-img {
+        width: 150px; /* Tamaño del logo para tablets */
+        top: 80px; /* Ajustar la posición en tablets */
+        left: 50%; /* Ajustar la posición a la izquierda en tablets */
+    }
+}
+
+
+
+/* Estilos para la sección de paquetes turísticos */
+.packages {
+    margin-top: 20px;
+}
+
+.packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.package {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s;
+}
+
+.package:hover {
+    transform: scale(1.05);
+}
+
+.package img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.package-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.price {
+    font-weight: bold;
+    color: #e74c3c;
+    margin-top: 10px;
+}
+
+.package-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.package-btn:hover {
+    background-color: #0056b3;
+}
+
+.package-info {
+    display: none;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.load-more-btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.load-more-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos generales para mejorar la responsividad */
+@media (max-width: 768px) {
+    /* Hacer que el título sea más pequeño en móviles */
+    .hero h1 {
+        font-size: 2rem; /* Tamaño de fuente más pequeño para móviles */
+    }
+
+    /* Ocultar la sección de menú en pantallas pequeñas */
+    .menu-section {
+        display: none;
+    }
+}
+
+/* Mostrar el menú solo en pantallas grandes */
+@media (min-width: 1024px) {
+    .menu-section {
+        display: flex; /* Muestra el menú en pantallas grandes */
+        justify-content: center; /* Centra los elementos */
+        gap: 15px; /* Espaciado entre los items */
+        margin-top: 20px; /* Espacio entre el menú y el contenido */
+    }
+
+    .menu-item a {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+/* Estilo de los botones de la paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.page-btn {
+    margin: 0 5px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.page-btn:hover {
+    background-color: #0056b3;
+}
+
+.page-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.page-btn.active {
+    background-color: #0056b3;
+}
+
