@@ -32,14 +32,13 @@
                     @csrf
 
                     <!-- Campo oculto para el ID de la ruta -->
-                    <input type="hidden" id="ruta_id" name="ruta_id" value="{{ $ruta->id_ruta }}">
+                    <input type="hidden" id="id_ruta" name="id_ruta" value="{{ $ruta->id_ruta }}">
                     <input type="hidden" id="monbre_ruta" name="monbre_ruta" value="{{ $ruta->nombre_ruta }}">
                     <input type="hidden" id="precio_actual" name="precio_actual" value="{{ $ruta->precio_actual }}">
                     <input type="hidden" id="precio_regular" name="precio_regular" value="{{ $ruta->precio_regular }}">
                     <input type="hidden" id="metodo_pago" name="metodo_pago" value="web">
                     <input type="hidden" id="monto_pagado" name="monto_pagado" value="0">
-                    <!-- Campo oculto para almacenar los acompañantes -->
-                    <input type="hidden" name="acompanantes" id="acompanantesInput">
+                    
 
                     <!-- Documento y nombres -->
                     <div class="row mb-3">
@@ -100,6 +99,9 @@
                             @endforeach
                         </select>
                     </div>
+                    <!-- Campo oculto para almacenar los acompañantes pasarlos al controlador como query  y gaudarlos en la tabla cliente -->
+                    <input type="hidden" name="acompanantes" id="acompanantesInput">
+
                     <!-- Selección de cantidad de personas -->
                     <div class="row align-items-end mb-4 ">
                         <div class="col-8">

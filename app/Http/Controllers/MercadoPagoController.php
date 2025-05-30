@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Log;
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Client\Preference\PreferenceClient;
 use MercadoPago\Exceptions\MPApiException;
+use App\Models\Ruta;
+use App\Models\Reserva;
+use App\Models\Cliente;
+use App\Models\ReservaCliente;
+use App\Models\Pago;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use MercadoPago\Client\Payment\PaymentClient; // Aquí cambiamos
+use Illuminate\Support\Facades\DB;
 
 class MercadoPagoController extends Controller
 {
@@ -26,11 +35,11 @@ class MercadoPagoController extends Controller
 
         // 4. Crear array de ítems para la preferencia
         $items = [[
-            "title" => $request->input('monbre_ruta', 'Reserva'),
+            "title" => $request->input('nombre_ruta', 'Reserva'),
             "quantity" => 1,
             "unit_price" => $montopagar,
             "currency_id" => "PEN",
-        ]]; 
+        ]];
 
         // 5. Información del cliente
         $payer = [
@@ -39,16 +48,16 @@ class MercadoPagoController extends Controller
             "email" => $request->input('email'),
         ];
 
-        //back_urls con Ngrok
-        $ngrok = env('NGROK_UR');
+        //back_urls con Ngrok 
+        //$ngrok = env('NGROK_URL');
+        $ngrok = 'https://aa0b-181-176-225-105.ngrok-free.app';
 
         $backUrls = [
             "success" => "$ngrok/mercadopago/success",
             "failure" => "$ngrok/mercadopago/failure",
         ];
-        Log::info('Back URLs:', $backUrls);
 
-       //6. URLs de redireccionamiento PARA PRODUCCION
+        //6. URLs de redireccionamiento PARA PRODUCCION
         /* 
         $baseUrl = config('app.url');
 
@@ -62,18 +71,21 @@ class MercadoPagoController extends Controller
             "items" => $items,
             "payer" => $payer,
             "back_urls" => $backUrls,
-            "auto_return" => "approved", // Muy importante
-            "external_reference" => uniqid("reserva_"),
-        ];
+            "auto_return" => "approved",
+            //"external_reference" => "reserva_" . time(),  // Usando el tiempo como ID único
+            "external_reference" => 'reserva_' . Str::uuid(),
 
-        Log::info('Back URLs:', $backUrls);
+        ];
+        //Log::info('Back URLs:', $backUrls);
 
         // 8. Enviar a Mercado Pago y Crear preferencia
         try {
             $client = new PreferenceClient();
             $preference = $client->create($preferenceData);
 
-            Log::info('Preferencia creada:', (array) $preference);
+            Log::info('Preferencia llamada:', (array) $preference);
+            session(['datos_reserva' => $request->all()]);
+            session()->save(); // ✅ Fuerza guardar antes de redirigir
 
             // Redirigir al checkout
             return redirect()->away($preference->init_point);
@@ -91,12 +103,127 @@ class MercadoPagoController extends Controller
     // Redirección cuando el pago es exitoso
     public function success(Request $request)
     {
-        Log::info('Redireccionado a SUCCESS:', $request->all());
-        return view('mercadopago.exito', [
-            'status' => $request->input('collection_status'),
-            'payment_id' => $request->input('payment_id'),
-            'external_reference' => $request->input('external_reference')
-        ]);
+        MercadoPagoConfig::setAccessToken(config('services.mercadopago.access_token'));
+
+        try {
+            Log::info('Redireccionado a SUCCESS:', $request->all());
+
+            $paymentId = $request->input('payment_id');
+            $paymentClient = new PaymentClient();
+            $payment = $paymentClient->get($paymentId);
+
+            Log::info('Estado del pago:', ['status' => $payment->status]);
+
+            if ($payment->status === 'approved') {
+                $montoPagado = $payment->transaction_amount;
+                $fechaPago = Carbon::parse($payment->date_approved);
+                $metodoPago = $payment->payment_type_id;
+                $externalReference = $request->input('external_reference');
+
+                // ✅ Recuperar los datos de la reserva desde la sesión
+                $datosReserva = session('datos_reserva');
+                if (!$datosReserva) {
+                    Log::error('No hay datos en la sesión para crear la reserva.');
+                    return view('mercadopago.fallo2', [
+                        'error' => 'No se encontraron los datos de la reserva. Intenta nuevamente.',
+                    ]);
+                }
+
+                $idRuta = $datosReserva['id_ruta'];
+                $idFecha = $datosReserva['id_fecha'];
+                $cantidadPersonas = $datosReserva['cantidad_personas'];
+
+                $ruta = Ruta::findOrFail($idRuta);
+                $precioTotal = $cantidadPersonas * $ruta->precio_actual;
+                $saldo = $precioTotal - $montoPagado;
+
+                DB::beginTransaction();
+
+                // Crear RESERVA
+                $reserva = Reserva::create([
+                    'id_fecha' => $idFecha,
+                    'fecha_reserva' => Carbon::now(),
+                    'cantidad_personas' => $cantidadPersonas,
+                    'precio_total' => $precioTotal,
+                    'saldo' => $saldo,
+                    'estado' => 'pendiente',
+                ]);
+
+                // Crear CLIENTE PRINCIPAL
+                $cliente = Cliente::updateOrCreate(
+                    ['numero_documento' => $datosReserva['numero_documento']],
+                    [
+                        'tipo_documento'   => $datosReserva['tipo_documento'],
+                        'nombre'           => $datosReserva['nombre'],
+                        'apellido'         => $datosReserva['apellido'],
+                        'fecha_nacimiento' => $datosReserva['fecha_nacimiento'],
+                        'email'            => $datosReserva['email'],
+                        'telefono'         => $datosReserva['telefono'],
+                        'pais'             => $datosReserva['pais'],
+                        'region'           => $datosReserva['region'],
+                        'ciudad'           => $datosReserva['ciudad'],
+                    ]
+                );
+
+                // Asociar CLIENTE con RESERVA
+                ReservaCliente::create([
+                    'id_reserva' => $reserva->id_reserva,
+                    'id_cliente' => $cliente->id_cliente,
+                ]);
+
+                // Acompañantes
+                if (!empty($datosReserva['acompanantes'])) {
+                    $acompanantes = json_decode($datosReserva['acompanantes'], true);
+                    foreach ($acompanantes as $acompanante) {
+                        $nuevo = Cliente::updateOrCreate(
+                            ['numero_documento' => $acompanante['doc']],
+                            [
+                                'tipo_documento'   => $acompanante['tipo'],
+                                'nombre'           => $acompanante['nombre'],
+                                'apellido'         => $acompanante['apellido'],
+                                'fecha_nacimiento' => $acompanante['fecha'],
+                                'telefono'         => $acompanante['telefono'],
+                            ]
+                        );
+
+                        ReservaCliente::create([
+                            'id_reserva' => $reserva->id_reserva,
+                            'id_cliente' => $nuevo->id_cliente,
+                        ]);
+                    }
+                }
+
+                // Registrar PAGO
+                Pago::create([
+                    'id_reserva' => $reserva->id_reserva,
+                    'metodo_pago' => $metodoPago,
+                    'monto_pagado' => $montoPagado,
+                    'fecha_pago' => $fechaPago,
+                ]);
+
+                DB::commit();
+
+                // ✅ Limpiar sesión
+                session()->forget('datos_reserva');
+
+                return view('mercadopago.exito', [
+                    'status' => $request->input('collection_status'),
+                    'payment_id' => $paymentId,
+                    'external_reference' => $externalReference,
+                ]);
+            }
+
+            return view('mercadopago.fallo', [
+                'error' => 'El pago no fue aprobado. Por favor, inténtalo nuevamente.',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error en el pago exitoso: ' . $e->getMessage());
+
+            return view('mercadopago.fallo2', [
+                'error' => 'Hubo un error al procesar la confirmación del pago.',
+            ]);
+        }
     }
 
     // Redirección cuando el pago falla
