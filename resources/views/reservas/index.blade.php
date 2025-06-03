@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Gestion de Reservas')
 
 @section('content_header')
     <h2>GESTIÓN DE RESERVAS</h2>
@@ -135,7 +135,7 @@
                             <th>Movilidad</th>
                             <th>DNI</th>
                             <th>Cliente(s)</th>
-                            <th>Fecha Reserva</th>
+                            <th>FechadelTour</th>
                             <th>Total</th>
                             <th>Saldo</th>
                             <th>Estado</th>
@@ -161,7 +161,7 @@
                                     @endforeach
                                 </td>
                                 <td>{{ $reserva->clientes->pluck('nombre')->join(', ') }}</td>
-                                <td>{{ $reserva->fecha_reserva }}</td>
+                                <td>{{ $reserva->fechaDisponible->fecha }}</td>
                                 <td>{{ 'S/. ' . number_format($reserva->precio_total, 2) }}</td>
                                 <td>{{ 'S/. ' . number_format($reserva->saldo, 2) }}</td>
                                 <td>{{ $reserva->estado }}</td>

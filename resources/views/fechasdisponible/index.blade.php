@@ -1,6 +1,6 @@
 <!-- resources/views/fechasdisponible/index.blade.php -->
 @extends('adminlte::page')
-@section('title', 'Dashboard')
+@section('title', 'Fechas Disponibles')
 @section('content_header')
     <h1>Fechas Disponibles de una ruta</h1>
 @stop
@@ -11,18 +11,6 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Agregar Fechas</button>
-
-                {{-- Mensajes de éxito o error --}}
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success mt-2">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
-                @if ($message = Session::get('error'))
-                    <div class="alert alert-danger mt-2">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
             </div>
 
             <!-- Tabla de Fechas Disponibles -->
@@ -76,10 +64,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
 @stop
 
 @section('js')
-    <!-- Scripts -->
+    @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -99,6 +88,7 @@
                 lengthMenu: [10, 25, 50, 100], // Número de registros por página
                 autoWidth: true, // Ajusta el ancho de las columnas automáticamente
                 responsive: true, // Hace la tabla responsive para dispositivos móviles
+                order: [[0, 'desc']]
             });
 
             // Inicializar Select2 en el campo de rutas dentro del modal de creación

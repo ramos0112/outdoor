@@ -17,7 +17,7 @@
                 <!-- Ruta -->
                 <div class="mb-3">
                     <label for="id_ruta_edit" class="form-label">Ruta</label>
-                    <select class="form-control" name="id_ruta" required>
+                    <select class="form-control select2" name="id_ruta" required>
                         @foreach ($rutas as $ruta)
                             <option value="{{ $ruta->id_ruta }}"
                                 {{ $imagen->id_ruta == $ruta->id_ruta ? 'selected' : '' }}>

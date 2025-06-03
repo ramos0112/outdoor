@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Guias')
 
 @section('content_header')
     <h1>GUIAS</h1>
@@ -12,17 +12,6 @@
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createGuide">Agregar Guía</button>
         </div>
         <div class="card-body">
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success mt-2">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-            @if ($message = Session::get('error'))
-                <div class="alert alert-danger mt-2">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-
             <!-- Tabla de Guias -->
             <div class="table-responsive">
                 <table id="tablaGuias" class="table table-bordered table-striped w-100">
@@ -71,6 +60,7 @@
 @stop
 
 @section('js')
+  @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -85,7 +75,8 @@
                 paging: true,
                 ordering: true,
                 searching: true,
-                responsive: true
+                responsive: true,
+                order: [[0, 'desc']]
             });
         });
     </script>

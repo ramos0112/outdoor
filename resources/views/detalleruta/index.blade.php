@@ -10,27 +10,10 @@
     <div class="row">
         <div class="card">
             <div class="card-header">
-
-                <!-- Filtros -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <input type="text" id="filter_ruta" class="form-control" placeholder="Filtrar por Ruta">
-                    </div>
-                    <div class="col">
-                        <input type="text" id="filter_descripcion" class="form-control"placeholder="Filtrar por Descripción">
-                    </div>
-                </div>
-
                 <!-- Botón agregar -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                     Agregar Ruta
                 </button>
-
-                <!-- Mensaje de éxito -->
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success mt-2">{{ $message }}</div>
-                @endif
-
                 <!-- Tabla -->
                 <div class="table-responsive mt-3">
                     <table class="table" id="detallerutas">
@@ -96,17 +79,14 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-
 @stop
 
 @section('js')
-    <!-- Scripts necesarios -->
+    @include('partials.toastr')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-
     <script>
         $(document).ready(function() {
             // DataTable
@@ -120,14 +100,8 @@
                 searching: true,
                 ordering: true,
                 lengthMenu: [10, 25, 50, 100],
-            });
-
-
-            // Filtros
-            $('#filter_ruta, #filter_descripcion').on('keyup', function() {
-                table.column(1).search($('#filter_ruta').val())
-                    .column(2).search($('#filter_descripcion').val())
-                    .draw();
+                responsive: true,
+                order : [[0, 'desc']]
             });
 
             // Ver detalle

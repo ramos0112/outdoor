@@ -12,7 +12,7 @@
                 <div class="modal-body"> <!-- Agregado -->
                     <div class="mb-3">
                         <label for="id_ruta" class="form-label">Ruta</label>
-                        <select class="form-control" name="id_ruta" required>
+                        <select class="form-control select2" name="id_ruta" required>
                             <option value="" disabled selected>Seleccionar Ruta</option>
                             @foreach ($rutas as $ruta)
                                 <option value="{{ $ruta->id_ruta }}">{{ $ruta->nombre_ruta }}</option>

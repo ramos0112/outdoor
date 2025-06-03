@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\FechaDisponible;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ConfirmacionReserva;
 
 class ListarReservasController extends Controller
 {
@@ -138,6 +140,12 @@ class ListarReservasController extends Controller
                 }
             }
             DB::commit();
+            Mail::to($cliente->email)->send(new ConfirmacionReserva(
+                    $cliente,
+                    $reserva,
+                    $ruta,
+                    $reserva->fechaDisponible
+                ));
             return redirect()->route('listareservas.index')->with('success', 'Reserva registrada correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();

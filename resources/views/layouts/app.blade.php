@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard')</title> <!-- Título de la página -->
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <!-- Enlace a Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
@@ -36,10 +37,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">Aventura</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('rutas.tipo', ['tipo' => 'Trekking']) }}">Trekking</a></li>
                     <li class="nav-item"><a class="nav-link" href="blog">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/ruta">Rutas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="trekking">Trekking</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+
+                    <!--<li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>-->
                 </ul>
             </div>
         </div>
@@ -47,7 +49,16 @@
 
     <!-- Contenido de la página -->
     @yield('plantilla') <!-- Sección para insertar contenido específico de cada vista -->
-
+    <!-- Menú de íconos  ['icon' => 'envelope', 'text' => 'Contacto', 'url' => '#'], -->
+    <div class="menu-section hidden lg:flex mb-5">
+        <div class="menu-item"><i class="fas fa-home"></i><a href="/">Home</a></div>
+        <div class="menu-item"><i class="fas fa-road"></i><a class="nav-link"
+                href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">Aventura</a></div>
+        <div class="menu-item"><i class="fas fa-hiking"></i><a class="nav-link"
+                href="{{ route('rutas.tipo', ['tipo' => 'Trekking']) }}">Trekking</a></div>
+        <div class="menu-item"><i class="fas fa-book"></i><a href="/blog">Blog</a></div>
+        <!--<div class="menu-item"><i class="fas fa-envelope"></i><a href="#">Contacto</a></div>-->
+    </div>
     <!-- Pie de página -->
     <section class="packages">
         <div class="container">
@@ -59,14 +70,17 @@
                     <div class="row">
                         <div class="col-md-4">
                             <h3 class="text-xl font-bold mt-4">¿Quiénes somos?</h3>
-                            <p>Somos una agencia de viajes 𝗰𝗼𝗻𝗳𝗶𝗮𝗯𝗹𝗲 𝘆 𝗹𝗶𝗱𝗲𝗿𝗮𝗱𝗮 𝗽𝗼𝗿 𝗹𝗶𝗰𝗲𝗻𝗰𝗶𝗮𝗱𝗼𝘀 𝗲𝗻 𝗧𝘂𝗿𝗶𝘀𝗺𝗼 de la UNT. Pioneros en operar 𝗖𝗮𝗺𝗶𝗻𝗼 𝗜𝗻𝗰𝗮 Huaylillas, Rutas de Trekking y en aperturar corredores turísticos en toda la región La Libertad 🇵🇪.</p>
+                            <p>Somos una agencia de viajes 𝗰𝗼𝗻𝗳𝗶𝗮𝗯𝗹𝗲 𝘆 𝗹𝗶𝗱𝗲𝗿𝗮𝗱𝗮 𝗽𝗼𝗿
+                                𝗹𝗶𝗰𝗲𝗻𝗰𝗶𝗮𝗱𝗼𝘀 𝗲𝗻 𝗧𝘂𝗿𝗶𝘀𝗺𝗼 de la UNT. Pioneros en operar 𝗖𝗮𝗺𝗶𝗻𝗼
+                                𝗜𝗻𝗰𝗮 Huaylillas, Rutas de Trekking y en aperturar corredores turísticos en toda la
+                                región La Libertad 🇵🇪.</p>
                         </div>
                         <div class="col-md-4">
                             <h3 class="text-xl font-bold mt-4">Soporte</h3>
                             <ul class="list-unstyled">
                                 <p><a href="https://n9.cl/1bkel">Términos y condiciones</a></p>
                                 <p><a href="#">Políticas de privacidad</a></p>
-                                <p><a href="https://reclamos.outdoorexpeditionspe.com">Libro de reclamaciones</a></p>
+                                <p><a href="https://reclamos.outdoorexpeditionspe.com/">Libro de reclamaciones</a></p>
                             </ul>
                         </div>
                         <div class="col-md-4">
@@ -175,9 +189,6 @@
             loadPage(1);
         };
     </script>
-
-
     @yield('scripts') <!-- Permite agregar scripts específicos en las vistas -->
 </body>
-
 </html>

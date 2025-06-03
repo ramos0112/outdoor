@@ -17,25 +17,32 @@
 
                     <div class="mb-3">
                         <label for="descripcion_general" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="descripcion_general" id="descripcion_general" required>
+                        <input type="text" class="form-control" name="descripcion_general" id="descripcion_general"
+                            required>
 
                     </div>
                     <div class="mb-3">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <input type="text" class="form-control" name="tipo" id="tipo" required>
+                        <select name="tipo" id="tipo" class="form-select" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="Aventura">Aventura</option>
+                            <option value="Trekking">Trekking</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="precio_regular" class="form-label">Precio Regular</label>
                         <div class="input-group">
                             <span class="input-group-text">S/.</span>
-                            <input type="number" class="form-control" id="precio_regular" name="precio_regular" step="0.01" required>
+                            <input type="number" class="form-control" id="precio_regular" name="precio_regular"
+                                step="0.01" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="descuento" class="form-label">Descuento</label>
                         <div class="input-group">
                             <span class="input-group-text">S/.</span>
-                            <input type="number" class="form-control" id="descuento" name="descuento" step="0.01" required>
+                            <input type="number" class="form-control" id="descuento" name="descuento" step="0.01"
+                                required>
                         </div>
 
                     </div>
@@ -96,8 +103,8 @@
         const isValid = form.checkValidity();
 
         if (!isValid) {
-            event.preventDefault();  // Evita el envío del formulario si no es válido
-            form.classList.add('was-validated');  // Muestra los mensajes de validación
+            event.preventDefault(); // Evita el envío del formulario si no es válido
+            form.classList.add('was-validated'); // Muestra los mensajes de validación
         }
     });
 </script>

@@ -22,6 +22,7 @@ class ReservaClienteController extends Controller
 
     public function store(Request $request)
     {
+        /*
         dd($request->all());
         DB::beginTransaction();
 
@@ -102,5 +103,6 @@ class ReservaClienteController extends Controller
             DB::rollBack();
             return back()->withErrors(['error' => 'Error al procesar la reserva: ' . $e->getMessage()]);
         }
+            */
     }
 }

@@ -47,7 +47,8 @@ class MovilidadController extends Controller
         ]);
 
         // Asignar guías a la movilidad
-        $movilidad->guias()->sync($request->guias); // Esto es para asignar los guías seleccionados
+        //$movilidad->guias()->sync($request->guias); // Esto es para asignar los guías seleccionados
+        $movilidad->guias()->sync($request->id_guia);
 
         return redirect()->route('movilidades.index')->with('success', 'Movilidad creada y guías asignados correctamente');
     }

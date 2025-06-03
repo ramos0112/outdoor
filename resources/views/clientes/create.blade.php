@@ -105,13 +105,6 @@
         </form>
     </div>
 </div>
-
-<!-- Mensaje de éxito -->
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
 <!-- Script para mantener el modal abierto si hay errores -->
 <!-- Script para mantener el modal abierto si hay errores -->
 <script>

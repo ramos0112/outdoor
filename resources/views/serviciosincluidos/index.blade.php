@@ -15,18 +15,6 @@
         </div>
 
         <div class="card-body">
-            {{-- Mensajes --}}
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-            @if ($message = Session::get('error'))
-                <div class="alert alert-danger">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-
             {{-- Tabla --}}
             <div class="table-responsive">
                 <table id="tablaServicios" class="table table-bordered table-striped w-100 text-center">
@@ -74,11 +62,11 @@
 @stop
 
 @section('js')
+    @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
     <script>
         $(document).ready(function () {
             $('#tablaServicios').DataTable({
@@ -88,7 +76,10 @@
                 paging: true,
                 ordering: true,
                 searching: true,
-                lengthMenu: [5, 10, 25, 50, 100]
+                lengthMenu: [10, 25, 50, 100],
+                autoWidth: true,
+                responsive: true,
+                order: [[0, 'desc']]
             });
 
             // Select2 para modal crear

@@ -89,7 +89,8 @@
                 paging: true,
                 ordering: true,
                 searching: true,
-                responsive: true
+                responsive: true,
+                order: [[0, 'desc']]
             });
         });
     </script>

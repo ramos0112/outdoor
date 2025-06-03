@@ -14,13 +14,6 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                     Agregar Ruta
                 </button>
-
-                {{-- Mensajes de éxito o error --}}
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success mt-2">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
             </div>
             <!-- Tabla de rutas -->
             <div class="table-responsive mt-3">
@@ -53,16 +46,14 @@
                                 <td>{{ $ruta->estado }}</td>
                                 <td>
                                     {{-- Ver --}}
-                                    <button type="button" class="btn btn-info btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#show{{ $ruta->id_ruta }}"
-                                            title="Ver">
+                                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#show{{ $ruta->id_ruta }}" title="Ver">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
 
                                     {{-- Editar --}}
-                                    <button type="button" class="btn btn-warning btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#edit{{ $ruta->id_ruta }}"
-                                            title="Editar">
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#edit{{ $ruta->id_ruta }}" title="Editar">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </td>
@@ -88,23 +79,26 @@
 @stop
 
 @section('js')
+    @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Inicializar DataTable con idioma en español
             $('#tablaRutas').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
                 },
-                paging: true,  // Activar paginación
+                paging: true, // Activar paginación
                 ordering: true, // Permitir ordenar columnas
                 searching: true, // Activar búsqueda
                 lengthMenu: [10, 25, 50, 100], // Número de registros por página
-                autoWidth: true, // Ajusta el ancho de las columnas automáticamente
+                autoWidth: false, // Ajusta el ancho de las columnas automáticamente
                 responsive: true, // Hace la tabla responsive para dispositivos móviles
+                order: [[0, 'desc']]
             });
         });
     </script>

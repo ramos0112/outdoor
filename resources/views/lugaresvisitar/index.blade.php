@@ -15,18 +15,6 @@
         </div>
 
         <div class="card-body">
-            {{-- Mensajes --}}
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-            @if ($message = Session::get('error'))
-                <div class="alert alert-danger">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-
             {{-- Tabla --}}
             <div class="table-responsive">
                 <table id="tablaLugares" class="table table-striped table-bordered table-hover w-100 text-center">
@@ -74,16 +62,14 @@
 @stop
 
 @section('js')
+    @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-    
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#tablaLugares').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
@@ -92,21 +78,26 @@
                 ordering: true,
                 searching: true,
                 responsive: true,
-                lengthMenu: [5, 10, 25, 50, 100]
+                lengthMenu: [10, 25, 50, 100],
+                order : [[0, 'desc']]
             });
 
             // Select2 en modales
-            $('#create').on('shown.bs.modal', function () {
-                $('#id_ruta').select2({ dropdownParent: $('#create') });
+            $('#create').on('shown.bs.modal', function() {
+                $('#id_ruta').select2({
+                    dropdownParent: $('#create')
+                });
             });
 
-            $('.modal').on('shown.bs.modal hidden.bs.modal', function (event) {
+            $('.modal').on('shown.bs.modal hidden.bs.modal', function(event) {
                 var modalId = $(this).attr('id');
                 var selectId = '#id_ruta_edit' + modalId.replace('edit', '');
 
                 if (event.type === 'shown') {
                     if (!$(selectId).hasClass('select2-hidden-accessible')) {
-                        $(selectId).select2({ dropdownParent: $(this) });
+                        $(selectId).select2({
+                            dropdownParent: $(this)
+                        });
                     }
                 } else {
                     $(selectId).select2('destroy');

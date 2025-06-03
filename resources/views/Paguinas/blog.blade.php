@@ -1,27 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Blog - Turismo en Trujillo')
+@section('title', 'Blog')
     <section class="hero text-center">
 
         <h1 class="text-3xl font-bold sm:text-2xl md:text-4xl">
             Empieza a descubrir <span class="text-danger">La Libertad</span>
         </h1>
         <p>Tours Full Days todos los días</p>
-
-        <!-- Menú de íconos -->
-        <div class="menu-section d-none d-lg-flex justify-content-center gap-4 mb-5">
-            @php
-                $menu = [
-                    ['icon' => 'home', 'text' => 'Home', 'url' => '/'],
-                    ['icon' => 'road', 'text' => 'Rutas', 'url' => '/ruta'],
-                    ['icon' => 'book', 'text' => 'Blog', 'url' => '#'],
-                    ['icon' => 'hiking', 'text' => 'Trekking', 'url' => '#'],
-                    ['icon' => 'envelope', 'text' => 'Contacto', 'url' => '#'],
-                ];
-            @endphp
-        </div>
     </section>
-
+    <!-- Espaciador (opcional si hay más contenido abajo) -->
+    <section class="bg-dark py-3">
+        <div class="container d-flex justify-content-center"></div>
+    </section>
 
 @section('plantilla')
 <section class="bg-light py-5">

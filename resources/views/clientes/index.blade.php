@@ -11,12 +11,6 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <!-- Mostrar mensaje de éxito si existe -->
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
             <div class="table-responsive">
                 <table class="table table-bordered table-striped text-center w-100" id="clientesTable">
                     <thead class="table-dark">
@@ -59,7 +53,7 @@
                                         data-bs-target="#modalEdit" data-cliente='@json($cliente)'>
                                         <i class="fas fa-pencil-alt"></i>
                                     </button>
-                                
+
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modalDelete" data-cliente='@json($cliente)'>
                                         <i class="fas fa-trash-alt"></i>
@@ -81,17 +75,14 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 @stop
 
 @section('js')
+    @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
@@ -103,7 +94,8 @@
                 paging: true,
                 ordering: true,
                 searching: true,
-                responsive: true
+                responsive: true,
+                order: [[0, 'desc']]
             });
         });
     </script>

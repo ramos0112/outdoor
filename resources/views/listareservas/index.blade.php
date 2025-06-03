@@ -1,7 +1,7 @@
 <!-- resources/views/listareservas/index.blade.php -->
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Reservas')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
@@ -12,17 +12,6 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            {{-- Mensajes de éxito o error --}}
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success mt-2">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-            @if ($message = Session::get('error'))
-                <div class="alert alert-danger mt-2">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
             <div class="table-responsive">
                 <table class="  table table-bordered table-striped text-center" id="reservasTable">
                     <thead class="table-dark">
@@ -64,8 +53,7 @@
                                 <td>
                                     <!-- Clientes -->
                                     @foreach ($listareserva->clientes as $cliente)
-                                        {{ $cliente->nombre }}
-                                        {{ $cliente->apellido }}
+                                        <p> {{ $cliente->nombre }}{{ $cliente->apellido }}</p>
                                     @endforeach
                                 </td>
                                 <td>
@@ -92,11 +80,8 @@
 @stop
 
 @section('css')
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-
     <!-- Incluir el CSS de Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -106,10 +91,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
     <!-- DataTables JS para funcionalidades avanzadas en tablas -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
     <!-- DataTables con estilo Bootstrap 5 -->
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
     <!-- Incluir el JS de Select2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
@@ -122,7 +105,9 @@
                 paging: true,
                 ordering: true,
                 searching: true,
-                responsive: true
+                responsive: true,
+                autoWidth: false, // Ajusta el ancho de las columnas automáticamente
+                order: [[0, 'desc']]
             });
         });
     </script>

@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="edit{{ $ruta->id_ruta }}" tabindex="-1" aria-labelledby="editLabel{{ $ruta->id_ruta }}" aria-hidden="true">
+<div class="modal fade" id="edit{{ $ruta->id_ruta }}" tabindex="-1" aria-labelledby="editLabel{{ $ruta->id_ruta }}"
+    aria-hidden="true">
     <div class="modal-dialog">
         <form action="{{ route('rutas.update', $ruta->id_ruta) }}" method="POST" id="ruta-form-edit{{ $ruta->id_ruta }}">
             @csrf
@@ -13,22 +14,38 @@
                     <!-- Campos del formulario -->
                     <div class="mb-3">
                         <label for="nombre_ruta{{ $ruta->id_ruta }}" class="form-label">Nombre Ruta</label>
-                        <input type="text" class="form-control" name="nombre_ruta" id="nombre_ruta{{ $ruta->id_ruta }}" value="{{ $ruta->nombre_ruta }}" required>
+                        <input type="text" class="form-control" name="nombre_ruta"
+                            id="nombre_ruta{{ $ruta->id_ruta }}" value="{{ $ruta->nombre_ruta }}" required>
                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                     </div>
                     <div class="mb-3">
                         <label for="descripcion_general{{ $ruta->id_ruta }}" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="descripcion_general" id="descripcion_general{{ $ruta->id_ruta }}" value="{{ $ruta->descripcion_general }}">
+                        <input type="text" class="form-control" name="descripcion_general"
+                            id="descripcion_general{{ $ruta->id_ruta }}" value="{{ $ruta->descripcion_general }}">
                     </div>
+
                     <div class="mb-3">
+                        @php
+                            $tipos = ['Aventura', 'Trekking'];
+                        @endphp
                         <label for="tipo{{ $ruta->id_ruta }}" class="form-label">Tipo</label>
-                        <input type="text" class="form-control" name="tipo" id="tipo{{ $ruta->id_ruta }}" value="{{ $ruta->tipo }}">
+                        <select name="tipo" id="tipo{{ $ruta->id_ruta }}" class="form-select" required>
+                            <option value="" disabled {{ $ruta->tipo ? '' : 'selected' }}>Selecciona una opción
+                            </option>
+                            @foreach ($tipos as $tipo)
+                                <option value="{{ $tipo }}" {{ $ruta->tipo == $tipo ? 'selected' : '' }}>
+                                    {{ $tipo }}</option>
+                            @endforeach
+                        </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="precio_regular{{ $ruta->id_ruta }}" class="form-label">Precio Regular</label>
                         <div class="input-group">
                             <span class="input-group-text">S/.</span>
-                            <input type="number" class="form-control" name="precio_regular" id="precio_regular{{ $ruta->id_ruta }}" value="{{ $ruta->precio_regular }}" step="0.01" required>
+                            <input type="number" class="form-control" name="precio_regular"
+                                id="precio_regular{{ $ruta->id_ruta }}" value="{{ $ruta->precio_regular }}"
+                                step="0.01" required>
                         </div>
                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                     </div>
@@ -36,7 +53,9 @@
                         <label for="descuento{{ $ruta->id_ruta }}" class="form-label">Descuento</label>
                         <div class="input-group">
                             <span class="input-group-text">S/.</span>
-                            <input type="number" class="form-control" name="descuento" id="descuento{{ $ruta->id_ruta }}" value="{{ $ruta->descuento }}" step="0.01" required>
+                            <input type="number" class="form-control" name="descuento"
+                                id="descuento{{ $ruta->id_ruta }}" value="{{ $ruta->descuento }}" step="0.01"
+                                required>
                         </div>
                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                     </div>
@@ -44,18 +63,21 @@
                         <label for="precio_actual{{ $ruta->id_ruta }}" class="form-label">Precio Actual</label>
                         <div class="input-group">
                             <span class="input-group-text">S/.</span>
-                            <input type="number" class="form-control" name="precio_actual" id="precio_actual{{ $ruta->id_ruta }}" value="{{ $ruta->precio_actual }}" readonly>
+                            <input type="number" class="form-control" name="precio_actual"
+                                id="precio_actual{{ $ruta->id_ruta }}" value="{{ $ruta->precio_actual }}" readonly>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="dificultad{{ $ruta->id_ruta }}" class="form-label">Dificultad</label>
-                        <input type="text" class="form-control" name="dificultad" id="dificultad{{ $ruta->id_ruta }}" value="{{ $ruta->dificultad }}">
+                        <input type="text" class="form-control" name="dificultad"
+                            id="dificultad{{ $ruta->id_ruta }}" value="{{ $ruta->dificultad }}">
                     </div>
                     <div class="mb-3">
                         <label for="estado{{ $ruta->id_ruta }}" class="form-label">Estado</label>
                         <select class="form-control" name="estado" id="estado{{ $ruta->id_ruta }}" required>
                             <option value="Activo" {{ $ruta->estado == 'Activo' ? 'selected' : '' }}>Activo</option>
-                            <option value="Inactivo" {{ $ruta->estado == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
+                            <option value="Inactivo" {{ $ruta->estado == 'Inactivo' ? 'selected' : '' }}>Inactivo
+                            </option>
                         </select>
                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                     </div>
@@ -96,8 +118,8 @@
         const form = document.getElementById('ruta-form-edit' + id);
         form.addEventListener('submit', function(event) {
             if (!form.checkValidity()) {
-                event.preventDefault();  // Evita el envío del formulario si no es válido
-                form.classList.add('was-validated');  // Muestra los mensajes de validación
+                event.preventDefault(); // Evita el envío del formulario si no es válido
+                form.classList.add('was-validated'); // Muestra los mensajes de validación
             }
         });
     });

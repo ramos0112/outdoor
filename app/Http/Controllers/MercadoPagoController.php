@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use MercadoPago\Client\Payment\PaymentClient; // Aquí cambiamos
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ConfirmacionReserva;
 
 class MercadoPagoController extends Controller
 {
@@ -48,24 +50,14 @@ class MercadoPagoController extends Controller
             "email" => $request->input('email'),
         ];
 
-        //back_urls con Ngrok 
-        //$ngrok = env('NGROK_URL');
-        $ngrok = 'https://aa0b-181-176-225-105.ngrok-free.app';
-
-        $backUrls = [
-            "success" => "$ngrok/mercadopago/success",
-            "failure" => "$ngrok/mercadopago/failure",
-        ];
-
         //6. URLs de redireccionamiento PARA PRODUCCION
-        /* 
         $baseUrl = config('app.url');
 
         $backUrls = [
             "success" => "$baseUrl/mercadopago/success",
             "failure" => "$baseUrl/mercadopago/failure",
         ];
-        */
+
         // 7. Crear preferencia de pago
         $preferenceData = [
             "items" => $items,
@@ -76,7 +68,6 @@ class MercadoPagoController extends Controller
             "external_reference" => 'reserva_' . Str::uuid(),
 
         ];
-        //Log::info('Back URLs:', $backUrls);
 
         // 8. Enviar a Mercado Pago y Crear preferencia
         try {
@@ -202,6 +193,14 @@ class MercadoPagoController extends Controller
                 ]);
 
                 DB::commit();
+                Log::info('Pago exitoso:', ['payment_id' => $paymentId, 'external_reference' => $externalReference]);
+                
+                Mail::to($cliente->email)->send(new ConfirmacionReserva(
+                    $cliente,
+                    $reserva,
+                    $ruta,
+                    $reserva->fechaDisponible
+                ));
 
                 // ✅ Limpiar sesión
                 session()->forget('datos_reserva');

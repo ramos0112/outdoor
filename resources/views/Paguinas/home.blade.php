@@ -11,25 +11,6 @@
             Empieza a descubrir <span class="text-danger">La Libertad</span>
         </h1>
         <p>Tours Full Days todos los días</p>
-
-        <!-- Menú de íconos -->
-        <div class="menu-section d-none d-lg-flex justify-content-center gap-4 mb-5">
-            @php
-                $menu = [
-                    ['icon' => 'home', 'text' => 'Home', 'url' => '/'],
-                    ['icon' => 'road', 'text' => 'Rutas', 'url' => '/ruta'],
-                    ['icon' => 'book', 'text' => 'Blog', 'url' => '#'],
-                    ['icon' => 'hiking', 'text' => 'Trekking', 'url' => '#'],
-                    ['icon' => 'envelope', 'text' => 'Contacto', 'url' => '#'],
-                ];
-            @endphp
-            @foreach ($menu as $item)
-                <div class="menu-item">
-                    <i class="fas fa-{{ $item['icon'] }}"></i>
-                    <a href="{{ $item['url'] }}">{{ $item['text'] }}</a>
-                </div>
-            @endforeach
-        </div>
     </section>
 
     <!-- Espaciador (opcional si hay más contenido abajo) -->
@@ -65,52 +46,47 @@
                 @php
                     $bloques = [
                         [
-                            'verticales' => [
-                                'https://aritoursperu.com/wp-content/uploads/2024/08/cascas-extremo.jpg',
-                                'https://www.elbrujo.pe/storage/noticias/July2023/Visita%20el%20Complejo%20Arqueol%C3%B3gico%20El%20Brujo.jpg',
-                                'https://i.pinimg.com/236x/9e/9a/c8/9e9ac8e150142bc22726933d792ea75a.jpg',
-                            ],
-                            'horizontales' => [
-                                'https://toursentrujillo.com/wp-content/uploads/2022/01/puenting.jpg',
-                                'https://www.venta-vinosarcascas.com/wp-content/uploads/2023/07/IMG_0040-scaled.jpg',
-                                'https://blog.redbus.pe/wp-content/uploads/2021/09/playa-cherrepe-e1631229639128-1280x720.jpg',
-                                'https://explorandomaravillas.com/wp-content/uploads/chan-chan-en-trujillo-3.jpg',
-                                'https://viajeronline.com/wp-content/uploads/que-ver-hacer-visitar-en-trujillo-la-libertad-sitios-turisticos-peru-catedral-1.png',
-                            ],
-                            'rutas' => '/ruta',
+                            'titulo' => 'Tours de Aventura',
+                            'imagenes' => $rutasAventura,
+                            'ruta' => route('rutas.tipo', ['tipo' => 'Aventura']),
                         ],
                         [
-                            'verticales' => [
-                                'https://portal.andina.pe/EDPfotografia3/Thumbnail/2024/05/30/001068846W.jpg',
-                                'https://explorandomaravillas.com/wp-content/uploads/plaza-de-armas-trujillo.jpg',
-                                'https://explorandomaravillas.com/wp-content/uploads/plaza-de-armas-de-trujillo-2.jpg',
-                            ],
-                            'horizontales' => [
-                                'https://portal.andina.pe/EDPFotografia3/thumbnail/2024/05/30/001068848M.jpg',
-                                'https://portal.andina.pe/EDPFotografia3/thumbnail/2024/05/30/001068817M.jpg',
-                                'https://www.elperuano.pe/fotografia//thumbnail/2019/11/14/000067422M.jpg',
-                                'https://i.ytimg.com/vi/rUmWc-etR-4/maxresdefault.jpg',
-                                'https://www.ytuqueplanes.com/imagenes//fotos/novedades/alerta-MINCUL.webp',
-                            ],
-                            'rutas' => '/trekking',
+                            'titulo' => 'Tours de Trekking',
+                            'imagenes' => $rutasTrekking,
+                            'ruta' => route('rutas.tipo', ['tipo' => 'Trekking']),
                         ],
                     ];
                 @endphp
                 @foreach ($bloques as $index => $bloque)
-                    <div class="col-md-6 mb-4">
-                        <div class="bg-white bg-opacity-75 p-2 rounded shadow-sm h-100" style="height: 400px;">
-                            <div class="row g-2 h-100" data-verticals='@json($bloque['verticales'])'
-                                data-horizontales='@json($bloque['horizontales'])' id="bloque-{{ $index }}">
+                    @php
+                        $imagenes = $bloque['imagenes']
+                            ->pluck('imagenes')
+                            ->flatten()
+                            ->pluck('url_imagen')
+                            ->take(10)
+                            ->toArray();
+                    @endphp
 
-                                <div class="col-6">
-                                    <div class="img-vertical h-100 w-100 rounded overflow-hidden"></div>
-                                </div>
-                                <div class="col-6 d-flex flex-column gap-2">
-                                    <div class="img-horizontal flex-fill rounded overflow-hidden"></div>
-                                    <div class="img-horizontal flex-fill rounded overflow-hidden"></div>
-                                </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="bg-white bg-opacity-75 p-3 rounded shadow-sm h-100 text-center">
+                            <h5 class="fw-bold mb-3">{{ $bloque['titulo'] }}</h5>
+
+                            <div class="row g-2 justify-content-center" data-imgs='@json($imagenes)'
+                                id="bloque-{{ $index }}">
+                                @for ($i = 0; $i < 4; $i++)
+                                    <div class="col-6">
+                                        <div class="ratio ratio-4x3 rounded overflow-hidden img-slot"
+                                            style="max-width: 245px; margin: 0 auto;">
+                                            <img src="" class="w-100 h-100 object-fit-cover img-fluid"
+                                                alt="Imagen">
+                                        </div>
+                                    </div>
+                                @endfor
                             </div>
-                            <a href="{{ $bloque['rutas'] }}" class="btn btn-success mt-3">Ver Más...</a>
+
+                            <div class="text-center mt-3">
+                                <a href="{{ $bloque['ruta'] }}" class="btn btn-success px-4 py-1">Ver más</a>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -126,25 +102,20 @@
         const updateInterval = 5000; // 5 segundos
 
         document.querySelectorAll('[id^="bloque-"]').forEach(bloque => {
-            const verticalImages = JSON.parse(bloque.dataset.verticals);
-            const horizontalImages = JSON.parse(bloque.dataset.horizontales);
-            const verticalContainer = bloque.querySelector('.img-vertical');
-            const horizontalContainers = bloque.querySelectorAll('.img-horizontal');
+            const imagenes = JSON.parse(bloque.dataset.imgs);
+            const slots = bloque.querySelectorAll('.img-slot');
 
-            function getRandomImage(images) {
-                return images[Math.floor(Math.random() * images.length)];
+            function getRandomImages(images, count) {
+                return [...images].sort(() => 0.5 - Math.random()).slice(0, count);
             }
 
             function updateImages() {
-                const verticalSrc = getRandomImage(verticalImages);
-                verticalContainer.innerHTML = `<img src="${verticalSrc}" class="img-fluid w-100 h-100 object-fit-cover" alt="Imagen vertical">`;
-
-                const shuffledHorizontals = horizontalImages.sort(() => 0.5 - Math.random()).slice(0, 2);
-                horizontalContainers.forEach((container, i) => {
-                    container.innerHTML = `<img src="${shuffledHorizontals[i]}" class="img-fluid w-100 h-100 object-fit-cover" alt="Imagen horizontal">`;
+                const randomImgs = getRandomImages(imagenes, 4);
+                slots.forEach((slot, i) => {
+                    slot.innerHTML =
+                        `<img src="${randomImgs[i]}" class="img-fluid w-100 h-100 object-fit-cover" alt="Imagen">`;
                 });
             }
-
             updateImages();
             setInterval(updateImages, updateInterval);
         });

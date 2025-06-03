@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>AGENCIA</b>deturismo',
-    'logo_img' => config('app.asset_url') . '/imagenes/logo.png',
+    'logo' => '<b>AGENCIA</b> de turismo',
+    'logo_img' => config('app.asset_url') . '/imagenes/autdoor.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -113,7 +113,7 @@ return [
         'enabled' => true,
         'mode' => 'cwrapper',
         'img' => [
-            'path' => config('app.asset_url') . '/imagenes/logo.png',
+            'path' => config('app.asset_url') . '/imagenes/logo_animation.png',
             'alt' => 'Cargando...',
             'effect' => 'animation__shake',
             'width' => 100,
@@ -342,11 +342,6 @@ return [
                     'icon' => 'fas fa-fw fa-user-circle', // Ícono de perfil de usuario
                 ],
                 [
-                    'text' => 'Cambiar password',
-                    'url' => 'Profile2',
-                    'icon' => 'fas fa-fw fa-key', // Ícono de llave, para cambio de contraseña
-                ],
-                [
                     'text' => 'Roles',
                     'url' => 'roles',
                     'icon' => 'fas fa-fw fa-user-tag', // Ícono de usuario con etiqueta (roles)
@@ -379,7 +374,7 @@ return [
                     'url' => 'listareservas',
                 ],
                 [
-                    'text' => 'Reservas-movilidad',
+                    'text' => 'Reservas a movilidad',
                     'icon' => 'fas fa-car',
                     'url' => 'reservasmovilidad',
                 ],
@@ -452,16 +447,6 @@ return [
                     'icon' => 'fas fa-car', // Auto genérico
                     'url' => 'movilidades',
                 ],
-                [
-                    'text' => 'Movilidades_Gias',
-                    'icon' => 'fas fa-user-tie', // Representa un guía o conductor profesional
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'Reservas-Movilidades',
-                    'icon' => 'fas fa-calendar-check', // Reserva con calendario
-                    'url' => '#',
-                ],
             ],
         ],
         
@@ -494,10 +479,9 @@ return [
                 ],
             ],
         ],
-        
-
+    
         // MENU DE LA PAGINA PRINCIPAL DE ADMINISTRADOR (GESTION REPORTES)
-
+        /*
         [
             'text' => 'REPORTES',
             'icon' => 'fas fa-chart-line', // Ícono de gráficos para estadísticas
@@ -510,7 +494,7 @@ return [
                 ],
             ],
         ],
-        
+        */
 
     ],
 

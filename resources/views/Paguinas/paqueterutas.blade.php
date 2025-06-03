@@ -2,7 +2,11 @@
 <section class="packages">
     <div class="container ">
         <h1 class="text-black text-center font-bold">
-            Explora Tours desde Trujillo
+            @isset($tipo)
+                Explora tours de {{ ucfirst($tipo) }} desde Trujillo
+            @else
+                Explora todas las rutas disponibles desde Trujillo
+            @endisset
         </h1>
         <section class="packages-grid">
             @foreach ($rutas as $ruta)

@@ -66,28 +66,50 @@ Route::middleware([
     Route::resource('guias', GuiaController::class);
 
     Route::resource('pagos', PagoController::class);
- 
 
+ 
 });
 
 Route::post('/checkout', [MercadoPagoController::class, 'checkout'])->name('mercadopago.checkout');
 Route::get('/mercadopago/success', [MercadoPagoController::class, 'success'])->name('mercadopago.success');
 Route::get('/mercadopago/failure', [MercadoPagoController::class, 'failure'])->name('mercadopago.failure');
 
+// Mostrar rutas por tipo (ej: trekking, aventura)
+Route::get('/rutas/tipo/{tipo}', [HomeController::class, 'rutasPorTipo'])->name('rutas.tipo');
 
-Route::get('/', [RutaController::class, 'home'])->name('home');
+// Mostrar descripción de una ruta específica (solo si el ID es numérico)
+Route::get('/rutas/{id_ruta}/descripcion', [HomeController::class, 'mostrarDescripcion'])
+    ->where('id_ruta', '[0-9]+')
+    ->name('rutas.descripcion');
 
-Route::get('/ruta', [homeController::class, 'mostrarRutasWeb'])->name('rutas.web');
-Route::get('/trekking', [homeController::class, 'trekking'])->name('trekking.web');
-Route::get('/blog', [homeController::class, 'blog'])->name('blog.web');
+// Blog
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog.web');
 
-
-Route::get('/rutas/{id_ruta}/descripcion', [RutaController::class, 'mostrarDescripcion'])->name('rutas.descripcion');
+// Página de inicio
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
 
 Route::get('/reserva/{ruta}', [ReservaClienteController::class, 'formulario'])->name('reserva.formulario');
 
 Route::post('/reserva', [ReservaClienteController::class, 'store'])->name('reservas.store');
+/*
+use App\Models\Cliente;
+use App\Models\Ruta;
+use App\Models\FechaDisponible;
+use App\Models\Reserva;
+use App\Mail\ConfirmacionReserva;
+use Illuminate\Support\Facades\Mail;
 
+Route::get('/vista-correo', function () {
+    $cliente = Cliente::find(1);
+    $ruta = Ruta::find(1);
+    $fechaDisponible = FechaDisponible::find(1);
+    $reserva = Reserva::find(1);
 
+    $mail = new ConfirmacionReserva($cliente, $ruta, $fechaDisponible, $reserva);
+
+    // Renderiza el correo como HTML
+    return $mail->render();
+});
+*/

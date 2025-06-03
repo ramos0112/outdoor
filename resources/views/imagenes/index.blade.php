@@ -14,18 +14,6 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                     Agregar Imagen
                 </button>
-
-                <!-- Mensajes de éxito o error -->
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success mt-2">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
-                @if ($message = Session::get('error'))
-                    <div class="alert alert-danger mt-2">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
             </div>
 
             <!-- Tabla de imágenes -->
@@ -45,7 +33,8 @@
                                 <td>{{ $imagen->id_imagen }}</td>
                                 <td>{{ $imagen->ruta->nombre_ruta }}</td>
                                 <td>
-                                    <img src="{{ asset($imagen->url_imagen) }}" alt="Imagen de Ruta" width="100" class="img-thumbnail">
+                                    <img src="{{ asset($imagen->url_imagen) }}" alt="Imagen de Ruta" width="100"
+                                        class="img-thumbnail">
                                 </td>
                                 <td>
                                     <!-- Ver -->
@@ -84,18 +73,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
 @stop
 
 @section('js')
-    <!-- Scripts -->
+    @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            // Inicializar DataTable con español
+        $(document).ready(function() {
+            // DataTable
             $('#tablaImagenes').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
@@ -103,13 +93,34 @@
                 paging: true,
                 ordering: true,
                 searching: true,
-                lengthMenu: [10, 25, 50, 100], // Cantidad de registros por página
-                autoWidth: true, // Ajusta automáticamente el ancho de las columnas
-                responsive: true, // Hace la tabla responsive para dispositivos móviles
+                responsive: true,
+                lengthMenu: [10, 25, 50, 100],
+                autoWidth: true,
+                order : [[0, 'desc']]
             });
 
-            // Inicializar Select2 si se usa en modales
-            $('.select2').select2();
+            // Select2 en modal de crear
+            $('#create').on('shown.bs.modal', function() {
+                $('#id_ruta').select2({
+                    dropdownParent: $('#create')
+                });
+            });
+
+            // Select2 en modales de edición dinámicos
+            $('.modal').on('shown.bs.modal hidden.bs.modal', function(event) {
+                var modal = $(this);
+                var selectId = modal.find('select.select2');
+
+                if (event.type === 'shown') {
+                    if (!selectId.hasClass('select2-hidden-accessible')) {
+                        selectId.select2({
+                            dropdownParent: modal
+                        });
+                    }
+                } else {
+                    selectId.select2('destroy');
+                }
+            });
         });
     </script>
 @stop
