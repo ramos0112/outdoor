@@ -28,15 +28,19 @@
                         class="img-fluid rounded">
                 </div>
                 <div class="col-md-7">
+                    <h2>¿Quiénes Somos?</h2>
                     <p class="fs-6">
-                        Cascas posee una rica historia que se remonta al periodo formativo, con evidencias arqueológicas
-                        como petroglifos y cerámicas de diversas culturas antiguas. Durante la época virreinal, se fundó
-                        como “San Gabriel de Caxcax” y ha sido un punto estratégico de tránsito entre la sierra y la costa.
-                        Personajes históricos como Bolívar y Humboldt pasaron por allí. Hoy, Cascas es una ciudad con
-                        profundas tradiciones culturales y religiosas, destacando festividades como la fiesta patronal en
-                        honor a la Virgen del Rosario, los carnavales y la Feria Regional de la Uva. Gracias a su clima
-                        privilegiado, produce uva dos veces al año, siendo un importante centro vitivinícola en el Perú, con
-                        bodegas artesanales reconocidas por sus vinos y piscos de calidad.
+                        Outdoor Expeditions es una Agencia de Viajes Tour Operadora con sede en la ciudad de Trujillo, Perú.
+                        Desde nuestros inicios estuvimos vinculados a las comunidades más alejadas y a las montañas del ande
+                        Liberteño. Descubriendo en ambas nuestra pasión por impulsar el desarrollo de un turismo más
+                        sostenible y responsable que beneficie a las comunidades locales y preserve el medio ambiente.
+                        Teniendo como pilar el ofrecer experiencias únicas y emocionantes que permitan a nuestros viajeros
+                        conectar con la cultura y naturaleza de nuestros destinos.
+                        <br>
+                        Como emblema empresarial tenemos el ser los pioneros en operar rutas de trekking tales como Camino
+                        Inca "Tramo Escalerilla" y organizar ascensos al Pico más alto de la región "Huaylillas 4750 msnm".
+                        Además de liderar el posicionamiento y promoción de nuevos destinos y/o corredores turísticos, tales
+                        como Salpo, Cachicadan, Santiago de Chuco, Mache, Canotaje en Jequetepeque, Motil y mucho más.
                     </p>
                 </div>
             </div>
@@ -46,7 +50,7 @@
                 @php
                     $bloques = [
                         [
-                            'titulo' => 'Tours de Aventura',
+                            'titulo' => 'Tours Full Day',
                             'imagenes' => $rutasAventura,
                             'ruta' => route('rutas.tipo', ['tipo' => 'Aventura']),
                         ],
@@ -69,7 +73,7 @@
 
                     <div class="col-md-6 mb-4">
                         <div class="bg-white bg-opacity-75 p-3 rounded shadow-sm h-100 text-center">
-                            <h5 class="fw-bold mb-3">{{ $bloque['titulo'] }}</h5>
+                            <h2 class="fw-bold mb-3">{{ $bloque['titulo'] }}</h2>
 
                             <div class="row g-2 justify-content-center" data-imgs='@json($imagenes)'
                                 id="bloque-{{ $index }}">

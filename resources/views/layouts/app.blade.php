@@ -27,7 +27,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a href="{{ url('/#') }}">
-                <img src="{{ asset('imagenes/autdoor2.png') }}" height="48" alt="Inicio">
+                <img src="{{ asset('imagenes/logo.png') }}" height="48" alt="Inicio">
             </a>
 
             <!--<a class="navbar-brand fw-bold" href="/#">OUTDOOR <span class="text-danger">EXPEDITIONS</span></a>  -->
@@ -36,10 +36,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">Aventura</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('rutas.tipo', ['tipo' => 'Trekking']) }}">Trekking</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                            href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">Full Day</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                            href="{{ route('rutas.tipo', ['tipo' => 'Trekking']) }}">Trekking</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog">Nosotros</a></li>
 
                     <!--<li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>-->
                 </ul>
@@ -51,36 +53,49 @@
     @yield('plantilla') <!-- Sección para insertar contenido específico de cada vista -->
     <!-- Menú de íconos  ['icon' => 'envelope', 'text' => 'Contacto', 'url' => '#'], -->
     <div class="menu-section hidden lg:flex mb-5">
-        <div class="menu-item"><i class="fas fa-home"></i><a href="/">Home</a></div>
+        <div class="menu-item"><i class="fas fa-home"></i><a href="/">Inicio</a></div>
         <div class="menu-item"><i class="fas fa-road"></i><a class="nav-link"
-                href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">Aventura</a></div>
+                href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">Full Day</a></div>
         <div class="menu-item"><i class="fas fa-hiking"></i><a class="nav-link"
                 href="{{ route('rutas.tipo', ['tipo' => 'Trekking']) }}">Trekking</a></div>
-        <div class="menu-item"><i class="fas fa-book"></i><a href="/blog">Blog</a></div>
+        <div class="menu-item"><i class="fas fa-book"></i><a href="/blog">Nosotros</a></div>
         <!--<div class="menu-item"><i class="fas fa-envelope"></i><a href="#">Contacto</a></div>-->
     </div>
     <!-- Pie de página -->
     <section class="packages">
         <div class="container">
             <footer class="footer mt-auto">
-                <div>
-                    <h1 class="text-3xl font-bold">Sobre nosotros</h1>
-                </div>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
-                            <h3 class="text-xl font-bold mt-4">¿Quiénes somos?</h3>
-                            <p>Somos una agencia de viajes 𝗰𝗼𝗻𝗳𝗶𝗮𝗯𝗹𝗲 𝘆 𝗹𝗶𝗱𝗲𝗿𝗮𝗱𝗮 𝗽𝗼𝗿
-                                𝗹𝗶𝗰𝗲𝗻𝗰𝗶𝗮𝗱𝗼𝘀 𝗲𝗻 𝗧𝘂𝗿𝗶𝘀𝗺𝗼 de la UNT. Pioneros en operar 𝗖𝗮𝗺𝗶𝗻𝗼
-                                𝗜𝗻𝗰𝗮 Huaylillas, Rutas de Trekking y en aperturar corredores turísticos en toda la
-                                región La Libertad 🇵🇪.</p>
+                            <!-- Logo -->
+                            <div class="logo-container text-center">
+                                <img src="{{ asset('imagenes/logo_animation.png') }}" alt="Outdoor Expeditions"
+                                    class="img-fluid" style="max-width: 100px; height: auto;">
+                                <img src="{{ asset('imagenes/Certificado.jpeg') }}" alt="Outdoor Expeditions"
+                                    class="img-fluid" style="max-width: 70px; height: auto;">
+                            </div>
+
+                            <!-- Llamado a la acción -->
+                            <div class="cta-container text-center mt-1">
+                                <h3 class="text-xl font-bold">¡Explora nuestros Tours!</h3>
+                                <p>Haz de tus aventuras un recuerdo inolvidable con Outdoor Expeditions.
+                                </p>
+                                <a href="https://wa.link/0037yw" target="_blank" class="btn btn-danger"> <i
+                                        class="fab fa-whatsapp"></i> ¡Reserva
+                                    ahora!</a>
+                            </div>
                         </div>
+
                         <div class="col-md-4">
                             <h3 class="text-xl font-bold mt-4">Soporte</h3>
                             <ul class="list-unstyled">
                                 <p><a href="https://n9.cl/1bkel">Términos y condiciones</a></p>
                                 <p><a href="#">Políticas de privacidad</a></p>
                                 <p><a href="https://reclamos.outdoorexpeditionspe.com/">Libro de reclamaciones</a></p>
+                                <p></p><a href="#">Codigó ESNNA</a></p>
+                                <p></p>
+                                </p><a href="#">Certificaciones</a></p>
                             </ul>
                         </div>
                         <div class="col-md-4">
@@ -122,10 +137,11 @@
 
                     </div>
                 </div>
-                <p class="text-sm text-gray-600 mt-4">
-                    &copy; Outdoor Expeditions. Todos los derechos reservados | Desarrollado por: outdoorexpeditions <a
-                        href="https://github.com/" class="text-blue-500 hover:underline"></a>
+                <p style="font-size: 10px;" class="text-gray-100 mt-4">
+                    &copy; Outdoor Expeditions. Todos los derechos reservados | Desarrollado por: outdoorexpeditions
+                    <a href="#" class="text-blue-500 hover:underline"></a>
                 </p>
+
             </footer>
         </div>
     </section>
@@ -189,6 +205,68 @@
             loadPage(1);
         };
     </script>
-    @yield('scripts') <!-- Permite agregar scripts específicos en las vistas -->
+    @yield('scripts')
+
+
+    {{--  cambios------------------------------------------------------- --}}
+    <!-- Cuadro flotante con solo el ícono de WhatsApp -->
+    <div class="whatsapp-chat" id="whatsappChat">
+        <a href="javascript:void(0)" id="openModal">
+            <img src="{{ asset('imagenes/whatsapp-logo.png') }}" alt="WhatsApp" class="whatsapp-logo">
+        </a>
+    </div>
+
+    <!-- Modal (cuadro emergente) -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header del modal con color verde -->
+                <div class="modal-header bg-success text-white">
+                    <h6 class="modal-title">Inicie una conversación</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="closeModal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Estamos en línea las 24 horas, ¿Tienes alguna pregunta o necesitas más información sobre nuestros
+                        tours?</p>
+                    <div class="d-flex justify-content-center"> <!-- Esta clase centra solo el botón -->
+                        <a href="https://wa.link/0037yw" target="_blank" class="btn btn-success">¡Chatea ahora!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obtener el modal, los botones de abrir y cerrar
+        const whatsappChatIcon = document.getElementById("openModal");
+        const whatsappModal = document.getElementById("whatsappModal");
+        const closeModalButton = document.getElementById("closeModal");
+
+        // Función para alternar la visibilidad del modal
+        whatsappChatIcon.onclick = function() {
+            // Si el modal está visible, lo cerramos, de lo contrario, lo mostramos
+            if (whatsappModal.style.display === "block") {
+                whatsappModal.style.display = "none";
+            } else {
+                whatsappModal.style.display = "block";
+            }
+        }
+
+        // Función para cerrar el modal al hacer clic en el botón de cerrar
+        closeModalButton.onclick = function() {
+            whatsappModal.style.display = "none";
+        }
+
+        // Cerrar el modal si el usuario hace clic fuera del área del modal
+        window.onclick = function(event) {
+            if (event.target === whatsappModal) {
+                whatsappModal.style.display = "none";
+            }
+        }
+    </script>
+
+
 </body>
+
 </html>

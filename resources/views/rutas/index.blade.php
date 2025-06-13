@@ -11,9 +11,11 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
-                    Agregar Ruta
+                @can('rutas.crear')
+                <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#create">
+                    Agregar
                 </button>
+                @endcan
             </div>
             <!-- Tabla de rutas -->
             <div class="table-responsive mt-3">
@@ -44,7 +46,7 @@
                                 <td>{{ $ruta->precio_actual }}</td>
                                 <td>{{ $ruta->dificultad }}</td>
                                 <td>{{ $ruta->estado }}</td>
-                                <td>
+                                <td class="d-flex justify-content-center">
                                     {{-- Ver --}}
                                     <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#show{{ $ruta->id_ruta }}" title="Ver">
@@ -52,10 +54,20 @@
                                     </button>
 
                                     {{-- Editar --}}
+                                    @can('rutas.editar')
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#edit{{ $ruta->id_ruta }}" title="Editar">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
+                                    @endcan
+
+                                    {{-- Eliminar --}}
+                                    {{-- @can('rutas.eliminar')
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"  
+                                        data-bs-target="#delete{{ $ruta->id_ruta }}" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    @endcan --}}
                                 </td>
                             </tr>
                             @include('rutas.show')

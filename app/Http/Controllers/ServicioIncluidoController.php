@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class ServicioIncluidoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:servicios.ver')->only(['index', 'show']);
+        $this->middleware('can:servicios.crear')->only(['store']);
+        $this->middleware('can:servicios.editar')->only(['update']);
+        $this->middleware('can:servicios.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         //
@@ -19,17 +25,11 @@ class ServicioIncluidoController extends Controller
         return view('serviciosincluidos.index', compact('servicios', 'rutas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
@@ -44,23 +44,14 @@ class ServicioIncluidoController extends Controller
         ]);
 
         return redirect()->route('servicios.index')->with('success', 'Servicio creado exitosamente');
-
-        
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(ServicioIncluido $servicioIncluido)
     {
         //
-        
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *    public function edit(ServicioIncluido $servicioIncluido)
-     */
     public function edit($id)
     {
         //
@@ -68,13 +59,6 @@ class ServicioIncluidoController extends Controller
         $rutas = Ruta::all();
         return view('serviciosincluidos.edit', compact('servicio', 'rutas'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    /** 
-    *public function update(Request $request, ServicioIncluido $servicioIncluido)
-    */
 
     public function update(Request $request, $id)
     {

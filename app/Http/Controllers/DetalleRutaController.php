@@ -7,13 +7,17 @@ use App\Models\Ruta;
 use App\Models\FechaDisponible;
 
 use Illuminate\Http\Request;
-
-
 class DetalleRutaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:detalleruta.ver')->only(['index', 'show']);
+        $this->middleware('can:detalleruta.crear')->only(['create', 'store']);
+        $this->middleware('can:detalleruta.editar')->only(['edit', 'update']);
+        $this->middleware('can:detalleruta.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         // Obtener todos los detalles de ruta con las rutas asociadas
@@ -22,17 +26,11 @@ class DetalleRutaController extends Controller
         return view('detalleruta.index', compact('detallerutas', 'rutas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         // 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         // Validación
@@ -49,17 +47,12 @@ class DetalleRutaController extends Controller
 
         return redirect()->route('detalleruta.index')->with('success', 'Detalle de Ruta creado exitosamente');
     }
-    /**
-     * Display the specified resource.
-     */
+
     public function show(DetalleRuta $detalleruta)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id) {}
 
     public function update(Request $request, $id_detalle)
@@ -75,10 +68,6 @@ class DetalleRutaController extends Controller
 
         return redirect()->route('detalleruta.index')->with('success', 'Detalle de Ruta actualizado exitosamente');
     }
-    
-    /**
-     * * Remove the specified resource from storage.
-     *  */
 
     public function destroy($id)
     {

@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Usuario;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class UsuarioController extends Controller
 {
     //
-    public function Perfil(){
-        return view('profile/Profile');
-    }
-    public function Perfil2(){
-        return view('profile/show');
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:perfil.ver')->only(['Perfil']);
     }
 
+    public function Perfil()
+    {
+        return view('profile/Profile');
+    }
 }

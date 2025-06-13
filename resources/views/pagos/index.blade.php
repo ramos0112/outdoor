@@ -46,30 +46,31 @@
                                 <td class="text-center">{{ $pago->monto_pagado }}</td>
                                 <td class="text-center">{{ $pago->fecha_pago }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#show{{ $pago->id_pago }}" title="Ver">
+                                    <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#show{{ $pago->id_pago }}" title="Ver">
                                         <i class="bi bi-eye-fill"></i>
-                                    </button> <!--
-                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit{{ $pago->id_pago }}">
+                                    </button>
+                                    {{-- <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit{{ $pago->id_pago }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $pago->id_pago }}" title="Eliminar">
                                         <i class="bi bi-trash"></i>
-                                    </button>-->
+                                    </button> --}}
                                 </td>
                             </tr>
-                            @include('pagos.edit')
+                            {{-- @include('pagos.edit') --}}
                             @include('pagos.show')
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            @include('pagos.create')
+            {{-- @include('pagos.create') --}}
         </div>
     </div>
 @stop
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 @stop
@@ -90,7 +91,9 @@
                 ordering: true,
                 searching: true,
                 responsive: true,
-                order: [[0, 'desc']]
+                order: [
+                    [0, 'desc']
+                ]
             });
         });
     </script>

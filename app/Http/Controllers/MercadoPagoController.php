@@ -50,6 +50,7 @@ class MercadoPagoController extends Controller
             "email" => $request->input('email'),
         ];
 
+        
         //6. URLs de redireccionamiento PARA PRODUCCION
         $baseUrl = config('app.url');
 
@@ -57,7 +58,7 @@ class MercadoPagoController extends Controller
             "success" => "$baseUrl/mercadopago/success",
             "failure" => "$baseUrl/mercadopago/failure",
         ];
-
+        
         // 7. Crear preferencia de pago
         $preferenceData = [
             "items" => $items,
@@ -194,7 +195,7 @@ class MercadoPagoController extends Controller
 
                 DB::commit();
                 Log::info('Pago exitoso:', ['payment_id' => $paymentId, 'external_reference' => $externalReference]);
-                
+
                 Mail::to($cliente->email)->send(new ConfirmacionReserva(
                     $cliente,
                     $reserva,

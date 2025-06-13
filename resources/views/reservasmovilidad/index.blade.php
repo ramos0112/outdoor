@@ -16,11 +16,12 @@
             <!-- Controles arriba -->
             <div class="row mb-3 d-flex flex-column flex-md-row align-items-md-center">
                 <div class="col-md-4 mb-2">
-                    <select name="id_movilidad" id="id_movilidad" class="form-select" required>
+                    <select name="id_movilidad" id="id_movilidad" class="form-control select2" required>
                         <option value="">Selecciona una Movilidad</option>
-                        @foreach($movilidades as $movilidad)
+                        @foreach ($movilidades as $movilidad)
                             <option value="{{ $movilidad->id_movilidad }}">
-                                #{{ $movilidad->id_movilidad }}-Cap: {{ $movilidad->capacidad }}
+                                -Ruta: {{ $movilidad->ruta }} -{{ $movilidad->tipo_movilidad }} -Cap:
+                                {{ $movilidad->capacidad }}
                             </option>
                         @endforeach
                     </select>
@@ -29,9 +30,11 @@
                     <label id="totalPersonas" class="fw-bold text-primary">Total: 0</label>
                 </div>
                 <div class="col-md-4 text-md-end mb-2">
-                    <button type="submit" class="btn btn-primary w-100 w-md-auto py-2 px-3 fs-6">
-                        <i class="bi bi-check-circle me-2"></i> Asignar
-                    </button>
+                    @can('reservas.asignar')
+                        <button type="submit" class="btn btn-primary w-100 w-md-auto py-2 px-3 fs-6">
+                            <i class="bi bi-check-circle me-2"></i> Asignar
+                        </button>
+                    @endcan
                 </div>
             </div>
 
@@ -56,24 +59,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($reservas as $reserva)
+                        @foreach ($reservas as $reserva)
                             <tr>
                                 <td>
                                     <input type="checkbox" class="reserva-check" name="reservas[]"
-                                           value="{{ $reserva->id_reserva }}"
-                                           data-personas="{{ $reserva->cantidad_personas }}">
+                                        value="{{ $reserva->id_reserva }}"
+                                        data-personas="{{ $reserva->cantidad_personas }}">
                                 </td>
                                 <td>{{ $reserva->id_reserva }}</td>
                                 <td>{{ $reserva->fechaDisponible->ruta->nombre_ruta ?? 'Sin ruta' }}</td>
                                 <td>{{ $reserva->cantidad_personas }}</td>
                                 <td>{{ $reserva->fechaDisponible->fecha ?? 'Sin fecha' }}</td>
                                 <td>
-                                    @if($reserva->estado === 'pendiente')
+                                    @if ($reserva->estado === 'pendiente')
                                         <span class="text-warning"><i class="bi bi-clock-fill"></i> Pendiente</span>
                                     @elseif($reserva->estado === 'confirmado')
                                         <span class="text-success"><i class="bi bi-check-circle-fill"></i> Confirmado</span>
                                     @else
-                                        <span class="text-secondary"><i class="bi bi-question-circle-fill"></i> {{ $reserva->estado }}</span>
+                                        <span class="text-secondary"><i class="bi bi-question-circle-fill"></i>
+                                            {{ $reserva->estado }}</span>
                                     @endif
                                 </td>
                             </tr>
@@ -88,6 +92,7 @@
 @section('css')
     <style>
         @media (max-width: 768px) {
+
             .form-select,
             .btn,
             label {
@@ -104,15 +109,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <!-- Agrega el CSS de Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 @stop
 
 @section('js')
+    @include('partials.toastr')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <!-- Agrega el JS de Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Inicializar DataTable
             $('#reservasMasivas').DataTable({
                 language: {
@@ -120,14 +129,20 @@
                 },
                 responsive: true
             });
+            // Inicializar Select2 en el select de movilidad con Bootstrap y AdminLTE
+            $('#id_movilidad').select2({
+                placeholder: "Selecciona una Movilidad",
+                allowClear: true,
+                width: '100%' // Para asegurar que el select2 ocupe todo el ancho disponible
+            });
 
             // Checkbox principal (versión desktop)
-            $('#checkAll').on('click', function () {
+            $('#checkAll').on('click', function() {
                 $('.reserva-check').prop('checked', this.checked).trigger('change');
             });
 
             // Botón "Seleccionar todo" (móviles)
-            $('#selectAllBtn').on('click', function () {
+            $('#selectAllBtn').on('click', function() {
                 const total = $('.reserva-check').length;
                 const checked = $('.reserva-check:checked').length;
                 const newState = checked !== total;
@@ -137,7 +152,7 @@
             // Contador total de personas
             function actualizarContador() {
                 let total = 0;
-                $('.reserva-check:checked').each(function () {
+                $('.reserva-check:checked').each(function() {
                     total += parseInt($(this).data('personas')) || 0;
                 });
                 $('#totalPersonas').text('Total: ' + total);

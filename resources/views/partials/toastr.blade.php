@@ -18,4 +18,8 @@
     @if (Session::has('warning'))
         toastr.warning("{{ Session::get('warning') }}", 'Advertencia');
     @endif
+
+    @if ($errors->has('error'))
+        toastr.error('{{ $errors->first('error') }}');
+    @endif
 </script>

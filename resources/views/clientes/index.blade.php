@@ -3,14 +3,17 @@
 @section('title', 'Clientes')
 
 @section('content_header')
-    <div class="d-flex justify-content-between align-items-center">
-        <h1>Lista de Clientes</h1>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCreate">Agregar Cliente</button>
-    </div>
+    <h1>Lista de Clientes</h1>
 @stop
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="d-flex justify-content-between">
+                @can('clientes.crear')
+                    <button class="btn btn-success ms-auto mb-2" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="fas fa-plus"></i>
+                        Agregar</button>
+                @endcan
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped text-center w-100" id="clientesTable">
                     <thead class="table-dark">
@@ -43,21 +46,23 @@
                                 <td>{{ $cliente->pais ?? 'NULL' }}</td>
                                 <td>{{ $cliente->region ?? 'NULL' }}</td>
                                 <td>{{ $cliente->ciudad ?? 'NULL' }}</td>
-                                <td>
+                                <td class="d-flex justify-content-center" style="gap: 5px;">
                                     <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#modalShow"
                                         data-cliente='@json($cliente)'>
                                         <i class="fas fa-eye"></i>
                                     </button>
-
-                                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modalEdit" data-cliente='@json($cliente)'>
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
-
-                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modalDelete" data-cliente='@json($cliente)'>
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                    @can('clientes.editar')
+                                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modalEdit" data-cliente='@json($cliente)'>
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    @endcan
+                                    @can('clientes.eliminar')
+                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modalDelete" data-cliente='@json($cliente)'>
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    @endcan
                                 </td>
                             </tr>
                             <!-- Incluye los modales para este cliente -->
@@ -95,7 +100,9 @@
                 ordering: true,
                 searching: true,
                 responsive: true,
-                order: [[0, 'desc']]
+                order: [
+                    [0, 'desc']
+                ]
             });
         });
     </script>

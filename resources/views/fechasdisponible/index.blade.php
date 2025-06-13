@@ -10,7 +10,9 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Agregar Fechas</button>
+                @can('fechas.crear')
+                <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#create"><i class="fas fa-plus"></i> Agregar</button>
+                @endcan
             </div>
 
             <!-- Tabla de Fechas Disponibles -->
@@ -36,13 +38,13 @@
                                             data-bs-target="#show{{ $fecha->id_fecha }}" title="Ver">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
-
+                                    @can('fechas.editar')
                                     <!-- Editar -->
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#edit{{ $fecha->id_fecha }}" title="Editar">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
-                                    
+                                    @endcan
                                 </td>
                             </tr>
                             @include('fechasdisponible.show')

@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="edit{{ $ruta->id_ruta }}" tabindex="-1" aria-labelledby="editLabel{{ $ruta->id_ruta }}"
+<div class="modal fade" id="edit{{ $ruta->id_ruta }}" tabindex="-1" data-bs-backdrop="static" aria-labelledby="editLabel{{ $ruta->id_ruta }}"
     aria-hidden="true">
     <div class="modal-dialog">
         <form action="{{ route('rutas.update', $ruta->id_ruta) }}" method="POST" id="ruta-form-edit{{ $ruta->id_ruta }}">

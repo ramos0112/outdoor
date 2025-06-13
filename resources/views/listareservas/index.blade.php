@@ -4,14 +4,17 @@
 @section('title', 'Reservas')
 
 @section('content_header')
-    <div class="d-flex justify-content-between align-items-center">
-        <h1>LISTA DE RESERVAS</h1>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCreate">Agregar reservas</button>
-    </div>
+    <h1>LISTA DE RESERVAS</h1>
+
 @stop
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                @can('reservas.crear')
+                    <button class="btn btn-success ms-auto mb-3" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="fas fa-plus"></i> Agregar</button>
+                @endcan
+            </div>
             <div class="table-responsive">
                 <table class="  table table-bordered table-striped text-center" id="reservasTable">
                     <thead class="table-dark">
@@ -107,7 +110,9 @@
                 searching: true,
                 responsive: true,
                 autoWidth: false, // Ajusta el ancho de las columnas automáticamente
-                order: [[0, 'desc']]
+                order: [
+                    [0, 'desc']
+                ]
             });
         });
     </script>
@@ -140,41 +145,41 @@
             });
         });
 
-            $(document).ready(function () {
-        $('#numero_documento').on('change', function () {
-            let numero = $(this).val();
+        $(document).ready(function() {
+            $('#numero_documento').on('change', function() {
+                let numero = $(this).val();
 
-            if (numero.trim() !== '') {
-                $.ajax({
-                    url: `/buscar-cliente/${numero}`,
-                    type: 'GET',
-                    success: function (data) {
-                        $('#tipo_documento').val(data.tipo_documento);
-                        $('#nombre').val(data.nombre);
-                        $('#apellido').val(data.apellido);
-                        $('#fecha_nacimiento').val(data.fecha_nacimiento);
-                        $('#email').val(data.email);
-                        $('#telefono').val(data.telefono);
-                        $('#pais').val(data.pais);
-                        $('#region').val(data.region);
-                        $('#ciudad').val(data.ciudad);
-                    },
-                    error: function () {
-                        // Limpiar campos si no se encuentra cliente
-                        $('#tipo_documento').val('');
-                        $('#nombre').val('');
-                        $('#apellido').val('');
-                        $('#fecha_nacimiento').val('');
-                        $('#email').val('');
-                        $('#telefono').val('');
-                        $('#pais').val('');
-                        $('#region').val('');
-                        $('#ciudad').val('');
-                    }
-                });
-            }
+                if (numero.trim() !== '') {
+                    $.ajax({
+                        url: `/buscar-cliente/${numero}`,
+                        type: 'GET',
+                        success: function(data) {
+                            $('#tipo_documento').val(data.tipo_documento);
+                            $('#nombre').val(data.nombre);
+                            $('#apellido').val(data.apellido);
+                            $('#fecha_nacimiento').val(data.fecha_nacimiento);
+                            $('#email').val(data.email);
+                            $('#telefono').val(data.telefono);
+                            $('#pais').val(data.pais);
+                            $('#region').val(data.region);
+                            $('#ciudad').val(data.ciudad);
+                        },
+                        error: function() {
+                            // Limpiar campos si no se encuentra cliente
+                            $('#tipo_documento').val('');
+                            $('#nombre').val('');
+                            $('#apellido').val('');
+                            $('#fecha_nacimiento').val('');
+                            $('#email').val('');
+                            $('#telefono').val('');
+                            $('#pais').val('');
+                            $('#region').val('');
+                            $('#ciudad').val('');
+                        }
+                    });
+                }
+            });
         });
-    });
     </script>
 
 @stop

@@ -10,9 +10,15 @@ use Carbon\Carbon;
 
 class ReservaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:reservas.gestionar')->only(['index', 'show']);
+        $this->middleware('can:reservas.crear')->only(['create', 'store']);
+        $this->middleware('can:reservas.editar')->only(['edit', 'update']);
+        $this->middleware('can:reservas.eliminar')->only(['destroy']);
+    }
     public function index()
     {
         // Obtener las últimas 5 reservas actualizadas

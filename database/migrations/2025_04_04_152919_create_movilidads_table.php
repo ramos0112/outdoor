@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('movilidads', function (Blueprint $table) {
             $table->id('id_movilidad');
-            #$table->string('ruta');
-            #$table->string('tipo');
+            $table->string('ruta');
+            $table->string('tipo_movilidad');
             $table->integer('capacidad');
             $table->enum('estado', ['Disponible', 'Ocupado'])->default('Disponible');
             $table->timestamps();

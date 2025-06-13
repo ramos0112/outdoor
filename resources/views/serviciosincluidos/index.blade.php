@@ -9,9 +9,11 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
-                Agregar Servicio
+            @can('servicios.crear') {{-- can permite mostrar el boton --}}
+            <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#create">
+               <i class="fas fa-plus"></i> Agregar
             </button>
+            @endcan
         </div>
 
         <div class="card-body">
@@ -34,13 +36,13 @@
                                 <td>{{ $servicio->servicio }}</td>
                                 <td>
                                     <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#show{{ $servicio->id_servicio }}">
-                                        Ver
+                                        data-bs-target="#show{{ $servicio->id_servicio }}"> <i class="fas fa-eye"></i>
                                     </button>
+                                    @can('servicios.editar')
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#edit{{ $servicio->id_servicio }}">
-                                        Editar
+                                        data-bs-target="#edit{{ $servicio->id_servicio }}"> <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    @endcan
                                 </td>
                             </tr>
                             @include('serviciosincluidos.edit')

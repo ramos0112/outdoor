@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 
 class PagoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:pagos.ver')->only(['index', 'show']);
+        $this->middleware('can:pagos.crear')->only(['create', 'store']);
+        $this->middleware('can:pagos.editar')->only(['edit', 'update']);
+        $this->middleware('can:pagos.eliminar')->only(['destroy']);
+    }
     public function index()
     {
         //
@@ -64,34 +69,21 @@ class PagoController extends Controller
         ]);
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Pago $pago)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Pago $pago)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Pago $pago)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Pago $pago)
     {
         //

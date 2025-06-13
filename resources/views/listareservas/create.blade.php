@@ -86,12 +86,10 @@
                                 style="width: 100%" required>
                                 <option value="">Seleccione una Movilidad</option>
                                 @foreach ($movilidades as $movilidad)
-                                    <option value="{{ $movilidad->id_movilidad }}">{{ $movilidad->capacidad }}</option>
+                                    <option value="{{ $movilidad->id_movilidad }}">-Ruta: {{ $movilidad->ruta }} -Cap: {{ $movilidad->capacidad }}</option>
                                 @endforeach
                             </select>
                         </div>
-
-
 
                         <!-- Aquí empieza la distribución de las dos columnas -->
                         <div class="row">
@@ -179,7 +177,6 @@
             alert('Completa todos los campos');
             return;
         }
-
         // Añadir el cliente al arreglo
         Clientes.push({
             tipo: tipo_documento,

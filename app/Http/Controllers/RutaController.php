@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class RutaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:rutas.ver')->only(['index', 'show']);
+        $this->middleware('can:rutas.crear')->only(['store']);
+        $this->middleware('can:rutas.editar')->only(['update']);
+        $this->middleware('can:rutas.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
         //

@@ -14,6 +14,8 @@ class Movilidad extends Model
     protected $primaryKey = 'id_movilidad';
 
     protected $fillable = [
+        'ruta',
+        'tipo_movilidad',
         'capacidad',
         'estado',
     ];

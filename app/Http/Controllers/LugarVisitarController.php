@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 
 class LugarVisitarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:lugares.ver')->only(['index', 'show']);
+        $this->middleware('can:lugares.crear')->only(['create', 'store']);
+        $this->middleware('can:lugares.editar')->only(['edit', 'update']);
+        $this->middleware('can:lugares.eliminar')->only(['destroy']);
+    }
     public function index()
     {
         //
@@ -19,17 +24,11 @@ class LugarVisitarController extends Controller
         return view('lugaresvisitar.index', compact('lugares', 'rutas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
@@ -46,17 +45,11 @@ class LugarVisitarController extends Controller
         return redirect()->route('lugares.index')->with('success', 'Lugar creado exitosamente');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(LugarVisitar $lugarVisitar)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $lugar = LugarVisitar::findOrFail($id); // Buscar el lugar por su ID
@@ -83,10 +76,6 @@ class LugarVisitarController extends Controller
         return redirect()->route('lugares.index')->with('success', 'Lugar actualizado exitosamente');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(LugarVisitar $lugarVisitar)
     {
         //

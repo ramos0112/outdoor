@@ -9,9 +9,11 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
-                Agregar Lugares
+            @can('lugares.crear')
+            <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#create">
+               <i class="fas fa-plus"></i> Agregar
             </button>
+            @endcan
         </div>
 
         <div class="card-body">
@@ -35,12 +37,14 @@
                                 <td>
                                     <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#show{{ $lugar->id_lugar }}">
-                                        Ver
+                                        <i class="fas fa-eye"></i>
                                     </button>
+                                    @can('lugares.editar')
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#edit{{ $lugar->id_lugar }}">
-                                        Editar
+                                        <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    @endcan
                                 </td>
                             </tr>
                             @include('lugaresvisitar.show')

@@ -17,20 +17,30 @@ use App\Mail\ConfirmacionReserva;
 
 class ListarReservasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:reservas.ver')->only(['index', 'show']);
+        $this->middleware('can:reservas.crear')->only(['store']);
+        $this->middleware('can:reservas.editar')->only(['edit', 'update']);
+        $this->middleware('can:reservas.eliminar')->only(['destroy']);
+    }
+
     public function index()
     {
-        // Obtener todas las reservas con sus relaciones
-        $listareservas = Reserva::with(['fechaDisponible.ruta', 'clientes', 'movilidads.guias'])->get();
         // Obtener todas las rutas
         $rutas = Ruta::all();
-        // Obtener todas las movilidades
-        $movilidades = Movilidad::all();
-        // Pasar las reservas y rutas a la vista
+
+        // Obtener todas las movilidades con capacidad disponible
+        $movilidades = Movilidad::where('estado', 'Disponible')->where('capacidad', '>', 0)->get();
+
+        // Obtener todas las reservas con sus relaciones
+        $listareservas = Reserva::with(['fechaDisponible.ruta', 'clientes', 'movilidads.guias'])->get();
+
+        // Pasar las reservas, rutas y movilidades a la vista
         return view('listareservas.index', compact('listareservas', 'rutas', 'movilidades'));
     }
+
 
     public function obtenerFechasPorRuta($id)
     {
@@ -42,7 +52,6 @@ class ListarReservasController extends Controller
     }
     public function store(Request $request)
     {
-        //dd($request->all());
         DB::beginTransaction();
         try {
             // Validación de datos
@@ -64,6 +73,7 @@ class ListarReservasController extends Controller
                 'metodo_pago' => 'required|string',
                 'monto_pagado' => 'required|numeric|min:0',
             ]);
+
             // 1. Buscar o crear cliente
             $cliente = Cliente::updateOrCreate(
                 ['numero_documento' => $request->numero_documento],
@@ -99,6 +109,7 @@ class ListarReservasController extends Controller
                 'saldo'            => $saldo,
                 'estado'           => 'pendiente',
             ]);
+
             // 5. Relacionar cliente con reserva
             $reserva->clientes()->attach($cliente->id_cliente);
 
@@ -112,11 +123,35 @@ class ListarReservasController extends Controller
 
             // 7. Asociar la movilidad a la reserva
             $movilidadId = $request->id_movilidad; // Obtener la movilidad seleccionada
-            $reserva->movilidads()->attach($movilidadId); // Relacionar la reserva con la movilidad
-            
-            // Procesar acompañantes
-            $acompanantes = json_decode($request->acompanantes, true);
+            $movilidad = Movilidad::findOrFail($movilidadId); // Obtener la movilidad
+            $movilidadCapacidadRestante = $movilidad->capacidad;
 
+            // Calcular el total de personas (incluyendo acompañantes)
+            $acompanantes = json_decode($request->acompanantes, true);
+            $totalPersonasReserva = $cantidadPersonas + count($acompanantes);
+
+            // Verificar si la movilidad tiene suficiente capacidad
+            if ($movilidadCapacidadRestante < $totalPersonasReserva) {
+                DB::rollBack();
+                return back()->with('error', 'La capacidad de la movilidad no es suficiente para la reserva.');
+            }
+
+            // Relacionar la reserva con la movilidad
+            $reserva->movilidads()->attach($movilidadId);
+
+            // Actualizar la capacidad de la movilidad
+            $movilidad->capacidad -= $totalPersonasReserva;
+
+            // Si la capacidad es cero o negativa, marcar la movilidad como "Ocupado"
+            if ($movilidad->capacidad <= 0) {
+                $movilidad->estado = 'Ocupado';
+                $movilidad->capacidad = 0; // Aseguramos que la capacidad no sea negativa
+            } else {
+                $movilidad->estado = 'Disponible';
+            }
+            $movilidad->save();
+
+            // Procesar acompañantes
             if ($acompanantes && is_array($acompanantes)) {
                 foreach ($acompanantes as $acomp) {
                     $clienteAcompanante = Cliente::updateOrCreate(
@@ -127,7 +162,6 @@ class ListarReservasController extends Controller
                             'apellido' => $acomp['apellido'],
                             'fecha_nacimiento' => $acomp['fecha'],
                             'email' => $acomp['email'],
-                            // puedes agregar más campos si los tienes, como email, etc.
                         ]
                     );
 
@@ -135,17 +169,19 @@ class ListarReservasController extends Controller
                     ReservaCliente::create([
                         'id_reserva' => $reserva->id_reserva,
                         'id_cliente' => $clienteAcompanante->id_cliente
-
                     ]);
                 }
             }
+
+            // Confirmación de la reserva por correo
             DB::commit();
             Mail::to($cliente->email)->send(new ConfirmacionReserva(
-                    $cliente,
-                    $reserva,
-                    $ruta,
-                    $reserva->fechaDisponible
-                ));
+                $cliente,
+                $reserva,
+                $ruta,
+                $reserva->fechaDisponible
+            ));
+
             return redirect()->route('listareservas.index')->with('success', 'Reserva registrada correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -164,33 +200,21 @@ class ListarReservasController extends Controller
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //

@@ -3,66 +3,77 @@
 @section('title', 'Movilidades')
 
 @section('content_header')
-    <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 class="mb-0">Lista de Movilidades</h1>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create">Agregar Movilidad</button>
-        </div>
-    </div>
+    <h1 class="mb-0">Lista de Movilidades</h1>
 @stop
 
 @section('content')
     <div class="row">
         <div class="card">
             <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    @can('movilidad.crear')
+                        <button class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#create"><i
+                                class="fas fa-plus"></i> Agregar</button>
+                    @endcan
+                </div>
                 <!-- Tabla -->
                 <div class="table-responsive mt-3">
-                    <table id="tablaGuias" class="table table-bordered table-striped w-100">
-                        <thead class="table-dark text-center">
+                    <table id="tablaGuias" class="table table-bordered table-striped w-100 text-center">
+                        <thead class="table-dark ">
                             <tr>
                                 <th>ID</th>
+                                <th>Ruta</th>
+                                <th>Tipo</th>
                                 <th>Capacidad</th>
                                 <th>Estado</th>
                                 <th>Guías</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             @foreach ($movilidades as $movilidad)
                                 <tr>
-                                    <td class="text-center">{{ $movilidad->id_movilidad }}</td>
-                                    <td class="text-center">{{ $movilidad->capacidad }}</td>
-                                    <td class="text-center">
+                                    <td>{{ $movilidad->id_movilidad }}</td>
+                                    <td>{{ $movilidad->ruta}}</td>
+                                    <td>{{ $movilidad->tipo_movilidad}}</td>
+                                    <td>{{ $movilidad->capacidad }}</td>
+                                    <td>
                                         @if ($movilidad->estado == 'Disponible')
                                             <span class="badge bg-success">Disponible</span>
                                         @elseif ($movilidad->estado == 'Ocupado')
                                             <span class="badge bg-danger">Ocupado</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         @if ($movilidad->guias->isEmpty())
                                             <span class="text-muted">Sin guías asignados</span>
                                         @else
                                             <ul class="mb-0 list-unstyled">
                                                 @foreach ($movilidad->guias as $guia)
-                                                    <li>{{ $guia->nombre }} {{ $guia->apellido }}</li>
+                                                    <li><i class="bi bi-person-fill"></i> {{ $guia->nombre }} {{ $guia->apellido }}</li>
                                                 @endforeach
                                             </ul>
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#show{{ $movilidad->id_movilidad }}" title="Ver">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </button>
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#edit{{ $movilidad->id_movilidad }}" title="Editar">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#delete{{ $movilidad->id_movilidad }}" title="Eliminar">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#show{{ $movilidad->id_movilidad }}" title="Ver">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                            @can('movilidad.editar')
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#edit{{ $movilidad->id_movilidad }}" title="Editar">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                            @endcan
+                                            @can('movilidad.eliminar')
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#delete{{ $movilidad->id_movilidad }}" title="Eliminar">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            @endcan
+                                        </div>
                                     </td>
                                 </tr>
                                 @include('movilidades.edit')

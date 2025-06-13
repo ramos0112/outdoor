@@ -9,7 +9,9 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createGuide">Agregar Guía</button>
+            @can('guias.crear')
+            <button class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#createGuide">Agregar</button>
+            @endcan
         </div>
         <div class="card-body">
             <!-- Tabla de Guias -->
@@ -33,10 +35,15 @@
                                 <td class="text-center">{{ $guia->apellido }}</td>
                                 <td class="text-center">{{ $guia->telefono }}</td>
                                 <td class="text-center">{{ $guia->email }}</td>
-                                <td class="text-center">
+                                <td class="d-flex justify-content-center" style="gap: 5px;">
+                                     
                                     <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#show{{ $guia->id_guia }}">Ver</button>
+                                    @can('guias.editar')
                                     <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit{{ $guia->id_guia }}">Editar</button>
+                                    @endcan
+                                    @can('guias.eliminar')
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $guia->id_guia }}">Eliminar</button>
+                                    @endcan
                                 </td>
                             </tr>
                             @include('guias.show')

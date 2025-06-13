@@ -321,7 +321,7 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'Home',
+            'text' => 'Dashboard',
             'url' => 'dashboard',
             'icon' => 'far fa-fw fa-file',
             'label_color' => 'success',
@@ -334,22 +334,25 @@ return [
         ],
         [
             'text' => 'GESTIÓN USUARIOS',
-            'icon' => 'fas fa-user-shield', // Para gestión de usuarios y seguridad
+            'icon' => 'fas fa-user-shield', 
             'submenu' => [
                 [
                     'text' => 'Perfil',
                     'url' => 'Profile',
-                    'icon' => 'fas fa-fw fa-user-circle', // Ícono de perfil de usuario
+                    'icon' => 'fas fa-fw fa-user-circle', 
+                    'can' => 'perfil.ver',
                 ],
                 [
                     'text' => 'Roles',
                     'url' => 'roles',
-                    'icon' => 'fas fa-fw fa-user-tag', // Ícono de usuario con etiqueta (roles)
+                    'icon' => 'fas fa-fw fa-user-tag', 
+                    'can' => 'roles.ver',
                 ],
                 [
                     'text' => 'Permisos',
-                    'url' => 'roles',
-                    'icon' => 'fas fa-fw fa-lock', // Ícono de candado para permisos
+                    'url' => 'permisos',
+                    'icon' => 'fas fa-fw fa-lock', 
+                    'can' => 'permisos.ver',
                 ],
             ],
         ],
@@ -362,21 +365,26 @@ return [
         [
             'text' => 'RESERVAS',
             'icon' => 'fas fa-calendar-check',
+            'can' => 'reservas.ver',
             'submenu' => [
                 [
                     'text' => 'Gestión de reservas',
                     'icon' => 'fas fa-cogs',
                     'url' => 'gestionreservas',
+                    'can' => 'reservas.gestionar',
+                    
                 ],
                 [
                     'text' => 'Reservas',
                     'icon' => 'fas fa-list-ul',
                     'url' => 'listareservas',
+                    'can' => 'reservas.listar',
                 ],
                 [
                     'text' => 'Reservas a movilidad',
                     'icon' => 'fas fa-car',
                     'url' => 'reservasmovilidad',
+                    'can' => 'reservas.movilidad',
                 ],
                 
             ],
@@ -384,36 +392,44 @@ return [
         [
             'text' => 'RUTAS',
             'icon' => 'fas fa-map-marked-alt', // Icono de mapa para el grupo principal
+            'can' => 'rutas.ver',
             'submenu' => [
                 [
                     'text' => 'rutas',
-                    'icon' => 'fas fa-route', // Ruta
+                    'icon' => 'fas fa-route',
                     'url' => 'rutas',
+                    'can' => 'rutas.ver',
                 ],
                 [
                     'text' => 'Fechas',
-                    'icon' => 'fas fa-calendar-alt', // Calendario
+                    'icon' => 'fas fa-calendar-alt',
                     'url' => 'fechas',
+                    'can' => 'fechas.ver',
                 ],
                 [
                     'text' => 'lugares',
-                    'icon' => 'fas fa-map-marker-alt', // Marcador de mapa
+                    'icon' => 'fas fa-map-marker-alt', 
                     'url' => 'lugares',
+                    'can' => 'lugares.ver',
                 ],
                 [
                     'text' => 'detalleruta',
-                    'icon' => 'fas fa-info-circle', // Información
+                    'icon' => 'fas fa-info-circle',
                     'url' => 'detalleruta',
+                    'can' => 'detalleruta.ver',
                 ],
                 [
                     'text' => 'servicios',
-                    'icon' => 'fas fa-concierge-bell', // Servicios (campana de conserje)
+                    'icon' => 'fas fa-concierge-bell',
                     'url' => 'servicios',
+                    'can' => 'servicios.ver',
                 ],
                 [
                     'text' => 'Imagen',
-                    'icon' => 'fas fa-image', // Imagen
+                    'icon' => 'fas fa-image',
                     'url' => 'imageness',
+                    'can' => 'imagenes.ver',
+
                 ]
             ],
         ],
@@ -423,13 +439,13 @@ return [
 
         [
             'text' => 'CLIENTES',
-            'icon' => 'fas fa-users', // Ícono de grupo de personas
-            'url' => '#',
+            'icon' => 'fas fa-users', 
+            'can' => 'clientes.ver',
             'submenu' => [
                 [
                     'text' => 'clientes',
-                    'icon' => 'fas fa-user-tag', // Ícono de cliente o persona identificada
-                    'url' => 'clientes',
+                    'icon' => 'fas fa-user-tag', 
+                    'url' => 'clientes  ',
                 ],
             ],
         ],
@@ -439,8 +455,8 @@ return [
 
         [
             'text' => 'MOVILIDADES',
-            'icon' => 'fas fa-shuttle-van', // Vehículo o transporte
-            'url' => '#',
+            'icon' => 'fas fa-shuttle-van', 
+            'can' => 'movilidad.ver',
             'submenu' => [
                 [
                     'text' => 'Movilidades',
@@ -454,12 +470,12 @@ return [
         // MENU DE LA PAGINA PRINCIPAL DE ADMINISTRADOR (GESTION GUIAS)
         [
             'text' => 'GUÍAS',
-            'icon' => 'fas fa-user-tie', // Representa un guía o profesional
-            'url' => '#',
+            'icon' => 'fas fa-user-tie',
+            'can' => 'guias.ver',
             'submenu' => [
                 [
                     'text' => 'Guías',
-                    'icon' => 'fas fa-map-signs', // Ícono relacionado a guía o dirección
+                    'icon' => 'fas fa-map-signs', 
                     'url' => 'guias',
                 ],
             ],
@@ -469,12 +485,12 @@ return [
         // MENU DE LA PAGINA PRINCIPAL DE ADMINISTRADOR (GESTION PAGOS)
         [
             'text' => 'PAGOS',
-            'icon' => 'fas fa-money-check-alt', // Ícono de cheque o transacción
-            'url' => '#',
+            'icon' => 'fas fa-money-check-alt',
+            'can' => 'pagos.ver',
             'submenu' => [
                 [
                     'text' => 'Pagos',
-                    'icon' => 'fas fa-credit-card', // Tarjeta de crédito
+                    'icon' => 'fas fa-credit-card',
                     'url' => 'pagos',
                 ],
             ],

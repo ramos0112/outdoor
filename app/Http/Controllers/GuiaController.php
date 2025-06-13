@@ -7,27 +7,25 @@ use Illuminate\Http\Request;
 
 class GuiaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:guias.ver')->only(['index', 'show']);
+        $this->middleware('can:guias.crear')->only(['create', 'store']);
+        $this->middleware('can:guias.editar')->only(['edit', 'update']);
+        $this->middleware('can:guias.eliminar')->only(['destroy']);
+    }
     public function index()
     {
         $guias = Guia::all();
         return view('guias.index', compact('guias'));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
 
     public function store(Request $request)
     {
@@ -49,25 +47,17 @@ class GuiaController extends Controller
         return redirect()->route('guias.index')->with('success', 'Guía creada con éxito');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Guia $guia)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // Mostrar el formulario para editar una guía
     public function edit($id)
     {
         $guia = Guia::findOrFail($id);
         return view('guias.edit', compact('guia'));
     }
 
-    // Actualizar la guía en la base de datos
     public function update(Request $request, $id)
     {
         // Validación
@@ -90,18 +80,12 @@ class GuiaController extends Controller
         return redirect()->route('guias.index')->with('success', 'Guía actualizada con éxito');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         // Encontrar el guía por su ID
         $guia = Guia::findOrFail($id);
-    
         // Eliminar el guía
         $guia->delete();
-    
         // Redirigir con mensaje de éxito
         return redirect()->route('guias.index')->with('success', 'Guía eliminada con éxito');
     }

@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="create" tabindex="-1" aria-labelledby="createLabel" aria-hidden="true">
+<div class="modal fade" id="create" data-bs-backdrop="static" tabindex="-1" aria-labelledby="createLabel" aria-hidden="true">
     <div class="modal-dialog">
         <form action="{{ route('rutas.store') }}" method="POST" id="ruta-form">
             @csrf

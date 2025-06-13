@@ -37,11 +37,13 @@
                         </div>
                     </div>
                     <!-- Columna para el botón "Ingresar nuevo pago" -->
+                    @can('pagos.crear')
                     <div class="col-md-4 d-flex justify-content-md-end mt-3 mt-md-0">
                         <button class="btn btn-success w-auto w-md-auto" data-bs-toggle="modal" data-bs-target="#modalPago">
                             Ingresar pago
                         </button>
                     </div>
+                    @endcan
                 </div>
                 <!-- Detalle de la Reserva -->
                 <div id="resultadoReserva" class="mt-4">

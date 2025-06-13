@@ -240,3 +240,144 @@
     background-color: #0056b3;
 }
 
+
+/* Estilo del modal de WhatsApp e su contenido interior y su icóno flotante */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 70%; /* Mueve el modal un 10% desde la izquierda */
+    top: 40%;  /* Mueve el modal un 20% hacia abajo */
+    width: 500px; /* Puedes ajustar el ancho del modal si lo deseas */
+    height: 500px; /* Ajusta la altura si es necesario */
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0); /* Fondo semitransparente */
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 50%;
+    max-width: 500px;
+}
+
+/* Estilo para el ícono flotante */
+.whatsapp-chat {
+    position: fixed;
+    bottom: 20px; /* Espacio desde el fondo */
+    right: 20px; /* Espacio desde la derecha */
+    z-index: 1000; /* Para asegurarse de que esté por encima de otros elementos */
+}
+
+.whatsapp-logo {
+    width: 50px; /* Ajusta el tamaño que desees */
+    height: auto;
+}
+
+/* Media Queries para dispositivos pequeños */
+@media (max-width: 768px) { /* Para tablets y dispositivos pequeños */
+    .modal {
+        width: 100%; /* El modal ocupará el 80% del ancho en pantallas pequeñas */
+        height: 80%; /* Ajusta la altura al 80% para que no quede demasiado grande */
+        max-width: 500px; /* Asegura que el modal no crezca más allá de 500px de ancho */
+        max-height: 500px; /* Limita la altura del modal en pantallas pequeñas */
+        left: 68%; /* Mantiene la misma posición horizontal */
+        top: 75%;  /* Mantiene la misma posición vertical */
+        transform: translate(-50%, -50%); /* Mantiene la posición centrada */
+    }
+}
+
+
+
+
+
+ .valores-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 15px;
+    }
+
+    .valores-container h2 {
+        font-size: 36px;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #333;
+    }
+
+    .valor {
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: block;
+        /* Flexbox para distribuir los elementos */
+        justify-content: space-between;
+        /* Espacio entre texto e ícono */
+        align-items: center;
+        /* Alinea verticalmente */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .valor:hover {
+        background-color: #e9ecef;
+    }
+
+    .valor i {
+        margin-right: 10px;
+        /* Espacio entre el ícono de la bombilla y el texto */
+    }
+
+    .icono {
+        font-size: 20px;
+        color: #f30202;
+        transition: transform 0.3s ease;
+        margin-left: 95%;
+        /* Espacio entre el texto y la flecha */
+        margin-top: 0px;
+        cursor: pointer;
+    }
+
+    .descripcion {
+        display: none;
+        padding: 10px 20px;
+        background-color: #f1f3f5;
+        border-left: 3px solid hsl(357, 100%, 50%);
+        margin-top: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .open .descripcion {
+        display: block;
+    }
+
+    /* Rotación de la flecha */
+    .open .icono i {
+        transform: rotate(180deg);
+        /* Rota el ícono cuando se hace clic */
+    }
+
+    .container h2 {
+        font-size: 36px;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #D90B1C;
+        /* Color principal */
+        font-family: 'Poppins'; /* Tipografía moderna */
+        /* font-family: 'Blantic Rockybilly', sans-serif; */
+        font-weight: 600;
+        /* Peso de la fuente para hacerlo más prominente */
+        position: relative;
+        /* Para posicionar el subrayado */
+        text-transform: uppercase;
+        /* Hace que el título esté en mayúsculas */
+    }
+
+
+
+    
