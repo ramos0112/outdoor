@@ -43,11 +43,11 @@
     padding: 20px;
     transition: transform 0.3s;
 }
-
+/* Efecto de elevación al hacer hover */
 .package:hover {
     transform: translateY(-10px) scale(1.02);
     border-color: var(--primary-gold);
-    box-shadow: 0 20px 40px rgba(220, 3, 12, 0.6);
+    box-shadow: 0 20px 40px rgba(151, 164, 34, 0.6);
 }
 
 .package img {
@@ -92,24 +92,24 @@
 .tipo2 {
     color: #1e7e34;
 }
-
+ /* Estilos para el botón de reserva */
 .package-btn {
     margin-top: 15px;
     padding: 10px 20px;
-    background: linear-gradient(135deg, #ca001d 0%, #000000 100%);
+    background: linear-gradient(135deg, #fc6b14 0%, #97a422 100%);
     color: white;
     font-weight: 600;
     border: none;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    border-radius: px;
+    border-radius: 10px;
     cursor: pointer;
     transition: var(--transition-smooth);
     box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
 }
 
 .package-btn:hover {
-    background: linear-gradient(135deg, #218838 0%, #155724 100%);
+    background: linear-gradient(135deg, #94b424    50%, #cc7434  50%);
     box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
     transform: translateY(-2px);
 }
@@ -200,7 +200,7 @@
 }
 
 .page-btn.active {
-    background-color: #155724;
+    background-color: #bb6306;
 }
 
 
@@ -208,7 +208,7 @@
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     margin-bottom: 1.5rem;
     text-align: center;
-    color: #D90B1C;
+    color: #0bd980;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 600;
     position: relative;
@@ -228,4 +228,41 @@
         text-align: center !important;
         padding: 0 15px !important;
     }
+}
+
+
+
+.hero-diarios{
+    background-image: url('/imagenes/background/diarios.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+@media (max-width: 768px) {
+
+    .hero.hero-diarios {
+
+        background-image:
+            linear-gradient(
+                rgba(0,0,0,.45),
+                rgba(0,0,0,.45)
+            ),
+            url('/imagenes/background/backgrond-diarios-movil.webp') !important;
+
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+
+        min-height: 80vh;
+    }
+
+}
+
+.hero-weekend{
+    background-image: url('/imagenes/background/weekend.webp');
+    background-size: cover;
+    background-position: center;
+}
+.hero-default{
+    background-image: url('/imagenes/background/default-background.png');
 }

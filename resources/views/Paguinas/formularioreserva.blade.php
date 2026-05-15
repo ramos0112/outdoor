@@ -11,7 +11,7 @@
     <div class="form-body-wrapper">
         <section class="hero text-white text-center py-4 bg-dark">
             <h1 class="text-3xl font-bold sm:text-2xl md:text-4xl">Reserva con "Outdoor <span>Expeditions"</span></h1>
-            <p>{{ $ruta->nombre_ruta ?? 'Ruta desconocida' }} te espera</p>
+            <p class="text-white">{{ $ruta->nombre_ruta ?? 'Ruta desconocida' }} te espera</p>
         </section>
 
         <div class="container py-5">

@@ -1,12 +1,21 @@
 <!-- resources/views/layouts/app.blade.php -->
+@php
+    $branding = \App\Models\Configuracion::obtener();
+@endphp
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard')</title> <!-- Título de la página -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <meta name="description" content="{{ $branding->meta_descripcion ?? 'Tours de aventura' }}">
+    <meta name="keywords" content="{{ $branding->meta_keywords ?? 'aventura, tours' }}">
+    <meta property="og:image" content="{{ $branding->og_image_url ?? asset('imagenes/og-image.jpg') }}">
+
+    <title>@yield('title', $branding->nombre_empresa ?? 'Dashboard')</title>
+    <link rel="icon" href="{{ brandingImage('favicon_url', 'favicon.ico') }}" type="image/x-icon">
+
     <!-- Enlace a Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
@@ -19,8 +28,11 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap"
         rel="stylesheet">
 
-        <link rel="stylesheet" href="{{ asset('css/whatsapp.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/paquetes.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/whatsapp.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/paquetes.css') }}">
+
+    <!-- Variables CSS de Branding -->
+    {!! brandingCss() !!}
 
     <!-- Estilos personalizados -->
     @yield('head') <!-- Permitirá agregar contenido extra en las vistas que lo extienden -->
@@ -30,43 +42,46 @@
     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a href="{{ url('/#') }}">
-                <img src="{{ asset('imagenes/logo.png') }}" height="48" alt="Inicio">
+            <a href="/">
+                <img src="{{ brandingImage('logo_url', 'imagenes/placeholder.png') }}" height="48"
+                    alt="{{ $branding->nombre_empresa }}">
             </a>
 
-            <!--<a class="navbar-brand fw-bold" href="/#">OUTDOOR <span class="text-danger">EXPEDITIONS</span></a>  -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">
-                            Inicio
+                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('blog') ? 'active' : '' }}" href="/blog">Nosotros</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ request()->routeIs('rutas.tipo') ? 'active' : '' }}"
+                            href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Tours
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('rutas.tipo', ['tipo' => 'Diarios']) }}">Diarios</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="{{ route('rutas.tipo', ['tipo' => 'Weekend']) }}">Fin de semana</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('blog') ? 'active' : '' }}" href="/blog">
-                            Nosotros
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {{ request('tipo') === 'Aventura' ? 'active' : '' }}"
-                            href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">
-                            Full Day
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link {{ request('tipo') === 'Trekking' ? 'active' : '' }}"
-                            href="{{ route('rutas.tipo', ['tipo' => 'Trekking']) }}">
-                            Trekking
+                        <a class="nav-link {{ request()->is('renta-cars') ? 'active' : '' }}" href="/renta-cars">
+                            Renta de Cars
                         </a>
                     </li>
                 </ul>
-
             </div>
         </div>
     </nav>
@@ -78,9 +93,9 @@
         <div class="menu-item"><i class="fas fa-home"></i><a href="/">Inicio</a></div>
         <div class="menu-item"><i class="fas fa-book"></i><a href="/blog">Nosotros</a></div>
         <div class="menu-item"><i class="fas fa-road"></i><a class="nav-link"
-                href="{{ route('rutas.tipo', ['tipo' => 'Aventura']) }}">Full Day</a></div>
+                href="{{ route('rutas.tipo', ['tipo' => 'Diarios']) }}">Diarios</a></div>
         <div class="menu-item"><i class="fas fa-hiking"></i><a class="nav-link"
-                href="{{ route('rutas.tipo', ['tipo' => 'Trekking']) }}">Trekking</a></div>
+                href="{{ route('rutas.tipo', ['tipo' => 'Weekend']) }}">Fin de semana</a></div>
         <!--<div class="menu-item"><i class="fas fa-envelope"></i><a href="#">Contacto</a></div>-->
     </div>
     <!-- Pie de página -->
@@ -92,20 +107,23 @@
                         <div class="col-md-4">
                             <!-- Logo -->
                             <div class="logo-container text-center">
-                                <img src="{{ asset('imagenes/logo_animation.png') }}" alt="Outdoor Expeditions"
-                                    class="img-fluid" style="max-width: 100px; height: auto;">
-                                <img src="{{ asset('imagenes/Certificado.jpeg') }}" alt="Outdoor Expeditions"
-                                    class="img-fluid" style="max-width: 70px; height: auto;">
+                                <img src="{{ brandingImage('logo_animation_url') }}"
+                                    alt="{{ $branding->nombre_empresa }}" class="img-fluid"
+                                    style="max-width: 100px; height: auto;">
+                                <img src="{{ brandingImage('certificacion_url') }}" alt="Certificado" class="img-fluid"
+                                    style="max-width: 70px; height: auto;">
                             </div>
 
                             <!-- Llamado a la acción -->
                             <div class="cta-container text-center mt-1">
-                                <h3 class="text-xl font-bold">¡Explora nuestros Tours!</h3>
-                                <p>Haz de tus aventuras un recuerdo inolvidable con Outdoor Expeditions.
-                                </p>
-                                <a href="https://wa.link/0037yw" target="_blank" class="btn btn-danger"> <i
-                                        class="fab fa-whatsapp"></i> ¡Reserva
-                                    ahora!</a>
+                                <h3 class="text-xl font-bold">Ayni Forest</h3>
+                                <a class="text-white block mb-2">¡Diceñando tu próxima aventura!</a>
+
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branding->whatsapp_numero) }}"
+                                    target="_blank" class="btn text-white inline-block mt-4"
+                                    style="background-color: {{ $branding->color_secundario }}; border-color: {{ $branding->color_secundario }};">
+                                    <i class="fab fa-whatsapp"></i> ¡Reserva ahora!
+                                </a>
                             </div>
                         </div>
 
@@ -113,62 +131,70 @@
                             <h3 class="text-xl font-bold mt-4">Soporte</h3>
                             <ul class="list-unstyled">
                                 <p><a href="https://n9.cl/1bkel">Términos y condiciones</a></p>
-                                <p><a href="#">Políticas de privacidad</a></p>
+                                <p><a href="#" class="text-white">Políticas de privacidad</a></p>
                                 <p><a href="https://reclamos.outdoorexpeditionspe.com/">Libro de reclamaciones</a></p>
-                                <p></p><a href="#">Codigó ESNNA</a></p>
-                                <p></p>
-                                </p><a href="#">Certificaciones</a></p>
+                                <p><a href="#">Código ESNNA</a></p>
+                                <p><a href="#">Certificaciones</a></p>
                             </ul>
                         </div>
                         <div class="col-md-4">
                             <h3 class="text-xl font-bold mt-4">Contáctanos</h3>
-
-                            <p><i class="fas fa-phone"></i> +51 961358621</p>
+                            <p>
+                                <<i class="fas fa-phone text-white "></i>
+                                    <a href="https://acortar.link/vcswna" target="_blank">+51-933 329 650</a>
+                            </p>
 
                             <p>
                                 <i class="fas fa-envelope"></i>
-                                <a href="mailto:outdoorexpeditionsperu@gmail.com">outdoorexpeditionsperu@gmail.com</a>
+                                <a href="mailto:{{ $branding->email_contacto }}">{{ $branding->email_contacto }}</a>
                             </p>
 
                             <p>
                                 <i class="fab fa-whatsapp"></i>
-                                <a href="https://wa.link/0037yw" target="_blank">Escríbenos al WhatsApp</a>
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branding->whatsapp_numero) }}"
+                                    target="_blank">Escríbenos al WhatsApp</a>
                             </p>
 
                             <h6 class="text-xl font-bold mt-4">Síguenos en:</h6>
 
                             <div class="d-flex justify-content-center gap-4 fs-4">
-                                <a href="https://www.facebook.com/profile.php?id=100091928552440&mibextid=ZbWKwL"
-                                    target="_blank">
-                                    <i class="fab fa-facebook text-primary"></i>
-                                </a>
-                                <a href="https://www.instagram.com/outdoorexpeditions.pe?igsh=bDA2aDI5cWFoZ2wy"
-                                    target="_blank">
-                                    <i class="fab fa-instagram text-danger"></i>
-                                </a>
-                                <a href="https://www.tiktok.com/@outdoorexpeditions?_t=ZS-8wbSI5Vbr6H&_r=1"
-                                    target="_blank">
-                                    <i class="fab fa-tiktok" style="color: white;"></i>
-                                </a>
-                                <a href="https://youtube.com/@outdoorexpeditions_pe?si=3E92hl_x5kjR1SVe"
-                                    target="_blank">
-                                    <i class="fab fa-youtube text-danger"></i>
-                                </a>
+                                @if ($branding->facebook_url)
+                                    <a href="{{ $branding->facebook_url }}" target="_blank" title="Facebook">
+                                        <i class="fab fa-facebook text-primary"></i>
+                                    </a>
+                                @endif
+                                @if ($branding->instagram_url)
+                                    <a href="{{ $branding->instagram_url }}" target="_blank" title="Instagram">
+                                        <i class="fab fa-instagram text-danger"></i>
+                                    </a>
+                                @endif
+                                @if ($branding->tiktok_url)
+                                    <a href="{{ $branding->tiktok_url }}" target="_blank" title="TikTok">
+                                        <i class="fab fa-tiktok" style="color: white;"></i>
+                                    </a>
+                                @endif
+                                @if ($branding->youtube_url)
+                                    <a href="{{ $branding->youtube_url }}" target="_blank" title="YouTube">
+                                        <i class="fab fa-youtube text-danger"></i>
+                                    </a>
+                                @endif
+
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <p style="font-size: 10px;" class="text-gray-100 mt-4">
-                    &copy; Outdoor Expeditions. Todos los derechos reservados | Desarrollado por: Mariños
-                    <a href="#" class="text-blue-500 hover:underline"></a>
+                <p style="font-size: 10px;" class="text-white-100 mt-4">
+                    <span class="text-white">&copy; {{ $branding->nombre_empresa ?? 'Outdoor Expeditions' }}. Todos
+                        los derechos reservados | Desarrollado por:J & M Developers</span>
                 </p>
 
             </footer>
         </div>
     </section>
 
-    <!-- Scripts -->
+    <!-- Scripts --><script src="https://elfsightcdn.com/platform.js" async></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const packagesPerPage = 8; // Número de paquetes por página
@@ -247,7 +273,7 @@
     @yield('scripts')
 
 
-    {{--  cambios------------------------------------------------------- --}}
+    {{-- WhatsApp Chat Widget --}}
     <!-- Cuadro flotante con solo el ícono de WhatsApp -->
     <div class="whatsapp-chat" id="whatsappChat">
         <a href="javascript:void(0)" id="openModal">
@@ -266,10 +292,11 @@
                         id="closeModal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Estamos en línea las 24 horas, ¿Tienes alguna pregunta o necesitas más información sobre nuestros
-                        tours?</p>
-                    <div class="d-flex justify-content-center"> <!-- Esta clase centra solo el botón -->
-                        <a href="https://wa.link/0037yw" target="_blank" class="btn btn-success">¡Chatea ahora!</a>
+                    <p>{{ $branding->descripcion_corta ?? 'Estamos en línea las 24 horas, ¿Tienes alguna pregunta o necesitas más información sobre nuestros tours?' }}
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branding->whatsapp_numero) }}"
+                            target="_blank" class="btn btn-success">¡Chatea ahora!</a>
                     </div>
                 </div>
             </div>

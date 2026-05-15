@@ -25,8 +25,6 @@ yarn-error.log
 /bootstrap/cache/*.php
 
 # Storage (except public storage link)
-/storage/*
-!/storage/app/public
 !/storage/framework
 !/storage/logs
 

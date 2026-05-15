@@ -26,8 +26,8 @@
                         <label for="tipo" class="form-label">Tipo</label>
                         <select name="tipo" id="tipo" class="form-select" required>
                             <option value="" disabled selected>Selecciona una opción</option>
-                            <option value="Aventura">Aventura</option>
-                            <option value="Trekking">Trekking</option>
+                            <option value="Aventura">Diarios</option>
+                            <option value="Excursiones">Weekend</option>
                         </select>
                     </div>
                     <div class="mb-3">

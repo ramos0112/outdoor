@@ -4,7 +4,7 @@
     <style>
         /* Fondo de la página */
         body {
-            background-image: url('{{ asset('imagenes/fondo.jpg') }}');
+            background-image: url('{{ asset('imagenes/background/default-background.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -15,7 +15,7 @@
             padding-right: 50px;
             padding-left: 50px;
         }
-
+ 
         .logo-img {
             max-width: 200px;  /* Ajusta el tamaño máximo */
             width: 100%;       /* Ajusta al contenedor */

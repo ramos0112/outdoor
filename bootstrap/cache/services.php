@@ -38,19 +38,17 @@
     34 => 'LaravelLang\\StarterKits\\ServiceProvider',
     35 => 'Laravel\\Fortify\\FortifyServiceProvider',
     36 => 'Laravel\\Jetstream\\JetstreamServiceProvider',
-    37 => 'Laravel\\Pail\\PailServiceProvider',
-    38 => 'Laravel\\Sail\\SailServiceProvider',
-    39 => 'Laravel\\Sanctum\\SanctumServiceProvider',
-    40 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    41 => 'Livewire\\LivewireServiceProvider',
-    42 => 'Carbon\\Laravel\\ServiceProvider',
-    43 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    44 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    45 => 'Spatie\\Activitylog\\ActivitylogServiceProvider',
-    46 => 'Spatie\\Permission\\PermissionServiceProvider',
-    47 => 'App\\Providers\\AppServiceProvider',
-    48 => 'App\\Providers\\FortifyServiceProvider',
-    49 => 'App\\Providers\\JetstreamServiceProvider',
+    37 => 'Laravel\\Sanctum\\SanctumServiceProvider',
+    38 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    39 => 'Livewire\\LivewireServiceProvider',
+    40 => 'Carbon\\Laravel\\ServiceProvider',
+    41 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    42 => 'Spatie\\Activitylog\\ActivitylogServiceProvider',
+    43 => 'Spatie\\Permission\\PermissionServiceProvider',
+    44 => 'App\\Providers\\AppServiceProvider',
+    45 => 'App\\Providers\\BrandingServiceProvider',
+    46 => 'App\\Providers\\FortifyServiceProvider',
+    47 => 'App\\Providers\\JetstreamServiceProvider',
   ),
   'eager' => 
   array (
@@ -78,17 +76,16 @@
     21 => 'LaravelLang\\StarterKits\\ServiceProvider',
     22 => 'Laravel\\Fortify\\FortifyServiceProvider',
     23 => 'Laravel\\Jetstream\\JetstreamServiceProvider',
-    24 => 'Laravel\\Pail\\PailServiceProvider',
-    25 => 'Laravel\\Sanctum\\SanctumServiceProvider',
-    26 => 'Livewire\\LivewireServiceProvider',
-    27 => 'Carbon\\Laravel\\ServiceProvider',
-    28 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    29 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    30 => 'Spatie\\Activitylog\\ActivitylogServiceProvider',
-    31 => 'Spatie\\Permission\\PermissionServiceProvider',
-    32 => 'App\\Providers\\AppServiceProvider',
-    33 => 'App\\Providers\\FortifyServiceProvider',
-    34 => 'App\\Providers\\JetstreamServiceProvider',
+    24 => 'Laravel\\Sanctum\\SanctumServiceProvider',
+    25 => 'Livewire\\LivewireServiceProvider',
+    26 => 'Carbon\\Laravel\\ServiceProvider',
+    27 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    28 => 'Spatie\\Activitylog\\ActivitylogServiceProvider',
+    29 => 'Spatie\\Permission\\PermissionServiceProvider',
+    30 => 'App\\Providers\\AppServiceProvider',
+    31 => 'App\\Providers\\BrandingServiceProvider',
+    32 => 'App\\Providers\\FortifyServiceProvider',
+    33 => 'App\\Providers\\JetstreamServiceProvider',
   ),
   'deferred' => 
   array (
@@ -241,8 +238,6 @@
     'validator' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'Illuminate\\Contracts\\Validation\\UncompromisedVerifier' => 'Illuminate\\Validation\\ValidationServiceProvider',
-    'Laravel\\Sail\\Console\\InstallCommand' => 'Laravel\\Sail\\SailServiceProvider',
-    'Laravel\\Sail\\Console\\PublishCommand' => 'Laravel\\Sail\\SailServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
   ),
   'when' => 
@@ -284,9 +279,6 @@
     array (
     ),
     'Illuminate\\Validation\\ValidationServiceProvider' => 
-    array (
-    ),
-    'Laravel\\Sail\\SailServiceProvider' => 
     array (
     ),
     'Laravel\\Tinker\\TinkerServiceProvider' => 

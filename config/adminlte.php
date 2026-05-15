@@ -64,12 +64,12 @@ return [
     */
 
     'logo' => '<b>AGENCIA</b> de turismo',
-    'logo_img' => config('app.asset_url') . '/imagenes/autdoor.png',
+    'logo_img' => config('app.asset_url') . '/imagenes/ayniforest.webp',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
-
+ 
     /*
     |--------------------------------------------------------------------------
     | Authentication Logo
@@ -325,7 +325,15 @@ return [
             'url' => 'dashboard',
             'icon' => 'far fa-fw fa-file',
             'label_color' => 'success',
-            /* 'can' => 'dashboard.ver', */
+            'can' => 'dashboard.ver', 
+        ],
+
+        [
+            'text' => 'configuración',
+            'url' => 'configuracion',
+            'icon' => 'far fa-fw fa-file',
+            'label_color' => 'success',
+             
         ],
 
         //MENU DE LA PAGINA PRINCIPAL DE ADMINISTRADOR DE RUTAS

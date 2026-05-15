@@ -13,7 +13,9 @@
         <h1 class="text-3xl font-bold sm:text-2xl md:text-4xl">
             Empieza a descubrir <span>La Libertad</span>
         </h1>
-        <p>Tours Full Days todos los días</p>
+        <p class="text-white">
+            Vive nuevas experiencias, descubre paisajes únicos y encuentra tu próxima aventura.
+        </p>
     </section>
 
     <!-- Espaciador (opcional si hay más contenido abajo) -->
@@ -27,22 +29,22 @@
             <!-- Fila con imagen y texto -->
             <div class="row align-items-center mb-5">
                 <div class="col-md-5">
-                    <img src="{{ asset('imagenes/nosotros.png') }}" alt="Outdoor Historia" class="img-fluid rounded">
+                    <img src="{{ brandingImage('nosotros_url') }}" class="img-fluid" alt="Nosotros">
                 </div>
                 <div class="col-md-7">
                     <h2>¿Quiénes Somos?</h2>
                     <p class="fs-6">
-                        Outdoor Expeditions es una Agencia de Viajes Tour Operadora con sede en la ciudad de Trujillo, Perú.
-                        Desde nuestros inicios estuvimos vinculados a las comunidades más alejadas y a las montañas del ande
-                        Liberteño. Descubriendo en ambas nuestra pasión por impulsar el desarrollo de un turismo más
-                        sostenible y responsable que beneficie a las comunidades locales y preserve el medio ambiente.
-                        Teniendo como pilar el ofrecer experiencias únicas y emocionantes que permitan a nuestros viajeros
-                        conectar con la cultura y naturaleza de nuestros destinos.
+                        En Ayni Forest creemos que cada viaje es una oportunidad para descubrir nuevos paisajes,
+                        conectar con la naturaleza y vivir experiencias que permanezcan para siempre.
+                        Como agencia de viajes y tour operadora 100% local con sede en Trujillo, La Libertad,
+                        trabajamos para ofrecer experiencias auténticas, organizadas y seguras,
+                        adaptadas a cada viajero y diseñadas para mostrar la esencia del norte peruano.
                         <br>
-                        Como emblema empresarial tenemos el ser los pioneros en operar rutas de trekking tales como Camino
-                        Inca "Tramo Escalerilla" y organizar ascensos al Pico más alto de la región "Huaylillas 4750 msnm".
-                        Además de liderar el posicionamiento y promoción de nuevos destinos y/o corredores turísticos, tales
-                        como Salpo, Cachicadan, Santiago de Chuco, Mache, Canotaje en Jequetepeque, Motil y mucho más.
+                        Nos esforzamos por cuidar cada detalle de nuestras rutas, brindando atención cercana, 
+                        buena energía y aventuras que combinan naturaleza, cultura y emoción. Más que planificar viajes,
+                        buscamos crear momentos inolvidables y hacer que cada destino se convierta en una experiencia única.
+                        Hoy creamos experiencias, mañana serán recuerdos para toda la vida.
+
                     </p>
                 </div>
             </div>
@@ -52,14 +54,14 @@
                 @php
                     $bloques = [
                         [
-                            'titulo' => 'Tours Full Day',
-                            'imagenes' => $rutasAventura,
-                            'ruta' => route('rutas.tipo', ['tipo' => 'Aventura']),
+                            'titulo' => 'Tours Diarios',
+                            'imagenes' => $rutasDiarios,
+                            'ruta' => route('rutas.tipo', ['tipo' => 'Diarios']),
                         ],
                         [
-                            'titulo' => 'Tours de Trekking',
-                            'imagenes' => $rutasTrekking,
-                            'ruta' => route('rutas.tipo', ['tipo' => 'Trekking']),
+                            'titulo' => 'Tours fin de semana',
+                            'imagenes' => $rutasWeekend,
+                            'ruta' => route('rutas.tipo', ['tipo' => 'Weekend']),
                         ],
                     ];
                 @endphp
@@ -95,7 +97,7 @@
                             </div>
 
                             <div class="text-center mt-3">
-                                <a href="{{ $bloque['ruta'] }}" class="btn btn-success px-4 py-1">Ver más</a>
+                                <a href="{{ $bloque['ruta'] }}" class="btn package-btn px-4 py-1">Ver más</a>
                             </div>
                         </div>
                     </div>

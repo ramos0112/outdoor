@@ -4,12 +4,13 @@
     <div class="col-md-4 mb-4">
         <div class="card h-100 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">VISIÓN</h5>
-                <p class="card-text">Outdoor Expeditions aspira a ser la agencia de viajes de aventura líder en
-                    operar y posicionar servicios turísticos en el mercado peruano e internacional, forjando
-                    lazos inseparables entre el desarrollo de las comunidades locales y la sostenibilidad
-                    ambiental. Buscamos ser un referente en la promoción de destinos turísticos emergentes y en
-                    la creación de experiencias únicas que destaquen por su autenticidad.</p>
+                <h5 class="card-title">MISIÓN</h5>
+                <p class="card-text">
+                    Brindar experiencias turísticas organizadas, seguras y auténticas, 
+                    ofreciendo servicios de calidad que permitan a nuestros viajeros 
+                    descubrir la riqueza natural y cultural de nuestros destinos, promoviendo el 
+                    turismo responsable y generando experiencias memorables en cada viaje.
+                </p>
             </div>
         </div>
     </div>
@@ -18,12 +19,13 @@
     <div class="col-md-4 mb-4">
         <div class="card h-100 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">MISIÓN</h5>
-                <p class="card-text">Organizamos experiencias turísticas auténticas y de aventura en la región
-                    La Libertad, priorizando los principios de sostenibilidad y turismo responsable en los
-                    destinos que operamos. A través de nuestro equipo de trabajo buscamos brindar a nuestros
-                    excursionistas y aventureros la mejor calidad de servicio posible, enfocándonos en
-                    brindarles vivencias de valor, únicas y de alta calidad.</p>
+                <h5 class="card-title">VISIÓN</h5>
+                <p class="card-text">
+                    Ser una agencia de viajes referente en La Libertad y el norte del Perú, 
+                    reconocida por crear experiencias auténticas, innovadoras y memorables, 
+                    promoviendo el turismo responsable y sostenible, así como el descubrimiento 
+                    de destinos que conecten a las personas con la naturaleza, la cultura y la aventura.
+                </p>
             </div>
         </div>
     </div>
@@ -31,13 +33,13 @@
     <div class="col-md-4 mb-4">
         <div class="card h-100 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Objetivos</h5>
-                <p class="card-text">Descubrir y mostrar el potencial del Perú de una forma diferente,
-                    desarrollando tours de aventura y full days que inspiren a nuestros viajeros a lograr una
-                    conexión profunda con la naturaleza y los incentiven a salir de su zona de confort. En
-                    Outdoor Expeditions mantenemos la firme creencia que todo viaje deja huella, es así que
-                    priorizamos que cada aventura sea una oportunidad para aprender algo nuevo sobre nosotros
-                    mismos, sobre nuestro entorno y sobre los demás.</p>
+                <h5 class="card-title">OBJETIVOS</h5>
+                <p class="card-text">
+                    Impulsar el desarrollo turístico de La Libertad mediante experiencias 
+                    innovadoras y sostenibles que contribuyan al descubrimiento de nuevos 
+                    destinos, la valorización del patrimonio cultural y natural, y el crecimiento 
+                    de las comunidades locales.
+                </p>
             </div>
         </div>
     </div>

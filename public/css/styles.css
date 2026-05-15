@@ -18,7 +18,7 @@ body {
 /* --- Efecto Dinámico en el Navbar --- */
 .navbar {
     backdrop-filter: blur(15px);
-    background: rgba(0, 0, 0, 0.7) !important;
+    background: rgba(247, 243, 235, 0.2) !important;
     border-bottom: 1px solid var(--border-glass);
     transition: var(--transition-smooth);
     padding: 1rem 0;
@@ -27,7 +27,7 @@ body {
 
 .navbar.scrolled {
     padding: 0.6rem 0;
-    background: rgba(0, 0, 0, 0.95) !important;
+    background: rgba(238, 108, 17, 0.2) !important;
 }
 
 /* --- colores de bajo de los ling barra de navegacion --- */
@@ -68,13 +68,21 @@ body {
     width: 100%;
 }
 
+/* Hacer que el dropdown se abra al pasar el mouse */
+@media (min-width: 992px) {
+    .navbar .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0; /* Evita parpadeo al mover el mouse */
+    }
+}
+
 
 .hero {
     position: relative;
     height: 100vh;
     /* Degradado para mejorar legibilidad */
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                url('/imagenes/background.png') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), 
+                url('/imagenes/background/background.png') no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,8 +98,8 @@ body {
 @media (max-width: 768px) {
     .hero {
         /* Cambiamos a la imagen vertical para que no se vea borrosa */
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                          url('/imagenes/background-mobile.png');
+        background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), 
+                          url('/imagenes/background/background-mobile.webp');
         height: 80vh; /* Ajuste opcional para ver más contenido abajo */
     }
 
@@ -105,7 +113,7 @@ body {
 }
 
 .hero span{
-    color: #D90B1C;
+    color: #ffffff;
 }
 .hero h1 {
     font-size: clamp(1.8rem, 5vw, 3.5rem);
@@ -145,10 +153,10 @@ body {
     display: flex;
     gap: 15px;
 }
-
+/*estilos para el menu de iconos tarjetas*/
 .menu-item {
-    background-color: #600;
-    color: white;
+    background-color: rgb(238, 108, 17);
+    color: rgb(151, 164, 34);
     padding: 15px;
     text-align: center;
     width: 120px;

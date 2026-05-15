@@ -15,10 +15,10 @@ class homeController extends Controller
     public function home()
 {
     $rutas = Ruta::with('imagenes')->get();
-    $rutasTrekking = Ruta::with('imagenes')->where('tipo', 'Trekking')->get();
-    $rutasAventura = Ruta::with('imagenes')->where('tipo', 'Aventura')->get();
+    $rutasWeekend  = Ruta::with('imagenes')->where('tipo', 'Weekend')->get();
+    $rutasDiarios  = Ruta::with('imagenes')->where('tipo', 'Diarios')->get();
 
-    return view('paguinas.home', compact('rutasTrekking', 'rutasAventura', 'rutas'));
+    return view('paguinas.home', compact('rutasWeekend', 'rutasDiarios', 'rutas'));
 }
 
 public function rutasPorTipo($tipo)

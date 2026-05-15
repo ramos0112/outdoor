@@ -3,7 +3,7 @@
 
     <div class="d-flex justify-content-between mb-2">
         <span>Ruta:</span>
-        <span class="fw-bold">{{ $ruta->nombre_ruta }}</span>
+        <span class="fw-bold ">{{ $ruta->nombre_ruta }}</span>
     </div>
     <div class="d-flex justify-content-between mb-2">
         <span>Precio Regular:</span>

@@ -26,7 +26,7 @@
 
                     <div class="mb-3">
                         @php
-                            $tipos = ['Aventura', 'Trekking'];
+                            $tipos = ['Diarios', 'Weekend'];
                         @endphp
                         <label for="tipo{{ $ruta->id_ruta }}" class="form-label">Tipo</label>
                         <select name="tipo" id="tipo{{ $ruta->id_ruta }}" class="form-select" required>

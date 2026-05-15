@@ -20,16 +20,16 @@
 
 /* --- Tarjetas de Información --- */
 .info-card {
-    background: linear-gradient(145deg, #1a1a1a, #0a0a0a) !important;
+    background: linear-gradient(145deg, #F7F3EB, #E9E2D3) !important;
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-left: 4px solid #dc030c; /* Detalle dorado lateral */
+    border-left: 4px solid #fc6b14; 
     font-family: 'Open Sans', sans-serif;
     transition: var(--transition-smooth);
 }
 
 .info-card:hover {
-    border-left: 4px solid #28a745;
+    border-left: 4px solid #97a422;
     transform: scale(1.01);
 }
 
@@ -104,7 +104,7 @@
 
 /* Aplicar al contenedor bg-dark de la derecha */
 .booking-container {
-    background: linear-gradient(145deg, #1a1a1a, #0a0a0a) !important;
+    background: linear-gradient(145deg, #F7F3EB, #E9E2D3) !important;
     border: 1px solid #333;
     position: sticky;
     top: 100px; /* Se queda fijo al hacer scroll */

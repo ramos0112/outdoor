@@ -1,16 +1,18 @@
 @extends('layouts.app')
 
 @section('title', 'Blog')
-<section class="hero text-center">
-        <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
-
-
-    <h1 class="text-3xl font-bold sm:text-2xl md:text-4xl">
-        Empieza a descubrir <span>La Libertad</span>
+<link rel="stylesheet" href="{{ asset('css/blog.css') }}">
+ 
+<section class="hero hero-nosotros text-center">
+    <h1>
+    Descubre quiénes somos
+    <span>y por qué elegimos</span>
     </h1>
-    <p>Tours Full Days todos los días</p>
+    <p>
+    Descubre la historia, esencia y pasión que nos inspira
+    a mostrar los paisajes más increíbles del norte peruano.
+    </p>
 </section>
-<!-- Espaciador (opcional si hay más contenido abajo) -->
 <section class="bg-dark py-3">
     <div class="container d-flex justify-content-center"></div>
 </section>
@@ -20,8 +22,9 @@
         <div class="container">
             <h2>Descubre Trujillo con Nuestra Agencia de Turismo</h2>
             <p class="lead text-center">
-                Somos una agencia de turismo especializada en brindar experiencias inolvidables en la ciudad de Trujillo y
-                sus alrededores. Conoce la historia, cultura y naturaleza de esta joya del norte peruano.
+                En Ayni Forest creemos que viajar es mucho más que conocer un destino;
+                es conectar con la naturaleza, descubrir nuevas experiencias y crear
+                recuerdos que permanecen para siempre.
             </p>
         </div>
     </section>
@@ -30,19 +33,38 @@
         <div class="container">
             <div class="row align-items-center mb-5">
                 <div class="col-md-6">
-                    <img src="{{ asset('imagenes/historia.png')}}" 
+                    <img src="{{ brandingImage('historia_url') }}" 
                         class="img-fluid rounded shadow" alt="Turismo Trujillo" title="Historia">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" style="text-align: justify;">
                     <h2>Nuestra Historia</h2>
                     <p>
-                        Somos una agencia con más de 10 años de experiencia en el sector turístico, ofreciendo tours
-                        personalizados, excursiones full day y paquetes culturales. Nuestro equipo está conformado por guías
-                        locales, apasionados por mostrar lo mejor de Trujillo.
+                        Ayni Forest nace con el propósito de diversificar la oferta turística de la 
+                        región La Libertad y mostrar destinos que durante mucho tiempo fueron poco 
+                        promovidos fuera de Trujillo. La idea surge gracias a un grupo de profesionales 
+                        de la carrera de Turismo, quienes identificaron la necesidad de crear experiencias 
+                        diferentes, con rutas mejor organizadas, atención más cercana y guías calificados que 
+                        permitieran a más personas descubrir la riqueza natural y cultural del norte peruano.
                     </p>
                     <p>
-                        Contamos con transporte seguro, guías certificados y un profundo conocimiento de los destinos
-                        históricos como Chan Chan, Huaca del Sol y la Luna, y la mágica playa de Huanchaco.
+                        Nuestros primeros viajes comenzaron explorando destinos como Cascas, 
+                        Salpo y Santiago de Chuco, lugares que en ese momento eran poco conocidos 
+                        y que hoy forman parte de las rutas más representativas y solicitadas por 
+                        nuestros viajeros. Gracias a ello, hemos logrado posicionar nuevos destinos 
+                        turísticos y conectar a más personas con experiencias auténticas y memorables
+                    </p>
+                    <p>
+                        El nombre Ayni Forest nace de la unión de dos conceptos que representan nuestra esencia:
+                         “Ayni”, palabra quechua relacionada con reciprocidad, comunidad y conexión; y “Forest”,
+                          que representa la naturaleza, aventura y libertad de explorar nuevos paisajes. Con el 
+                          paso del tiempo, Ayni Forest ha logrado posicionarse en plataformas como TikTok, Instagram 
+                          y Facebook gracias a sus nuevas propuestas, experiencias dinámicas y contenido que inspira 
+                          a más personas a viajar y descubrir nuevos destinos
+                    </p>
+                    <p>
+                        Hoy seguimos trabajando para crear experiencias auténticas, organizadas y llenas de buena energía, 
+                        promoviendo el turismo responsable y haciendo que cada viaje se convierta en un recuerdo 
+                        inolvidable.
                     </p>
                 </div>
             </div>

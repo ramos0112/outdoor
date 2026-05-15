@@ -21,6 +21,7 @@ use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ConfiguracionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ActivityLogController;
 
@@ -42,6 +43,15 @@ Route::get('/rutas/{id_ruta}/descripcion', [HomeController::class, 'mostrarDescr
 
 // Formulario de reserva
 Route::get('/reserva/{ruta}', [ReservaClienteController::class, 'formulario'])->name('reserva.formulario');
+
+// Renta de autos estática
+Route::get('/renta-cars', function () {
+    return view('rentacars.index');
+})->name('rentacars.index');
+
+Route::get('/renta-cars/{slug}', function ($slug) {
+    return view('rentacars.show', compact('slug'));
+})->where('slug', '[A-Za-z0-9\-]+')->name('rentacars.show');
 
 // Procesar reserva
 Route::post('/reserva', [ReservaClienteController::class, 'store'])->name('reservas.store');
@@ -66,6 +76,10 @@ Route::middleware([
     
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/Profile', [UsuarioController::class, 'Perfil']);
+
+    // ** Administración de Configuración (White Label) **
+    Route::get('/configuracion', [ConfiguracionController::class, 'edit'])->name('configuracion.edit');
+    Route::put('/configuracion', [ConfiguracionController::class, 'update'])->name('configuracion.update');
 
     // ** Gestión de reservas **
     Route::resource('gestionreservas', ReservaController::class);
