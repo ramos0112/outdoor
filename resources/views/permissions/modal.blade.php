@@ -2,8 +2,9 @@
     <div class="modal fade" id="modalAsignarPermisos" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <form action="{{ route('permisos.update') }}" method="POST">
+                <form id="formPermisos" method="POST">
                     @csrf
+                    @method('PUT')
                     <input type="hidden" name="role_id" id="role_id">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalLabel">Asignar Permisos al Rol</h5>

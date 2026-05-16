@@ -115,44 +115,66 @@ class ConfiguracionController extends Controller
      */
     private function optimizarImagen($archivo, $nombre, $ancho, $alto)
     {
+        // Asegurarse de que exista el directorio en el disco 'public'
         $directorio = 'public/branding';
-        if (!Storage::exists($directorio)) { Storage::makeDirectory($directorio); }
-
-        $ruta_temporal = $archivo->getRealPath();
-        $tipo_imagen = $archivo->getMimeType();
-
-        // Crear recurso según tipo
-        switch ($tipo_imagen) {
-            case 'image/jpeg': $img_original = imagecreatefromjpeg($ruta_temporal); break;
-            case 'image/png':  $img_original = imagecreatefrompng($ruta_temporal); break;
-            case 'image/webp': $img_original = imagecreatefromwebp($ruta_temporal); break;
-            default:
-                $nombre_archivo = $nombre . '_' . time() . '.' . $archivo->getClientOriginalExtension();
-                return $archivo->storeAs('branding', $nombre_archivo, 'public');
+        if (!Storage::exists($directorio)) {
+            Storage::makeDirectory($directorio);
         }
 
-        $ancho_orig = imagesx($img_original);
-        $alto_orig = imagesy($img_original);
-        $ratio = min($ancho / $ancho_orig, $alto / $alto_orig);
-        $n_ancho = (int)($ancho_orig * $ratio);
-        $n_alto = (int)($alto_orig * $ratio);
+        // Si GD no está disponible o las funciones faltan, no intentar optimizar
+        if (!function_exists('imagecreatefromjpeg') || !function_exists('imagewebp')) {
+            $nombre_archivo = $nombre . '_' . time() . '.' . $archivo->getClientOriginalExtension();
+            return $archivo->storeAs('branding', $nombre_archivo, 'public');
+        }
 
-        $img_res = imagecreatetruecolor($n_ancho, $n_alto);
+        try {
+            $ruta_temporal = $archivo->getRealPath();
+            $tipo_imagen = $archivo->getMimeType();
 
-        // Transparencia
-        imagealphablending($img_res, false);
-        imagesavealpha($img_res, true);
+            // Crear recurso según tipo (fallback a storeAs si el tipo no se reconoce)
+            switch ($tipo_imagen) {
+                case 'image/jpeg': $img_original = imagecreatefromjpeg($ruta_temporal); break;
+                case 'image/png':  $img_original = imagecreatefrompng($ruta_temporal); break;
+                case 'image/webp': $img_original = imagecreatefromwebp($ruta_temporal); break;
+                default:
+                    $nombre_archivo = $nombre . '_' . time() . '.' . $archivo->getClientOriginalExtension();
+                    return $archivo->storeAs('branding', $nombre_archivo, 'public');
+            }
 
-        imagecopyresampled($img_res, $img_original, 0, 0, 0, 0, $n_ancho, $n_alto, $ancho_orig, $alto_orig);
+            $ancho_orig = imagesx($img_original);
+            $alto_orig = imagesy($img_original);
+            $ratio = min($ancho / $ancho_orig, $alto / $alto_orig);
+            $n_ancho = (int)($ancho_orig * $ratio);
+            $n_alto = (int)($alto_orig * $ratio);
 
-        $nombre_final = $nombre . '_' . time() . '.webp';
-        $ruta_final = storage_path('app/public/branding/' . $nombre_final);
-        
-        imagewebp($img_res, $ruta_final, 80);
+            $img_res = imagecreatetruecolor($n_ancho, $n_alto);
 
-        imagedestroy($img_original);
-        imagedestroy($img_res);
+            // Transparencia
+            imagealphablending($img_res, false);
+            imagesavealpha($img_res, true);
 
-        return 'branding/' . $nombre_final;
+            imagecopyresampled($img_res, $img_original, 0, 0, 0, 0, $n_ancho, $n_alto, $ancho_orig, $alto_orig);
+
+            $nombre_final = $nombre . '_' . time() . '.webp';
+            $ruta_final = storage_path('app/public/branding/' . $nombre_final);
+
+            // Guardar como webp (si falla, fallback a storeAs)
+            if (!@imagewebp($img_res, $ruta_final, 80)) {
+                // Liberar recursos
+                imagedestroy($img_original);
+                imagedestroy($img_res);
+                $nombre_archivo = $nombre . '_' . time() . '.' . $archivo->getClientOriginalExtension();
+                return $archivo->storeAs('branding', $nombre_archivo, 'public');
+            }
+
+            imagedestroy($img_original);
+            imagedestroy($img_res);
+
+            return 'branding/' . $nombre_final;
+        } catch (\Throwable $e) {
+            // Si ocurre cualquier error en el proceso de optimización, guardar el archivo original
+            $nombre_archivo = $nombre . '_' . time() . '.' . $archivo->getClientOriginalExtension();
+            return $archivo->storeAs('branding', $nombre_archivo, 'public');
+        }
     }
 }

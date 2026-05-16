@@ -43,7 +43,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a href="/">
-                <img src="{{ brandingImage('logo_url', 'imagenes/placeholder.png') }}" height="48"
+                <img src="{{ brandingImage('logo_url', 'imagenes/logo.webp') }}" height="48"
                     alt="{{ $branding->nombre_empresa }}">
             </a>
 

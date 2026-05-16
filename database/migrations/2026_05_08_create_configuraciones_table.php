@@ -28,84 +28,55 @@ return new class extends Migration
             $table->id('id_configuracion'); 
             
             // Logo principal (para navbar, header)
-            $table->string('logo_url', 500)->nullable()
-                ->comment('Logo principal - ubicación: /public/imagenes/logo.png');
+            $table->string('logo_url', 500)->nullable();
             
             // Logo con animación (para hero section)
-            $table->string('logo_animation_url', 500)->nullable()
-                ->comment('Logo con animación - ubicación: /public/imagenes/logo_animation.png');
-            
-            // Logo alternativo (para footer, blanco/oscuro)
-            $table->string('logo_alt_url', 500)->nullable()
-                ->comment('Logo alternativo para fondo oscuro - ubicación: /public/imagenes/logo_alt.png');
-
-                // fondo de login
-            $table->string('background_login_url', 500)->nullable()
-                ->comment('Fondo para página de login -ubicación: /public/imagenes/background_login.png');
-            
+            $table->string('logo_animation_url', 500)->nullable();
+             // Logo alternativo (para footer, blanco/oscuro)
+            $table->string('logo_alt_url', 500)->nullable();
+            // fondo de login
+            $table->string('background_login_url', 500)->nullable();
             // Imagen de favicon
-            $table->string('favicon_url', 500)->nullable()
-                ->comment('Favicon del sitio - ubicación: /public/favicon.ico');
-            
+            $table->string('favicon_url', 500)->nullable();
             // Imagen de hero background (background principal)
-            $table->string('hero_background_url', 500)->nullable()
-                ->comment('Background para hero section- ubicación: /public/imagenes/hero_background.png');
-
+            $table->string('hero_background_url', 500)->nullable();
                 // Imagen de hero background (background movil)
-            $table->string('background_mobile_url', 500)->nullable()
-                ->comment('Background para hero section -ubicación: /public/imagenes/background_mobile.png');
-
+            $table->string('background_mobile_url', 500)->nullable();
                 // Imagen nosotros ( Nosotros)
-            $table->string('nosotros_url', 500)->nullable()
-                ->comment('nosotros -ubicación: /public/imagenes/nosotros.png');
-
+            $table->string('nosotros_url', 500)->nullable();
             // Imagen certificación ( Nosotros)
-            $table->string('certificacion_url', 500)->nullable()
-                ->comment('certificación -ubicación: /public/imagenes/certificacion.png');
-            
+            $table->string('certificacion_url', 500)->nullable();
                 // Imagen historia ( Nosotros)
-            $table->string('historia_url', 500)->nullable()
-                ->comment('historia -ubicación: /public/imagenes/historia.png');
-
+            $table->string('historia_url', 500)->nullable();
             // Imagen de banner para redes sociales
-            $table->string('social_banner_url', 500)->nullable()
-                ->comment('Banner para redes sociales - ubicación: /public/imagenes/social_banner.png (1200x630)');
-            
+            $table->string('social_banner_url', 500)->nullable();            
             // ─────────────────────────────────────────────────────
             // COLORES HEXADECIMALES - IDENTIDAD CROMÁTICA
             // ─────────────────────────────────────────────────────
             
             // Color primario (rojo expediciones)
-            $table->string('color_primario', 7)->default('#dc030c')
-                ->comment('Color primario hex - Ej: #dc030c (rojo Outdoor)');
+            $table->string('color_primario', 7);
             
             // Color secundario (rojo (h1,y títulos secundarios)
-            $table->string('color_secundario', 7)->default('#b42a2f')
-                ->comment('Color secundario hex - Ej: #b42a2f (rojo)');
+            $table->string('color_secundario', 7);
             
             // Color terciario (Verde (botones  degrado y acentos secundarios))
-            $table->string('color_terciario', 7)->default('#2D5016')
-                ->comment('Color terciario hex - Ej: #2D5016 ');
+            $table->string('color_terciario', 7);
             
             // Color de acento (negro (botones degrados)
-            $table->string('color_acento', 7)->default('#302b29')
-                ->comment('Color de acento hex - Ej: #302b29 ');
+            $table->string('color_acento', 7);
             
             // Color de texto principal
-            $table->string('color_texto_primario', 7)->default('#333333')
-                ->comment('Color texto principal');
+            $table->string('color_texto_primario', 7);
             
             // Color de texto secundario
-            $table->string('color_texto_secundario', 7)->default('#666666')
-                ->comment('Color texto secundario');
+            $table->string('color_texto_secundario', 7);
             
             // Color de fondo (blanco por defecto)
-            $table->string('color_fondo', 7)->default('#FFFFFF')
-                ->comment('Color de fondo');
+            $table->string('color_fondo', 7);
             
             // Color de fondo alterno (gris claro)
-            $table->string('color_fondo_alterno', 7)->default('#F5F5F5')
-                ->comment('Color de fondo alterno');
+            $table->string('color_fondo_alterno', 7);
             
            
             // ─────────────────────────────────────────────────────
@@ -113,68 +84,55 @@ return new class extends Migration
             // ─────────────────────────────────────────────────────
             
             // Nombre de la empresa
-            $table->string('nombre_empresa', 255)->default('Outdoor Expeditions')
-                ->comment('Ej: "Outdoor Expeditions"');
+            $table->string('nombre_empresa', 255);
             
             // ─────────────────────────────────────────────────────
             // INFORMACIÓN DE CONTACTO
             // ─────────────────────────────────────────────────────
             
             // Email de contacto principal
-            $table->string('email_contacto', 255)->nullable()
-                ->comment('Ej: contacto@outdoorexpeditions.com');
+            $table->string('email_contacto', 255)->nullable();
             
             // Teléfono principal
-            $table->string('telefono_principal', 20)->nullable()
-                ->comment('Ej: +51987654321');
+            $table->string('telefono_principal', 20)->nullable();
             
             // Dirección física
-            $table->text('direccion_fisica')->nullable()
-                ->comment('Ej: Calle Principal 123, Lima, Perú');
+            $table->text('direccion_fisica')->nullable();
  
             // ─────────────────────────────────────────────────────
             // REDES SOCIALES
             // ─────────────────────────────────────────────────────
             
             // Facebook URL
-            $table->string('facebook_url', 500)->nullable()
-                ->comment('Ej: https://facebook.com/OutdoorExpeditions');
+            $table->string('facebook_url', 500)->nullable();
             
             // Instagram URL
-            $table->string('instagram_url', 500)->nullable()
-                ->comment('Ej: https://instagram.com/OutdoorExpeditions');
+            $table->string('instagram_url', 500)->nullable();
             
                 // YouTube URL
-            $table->string('youtube_url', 500)->nullable()
-                ->comment('Ej: https://youtube.com/@OutdoorExpeditions');
+            $table->string('youtube_url', 500)->nullable();
             
             // WhatsApp número (sin +)
-            $table->string('whatsapp_numero', 20)->nullable()
-                ->comment('Ej: 51987654321 (sin + ni espacios)');
+            $table->string('whatsapp_numero', 20)->nullable();
             
             // TikTok URL
-            $table->string('tiktok_url', 500)->nullable()
-                ->comment('Ej: https://tiktok.com/@outdoorexp');
+            $table->string('tiktok_url', 500)->nullable();
             
             // ─────────────────────────────────────────────────────
             // SEO Y METADATOS
             // ─────────────────────────────────────────────────────
             
             // Meta título para SEO
-            $table->string('meta_titulo', 60)->nullable()
-                ->comment('Meta title: máx 60 caracteres');
+            $table->string('meta_titulo', 60)->nullable();
             
             // Meta descripción para SEO
-            $table->string('meta_descripcion', 160)->nullable()
-                ->comment('Meta description: 150-160 caracteres');
+            $table->string('meta_descripcion', 160)->nullable();
             
             // Keywords para SEO
-            $table->string('meta_keywords', 255)->nullable()
-                ->comment('Keywords: "aventura, trekking, naturaleza"');
+            $table->string('meta_keywords', 255)->nullable();
             
             // Open Graph Image (para compartir en redes)
-            $table->string('og_image_url', 500)->nullable()
-                ->comment('Imagen para redes sociales: 1200x630px');
+            $table->string('og_image_url', 500)->nullable();
             
             // ─────────────────────────────────────────────────────
             // AUDITORÍA

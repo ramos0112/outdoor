@@ -48,13 +48,24 @@ class ImagenController extends Controller
             $url = "https://api.cloudinary.com/v1_1/" . env('CLOUDINARY_CLOUD_NAME') . "/image/upload";
 
             // 2. Enviamos la petición POST
-            $response = Http::attach(
-                'file', 
-                file_get_contents($file->getRealPath()), 
-                $file->getClientOriginalName()
-            )->post($url, [
-                'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
-            ]);
+                $timestamp = time();
+
+                $paramsToSign = "timestamp=$timestamp&upload_preset=" 
+                . env('CLOUDINARY_UPLOAD_PRESET') 
+                . env('CLOUDINARY_API_SECRET');
+
+                $signature = sha1($paramsToSign);
+
+                $response = Http::attach(
+                    'file',
+                    file_get_contents($file->getRealPath()),
+                    $file->getClientOriginalName()
+                )->post($url, [
+                    'api_key'       => env('CLOUDINARY_API_KEY'),
+                    'timestamp'     => $timestamp,
+                    'signature'     => $signature,
+                    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+                ]);
 
             if ($response->successful()) {
                 // 3. Extraemos la URL segura que nos da Cloudinary
@@ -106,8 +117,25 @@ class ImagenController extends Controller
             // B. Subir la nueva imagen (mismo código que usaste en store)
             $file = $request->file('imagen_archivo');
             $url_cloud = "https://api.cloudinary.com/v1_1/" . env('CLOUDINARY_CLOUD_NAME') . "/image/upload";
-            $response = Http::attach('file', file_get_contents($file->getRealPath()), $file->getClientOriginalName())
-                ->post($url_cloud, ['upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')]);
+            
+            $timestamp = time();
+
+            $paramsToSign = "timestamp=$timestamp&upload_preset=" 
+            . env('CLOUDINARY_UPLOAD_PRESET') 
+            . env('CLOUDINARY_API_SECRET');
+
+            $signature = sha1($paramsToSign);
+
+            $response = Http::attach(
+                'file',
+                file_get_contents($file->getRealPath()),
+                $file->getClientOriginalName()
+            )->post($url_cloud, [
+                'api_key'       => env('CLOUDINARY_API_KEY'),
+                'timestamp'     => $timestamp,
+                'signature'     => $signature,
+                'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+            ]);  
 
             if ($response->successful()) {
                 $url_final = $response->json()['secure_url'];

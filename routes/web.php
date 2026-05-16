@@ -106,7 +106,7 @@ Route::middleware([
     // ** Gestión de roles y permisos **
     Route::resource('roles', RoleController::class);
     Route::resource('permisos', PermissionController::class);
-    Route::post('/permisos/update', [PermissionController::class, 'update'])->name('permisos.update');
+    //Route::post('/permisos/update', [PermissionController::class, 'update'])->name('permisos.update');
 
     Route::get('/movilidad', [MovilidadReporteController::class, 'index'])->name('movilidad.reporte');
     Route::get('/movilidad-reporte/rutas', [MovilidadReporteController::class, 'rutasPorFecha']);
@@ -114,7 +114,6 @@ Route::middleware([
     Route::get('/movilidad-reporte/manifiesto', [MovilidadReporteController::class, 'manifiestoPorMovilidad']);
 
     Route::get('/logs', [ActivityLogController::class, 'index'])->name('logs.index');
-
 
 });
 

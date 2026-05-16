@@ -87,6 +87,8 @@
         function setRoleId(roleId, permisosJson) {
             $('#role_id').val(roleId);
 
+            $('#formPermisos').attr('action', '/permisos/' + roleId);
+
             // Limpiar todos los checks
             $('.permiso-checkbox').prop('checked', false);
 

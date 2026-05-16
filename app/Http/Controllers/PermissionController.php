@@ -48,24 +48,21 @@ class PermissionController extends Controller
         //
     }
 
-    public function update(Request $request)
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'role_id' => 'required|exists:roles,id',
             'permissions' => 'array',
             'permissions.*' => 'string|exists:permissions,name',
         ]);
 
-        // Buscar el rol con sus permisos actuales
-        $rol = Role::findOrFail($request->role_id);
+        $rol = Role::findOrFail($id);
 
-        // Permisos seleccionados (si no hay ninguno, se envía un array vacío)
         $permisosSeleccionados = $request->permissions ?? [];
 
-        // Sincronizar reemplaza todos los permisos actuales con los nuevos
         $rol->syncPermissions($permisosSeleccionados);
 
-        return redirect()->back()->with('success', 'Permisos actualizados correctamente para el rol.');
+        return redirect()->back()
+            ->with('success', 'Permisos actualizados correctamente.');
     }
 
     public function destroy(string $id)
