@@ -46,13 +46,14 @@ class InjectNoindexMeta
             $noindexMeta = $this->buildNoindexMeta();
             
             // Inyectar antes de </head>
+            // Inyectar antes de </head>
             if (strpos($content, '</head>') !== false) {
                 $content = str_replace(
                     '</head>',
                     $noindexMeta . "\n</head>",
-                    $content,
-                    $count = 1
+                    $content
                 );
+
                 $response->setContent($content);
             }
         }

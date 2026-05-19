@@ -14,6 +14,8 @@ class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
+    private const DEFAULT_ROLE = 'Usuario';
+
     /**
      * Create a newly registered user.
      *
@@ -34,8 +36,8 @@ class CreateNewUser implements CreatesNewUsers
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
-                // ✅ Asignar el rol por defecto al usuario
-                $user->assignRole('Usuario');
+                // ✅ Asegurar una única asignación de rol al registrar el usuario
+                $user->syncRoles([self::DEFAULT_ROLE]);
                 $this->createTeam($user);
             });
         });

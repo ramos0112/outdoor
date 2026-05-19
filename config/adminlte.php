@@ -333,6 +333,7 @@ return [
             'url' => 'configuracion',
             'icon' => 'far fa-fw fa-file',
             'label_color' => 'success',
+            'can' => 'permisos.ver',
              
         ],
 
