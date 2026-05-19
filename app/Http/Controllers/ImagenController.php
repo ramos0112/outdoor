@@ -17,17 +17,16 @@ class ImagenController extends Controller
         $this->middleware('can:imagenes.editar')->only(['edit', 'update']);
         $this->middleware('can:imagenes.eliminar')->only(['destroy']); 
     }
-    public function index()
+    public function index(Request $request, \App\Services\ImagenDataTableService $dataTableService)
     {
-    $imagenes = Imagen::with('ruta')
-        ->whereNotNull('url_imagen')
-        ->get();
+        if ($request->ajax()) {
+            return response()->json($dataTableService->procesar($request));
+        }
 
-    $rutas = Ruta::all();
-
-    return view('imagen.index', compact('imagenes', 'rutas'));
-
+        $rutas = \App\Models\Ruta::all();
+        return view('imagen.index', compact('rutas'));
     }
+
     public function create()
     {
         //
@@ -153,6 +152,7 @@ class ImagenController extends Controller
     public function destroy($id)
     {
         $imagen = Imagen::findOrFail($id);
+        
 
         // 1. Borrar de Cloudinary si es una URL de Cloudinary
         if (strpos($imagen->url_imagen, 'cloudinary.com') !== false) {

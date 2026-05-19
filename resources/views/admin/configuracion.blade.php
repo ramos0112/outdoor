@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Configuración | White Label')
 
@@ -215,3 +215,4 @@
         });
     </script>
 @endsection
+

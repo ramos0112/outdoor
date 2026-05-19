@@ -2,6 +2,12 @@
 
 @section('title', 'Rutas')
 
+@section('meta_description', isset($tipo) ? ucfirst($tipo) . ' — Explora nuestros tours y paquetes desde Trujillo. Reserva en línea y descubre La Libertad.' : 'Explora nuestras rutas y tours desde Trujillo. Reserva online con Ayniforest.')
+@section('canonical_url', url()->current())
+@section('og_title', 'Rutas - Ayniforest')
+@section('og_description', isset($tipo) ? ucfirst($tipo) . ' desde Trujillo. Encuentra paquetes, fechas y reserva.' : 'Explora nuestras rutas y tours desde Trujillo.')
+@section('og_image', asset('imagenes/og-image.jpg'))
+
 @section('plantilla')
     <link rel="stylesheet" href="{{ asset('css/paquetes.css') }}">
     @php

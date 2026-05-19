@@ -17,12 +17,15 @@ class ServicioIncluidoController extends Controller
         $this->middleware('can:servicios.eliminar')->only(['destroy']);
     }
 
-    public function index()
+
+    public function index(Request $request, \App\Services\ServicioIncluidoDataTableService $dataTableService)
     {
-        //
-        $servicios = ServicioIncluido::with('ruta')->get();
-        $rutas = Ruta::all();
-        return view('serviciosincluidos.index', compact('servicios', 'rutas'));
+        if ($request->ajax()) {
+            return response()->json($dataTableService->procesar($request));
+        }
+
+        $rutas = \App\Models\Ruta::all();
+        return view('serviciosincluidos.index', compact('rutas'));
     }
 
     public function create()
@@ -80,8 +83,11 @@ class ServicioIncluidoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ServicioIncluido $servicioIncluido)
-    {
-        //
-    }
+    public function destroy($id)
+{
+    $servicio = ServicioIncluido::findOrFail($id);
+    $servicio->delete();
+
+    return redirect()->route('servicios.index')->with('success', 'Servicio eliminado correctamente');
+}
 }

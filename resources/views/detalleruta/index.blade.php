@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Detalle de Rutas')
 
@@ -146,3 +146,4 @@
         });
     </script>
 @stop
+

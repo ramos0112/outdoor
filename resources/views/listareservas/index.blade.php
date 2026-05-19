@@ -1,5 +1,5 @@
 <!-- resources/views/listareservas/index.blade.php -->
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Reservas')
 
@@ -42,53 +42,6 @@
                             <th>ESTADO</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($listareservas as $listareserva)
-                            <tr>
-                                <td>{{ $listareserva->id_reserva }}</td>
-                                <td>{{ $listareserva->fechaDisponible->ruta->nombre_ruta ?? 'Sin ruta' }}</td>
-                                <td>
-                                    @foreach ($listareserva->movilidads as $movilidad)
-                                        {{ $movilidad->conductor ?? 'Sin placa' }}<br>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @foreach ($listareserva->movilidads as $movilidad)
-                                        @foreach ($movilidad->guias as $guia)
-                                            {{ $guia->nombre }} {{ $guia->apellido }}<br>
-                                        @endforeach
-                                    @endforeach
-                                </td>
-
-                                <td class="text-left">
-                                    @foreach ($listareserva->clientes as $cliente)
-                                        • {{ $cliente->nombre }} {{ $cliente->apellido }}<br>
-                                    @endforeach
-                                </td>
-
-                                <td>
-                                    @foreach ($listareserva->clientes as $cliente)
-                                        {{ $cliente->numero_documento }}<br>
-                                    @endforeach
-                                </td>
-
-                                <td>{{ \Carbon\Carbon::parse($listareserva->fecha_reserva)->format('d/m/Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($listareserva->fechaDisponible->fecha ?? null)->format('d/m/Y') }}
-                                </td>
-                                <td>{{ $listareserva->cantidad_personas }}</td>
-
-                                <td class="font-weight-bold">S/. {{ number_format($listareserva->precio_total, 2) }}</td>
-                                <td class="text-danger">S/. {{ number_format($listareserva->saldo, 2) }}</td>
-
-                                <td>
-                                    <span
-                                        class="badge {{ $listareserva->estado == 'Pagado' ? 'badge-success' : 'badge-warning' }}">
-                                        {{ strtoupper($listareserva->estado) }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -155,20 +108,20 @@
     <script>
         $(document).ready(function() {
             /// ================= DATATABLE =================
+            // ================= DATATABLE SERVER-SIDE =================
             let tabla = $('#reservasTable').DataTable({
-                dom: 'Blfrtip',
-                buttons: [{
-                        extend: 'excelHtml5',
-                        title: 'Reporte_Reservas'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'REPORTE RESERVAS OUTDOOR',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL'
-                    },
-                    {
-                        extend: 'print',
+                processing: true,
+                serverSide: true, // 👈 ACTIVAMOS EL MODO SERVIDOR
+                ajax: {
+                    url: "{{ route('listareservas.index') }}", // Llama al mismo método index del controlador
+                    type: 'GET'
+                },
+                dom: 'Blfrtip', // Devolvemos la 'l' y la 'f' para que aparezcan los filtros nativos
+                buttons: [
+                    { extend: 'excelHtml5', title: 'Reporte_Reservas' },
+                    { extend: 'pdfHtml5', title: 'REPORTE RESERVAS OUTDOOR', orientation: 'landscape', pageSize: 'LEGAL' },
+                    { 
+                        extend: 'print', 
                         title: 'LISTA DE RESERVAS',
                         customize: function(win) {
                             $(win.document.body).find('h1').css('text-align', 'center');
@@ -180,12 +133,12 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
                 },
                 paging: true,
-                ordering: true,
+                ordering: false, // Mantenemos desactivado el ordenamiento JS para respetar el orden descendente del servidor
                 searching: true,
                 responsive: true,
                 autoWidth: false,
-                order: [
-                    [0, 'desc']
+                columnDefs: [
+                    { targets: [4], className: 'text-left' } // Alinea la columna de clientes a la izquierda
                 ]
             });
 
@@ -257,3 +210,4 @@
     </script>
 
 @stop
+

@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Historial de Actividad')
 
@@ -188,3 +188,4 @@
         }
     </script>
 @stop
+

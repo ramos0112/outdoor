@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LugarVisitar;
+use App\Services\LugarVisitarDataTableService;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
 
@@ -16,12 +17,14 @@ class LugarVisitarController extends Controller
         $this->middleware('can:lugares.editar')->only(['edit', 'update']);
         $this->middleware('can:lugares.eliminar')->only(['destroy']);
     }
-    public function index()
+    public function index(Request $request, LugarVisitarDataTableService $dataTableService)
     {
-        //
-        $lugares = LugarVisitar::with('ruta')->get();
-        $rutas = Ruta::all();
-        return view('lugaresvisitar.index', compact('lugares', 'rutas'));
+        if ($request->ajax()) {
+            return response()->json($dataTableService->procesar($request));
+        }
+
+        $rutas = Ruta::all(); // Necesario para el modal de 'crear'
+        return view('lugaresvisitar.index', compact('rutas'));
     }
 
     public function create()
@@ -76,8 +79,11 @@ class LugarVisitarController extends Controller
         return redirect()->route('lugares.index')->with('success', 'Lugar actualizado exitosamente');
     }
 
-    public function destroy(LugarVisitar $lugarVisitar)
+    public function destroy($id)
     {
-        //
+        $lugar = LugarVisitar::findOrFail($id);
+        $lugar->delete();
+
+        return redirect()->route('lugares.index')->with('success', 'Lugar eliminado correctamente');
     }
 }

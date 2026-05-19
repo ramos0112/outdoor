@@ -1,20 +1,47 @@
 <!-- resources/views/layouts/app.blade.php -->
 @php
     $branding = \App\Models\Configuracion::obtener();
+    // Valores por defecto para SEO
+    $defaultTitle = $branding->nombre_empresa ?? 'Ayniforest | Agencia de Viajes y Turismo en Trujillo, Perú';
+    $defaultDescription = $branding->meta_descripcion ?? 'Tours y Full Days en La Libertad, Trujillo. Descubre experiencias turísticas auténticas con Ayniforest, agencia especializada en aventura y cultura.';
+    $defaultImage = $branding->og_image_url ?? asset('imagenes/og-image.jpg');
+    $canonicalUrl = url()->current();
 @endphp
 
 <!DOCTYPE html>
 <html lang="es">
-
+ 
 <head>
+    <!-- Meta etiquetas básicas -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ $branding->meta_descripcion ?? 'Tours de aventura' }}">
-    <meta name="keywords" content="{{ $branding->meta_keywords ?? 'aventura, tours' }}">
-    <meta property="og:image" content="{{ $branding->og_image_url ?? asset('imagenes/og-image.jpg') }}">
-
-    <title>@yield('title', $branding->nombre_empresa ?? 'Dashboard')</title>
+    <meta name="robots" content="@yield('meta_robots', 'index, follow')">
+    
+    <!-- Título y descripción dinámicos -->
+    <title>@yield('title', $defaultTitle)</title>
+    <meta name="description" content="@yield('meta_description', $defaultDescription)">
+    <meta name="keywords" content="@yield('meta_keywords', $branding->meta_keywords ?? 'tours, viajes, agencia de viajes, Trujillo, La Libertad, aventura')">
+    
+    <!-- Open Graph - Redes Sociales -->
+    <meta property="og:title" content="@yield('og_title', $defaultTitle)">
+    <meta property="og:description" content="@yield('og_description', $defaultDescription)">
+    <meta property="og:image" content="@yield('og_image', $defaultImage)">
+    <meta property="og:url" content="@yield('og_url', $canonicalUrl)">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:locale" content="es_PE">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('twitter_title', $defaultTitle)">
+    <meta name="twitter:description" content="@yield('twitter_description', $defaultDescription)">
+    <meta name="twitter:image" content="@yield('twitter_image', $defaultImage)">
+    
+    <!-- Enlace canónico -->
+    <link rel="canonical" href="@yield('canonical_url', $canonicalUrl)">
+    
+    <!-- Favicon -->
     <link rel="icon" href="{{ brandingImage('favicon_url', 'favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ brandingImage('favicon_url', 'favicon.ico') }}">
 
     <!-- Enlace a Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">

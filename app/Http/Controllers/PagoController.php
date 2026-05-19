@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pago;
 use App\Models\Reserva;
+use App\Services\PagoDataTableService;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -16,15 +17,15 @@ class PagoController extends Controller
         $this->middleware('can:pagos.editar')->only(['edit', 'update']);
         $this->middleware('can:pagos.eliminar')->only(['destroy']);
     }
-    public function index()
+    public function index(Request $request, PagoDataTableService $dataTableService)
     {
-        //
-        // Obtener todos los pagos, puedes hacer paginación si lo necesitas
-        $pagos = Pago::all();
+        if ($request->ajax()) {
+            return response()->json($dataTableService->procesar($request));
+        }
 
-        // Retornar la vista con los pagos
-        return view('pagos.index', compact('pagos'));
+        return view('pagos.index');
     }
+    
     public function store(Request $request)
     {
         $request->validate([

@@ -1,5 +1,5 @@
 <!--resources/views/movilidad_reporte.index.blade.php-->
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Manifiesto por Movilidad')
 
@@ -260,3 +260,4 @@
         });
     </script>
 @stop
+

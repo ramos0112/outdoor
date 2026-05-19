@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Movilidades')
 
@@ -150,3 +150,4 @@
         });
     </script>
 @stop
+

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    
+    {{-- PÁGINAS ESTÁTICAS PRINCIPALES --}}
+    
+    <!-- Página Principal / Home -->
+    <url>
+        <loc>https://ayniforestperu.com/</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Página Nosotros/Blog -->
+    <url>
+        <loc>https://ayniforestperu.com/blog</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Página de Tours Diarios -->
+    <url>
+        <loc>https://ayniforestperu.com/tours/diarios</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Página de Tours Fin de Semana -->
+    <url>
+        <loc>https://ayniforestperu.com/tours/weekend</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Página de Renta de Cars -->
+    <url>
+        <loc>https://ayniforestperu.com/renta-cars</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Página de Términos y Condiciones -->
+    <url>
+        <loc>https://ayniforestperu.com/terminos-condiciones</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Página de Políticas de Privacidad -->
+    <url>
+        <loc>https://ayniforestperu.com/politicas-privacidad</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    {{-- RUTAS DINÁMICAS DESDE LA BASE DE DATOS --}}
+    
+    @foreach(\App\Models\Ruta::where('activo', 1)->get() as $ruta)
+    <!-- Página de Tour: {{ $ruta->nombre_ruta }} -->
+    <url>
+        <loc>{{ route('rutas.descripcion', ['id_ruta' => $ruta->id_ruta]) }}</loc>
+        <lastmod>{{ $ruta->updated_at->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        
+        {{-- Incluir imagen principal del tour --}}
+        @if($ruta->imagenes->isNotEmpty())
+        <image:image>
+            <image:loc>{{ asset($ruta->imagenes->first()->url_imagen) }}</image:loc>
+            <image:title>{{ $ruta->nombre_ruta }}</image:title>
+        </image:image>
+        @endif
+    </url>
+    @endforeach
+
+    {{-- LUGARES A VISITAR --}}
+    
+    @foreach(\App\Models\LugarVisitar::where('activo', 1)->get() as $lugar)
+    <!-- Lugar a Visitar: {{ $lugar->nombre_lugar }} -->
+    <url>
+        <loc>https://ayniforestperu.com/destinos/{{ \Illuminate\Support\Str::slug($lugar->nombre_lugar) }}</loc>
+        <lastmod>{{ $lugar->updated_at->toAtomString() }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    @endforeach
+
+</urlset>
+
+{{-- 
+    INSTRUCCIONES PARA USAR ESTE SITEMAP:
+    
+    1. OPCIÓN A: Usar directamente como ruta con Blade
+       - Crear ruta en routes/web.php:
+         Route::get('/sitemap.xml', function () {
+             return response()->view('sitemap', [], 200)
+                 ->header('Content-Type', 'application/xml');
+         });
+       
+       - Mover este contenido a resources/views/sitemap.blade.php
+    
+    2. OPCIÓN B: Usar paquete Spatie (RECOMENDADO)
+       composer require spatie/laravel-sitemap
+       
+       En app/Console/Commands/GenerateSitemap.php:
+       ```php
+       namespace App\Console\Commands;
+       
+       use Spatie\Sitemap\Sitemap;
+       use Illuminate\Console\Command;
+       use App\Models\Ruta;
+       
+       class GenerateSitemap extends Command
+       {
+           protected $signature = 'sitemap:generate';
+           
+           public function handle()
+           {
+               $sitemap = Sitemap::create();
+               
+               // Páginas estáticas
+               $sitemap->add(\Spatie\Sitemap\Tags\Url::create('/')
+                   ->setPriority(1.0)
+                   ->setChangeFrequency('weekly'));
+               
+               $sitemap->add(\Spatie\Sitemap\Tags\Url::create('/blog')
+                   ->setPriority(0.8)
+                   ->setChangeFrequency('monthly'));
+               
+               // Rutas dinámicas
+               Ruta::where('activo', 1)->each(function (Ruta $ruta) use ($sitemap) {
+                   $sitemap->add(\Spatie\Sitemap\Tags\Url::create(
+                       route('rutas.descripcion', ['id_ruta' => $ruta->id_ruta])
+                   )
+                   ->setPriority(0.9)
+                   ->setChangeFrequency('weekly'));
+               });
+               
+               $sitemap->writeToFile(public_path('sitemap.xml'));
+               $this->info('Sitemap generated successfully!');
+           }
+       }
+       ```
+       
+       Luego ejecutar: php artisan sitemap:generate
+    
+    3. VERIFICAR:
+       - https://ayniforestperu.com/sitemap.xml
+       - Google Search Console → Sitemaps → Añadir sitemap
+
+    PRIORIDADES:
+    - 1.0 = Página principal (home)
+    - 0.9 = Páginas de tours/rutas individuales
+    - 0.8 = Categorías (Tours Diarios, Weekend), Nosotros
+    - 0.7 = Destinos/Lugares
+    - 0.5 = Términos, Políticas, etc.
+
+    FRECUENCIA DE CAMBIO:
+    - weekly = Cambia frecuentemente (rutas con precios dinámicos)
+    - monthly = Cambios ocasionales (destinos, lugares)
+    - yearly = Cambios raros (términos, políticas)
+--}}

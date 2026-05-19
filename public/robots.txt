@@ -1,2 +1,47 @@
+# Robots.txt para Ayniforest - Agencia de Viajes en Trujillo, Perú
+# https://ayniforestperu.com
+
+# Permitir a todos los bots indexar la web pública
 User-agent: *
-Disallow:
+Allow: /
+Allow: /sitemap.xml
+Allow: /css/
+Allow: /js/
+Allow: /imagenes/
+Allow: /storage/
+
+# Bloquear el panel administrativo completamente
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /dashboard
+Disallow: /panel
+
+# Bloquear rutas de autenticación
+Disallow: /login
+Disallow: /register
+Disallow: /password/*
+Disallow: /forgot-password
+Disallow: /reset-password
+
+# Bloquear procesos sensibles de pago y checkout
+Disallow: /checkout
+Disallow: /carrito
+Disallow: /mercadopago*
+Disallow: /payment*
+Disallow: /api/
+Disallow: /reserva/procesar
+Disallow: /reserva/confirmar
+
+# Bloquear rutas internas/de debug
+Disallow: /telescope
+Disallow: /horizon
+Disallow: /logs
+Disallow: /*.json
+Disallow: /?*
+
+# Sitemap principal
+Sitemap: https://ayniforestperu.com/sitemap.xml
+
+# Política de crawling
+Crawl-delay: 1
+Request-rate: 30/60

@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\FechaDisponible;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ConfirmacionReserva;
+use App\Services\ReservaDataTableService;
 
 class ListarReservasController extends Controller
 {
@@ -26,19 +28,18 @@ class ListarReservasController extends Controller
         $this->middleware('can:reservas.eliminar')->only(['destroy']);
     }
 
-    public function index()
+    public function index(Request $request, ReservaDataTableService $dataTableService)
     {
-        // Obtener todas las rutas
-        $rutas = Ruta::all();
+        // Si la petición es AJAX, el servicio hace todo el trabajo pesado y responde de inmediato
+        if ($request->ajax()) {
+            return response()->json($dataTableService->procesar($request));
+        }
 
-        // Obtener todas las movilidades con capacidad disponible
+        // Carga inicial limpia para la vista
+        $rutas = Ruta::all();
         $movilidades = Movilidad::where('estado', 'Disponible')->where('capacidad', '>', 0)->get();
 
-        // Obtener todas las reservas con sus relaciones
-        $listareservas = Reserva::with(['fechaDisponible.ruta', 'clientes', 'movilidads.guias'])->get();
-
-        // Pasar las reservas, rutas y movilidades a la vista
-        return view('listareservas.index', compact('listareservas', 'rutas', 'movilidades'));
+        return view('listareservas.index', compact('rutas', 'movilidades'));
     }
 
 
@@ -176,15 +177,22 @@ class ListarReservasController extends Controller
 
             // Confirmación de la reserva por correo
             DB::commit();
-            Mail::to($cliente->email)->send(new ConfirmacionReserva(
-                $cliente,
-                $reserva,
-                $ruta,
-                $reserva->fechaDisponible
-            ));
-            
-
+            try {
+                Mail::to($cliente->email)->send(new ConfirmacionReserva(
+                    $cliente,
+                    $reserva,
+                    $ruta,
+                    $reserva->fechaDisponible
+                ));
+            } catch (\Throwable $e) {
+                Log::error('Error enviando confirmación de reserva: ' . $e->getMessage(), [
+                    'cliente_id' => $cliente->id_cliente,
+                    'reserva_id' => $reserva->id_reserva,
+                    'email' => $cliente->email,
+                ]);
+            } 
             return redirect()->route('listareservas.index')->with('success', 'Reserva registrada correctamente.');
+            
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Error al guardar la reserva: ' . $e->getMessage());

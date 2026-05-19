@@ -13,18 +13,18 @@ class UserSeeder extends Seeder
         // Crear el usuario admin
         $admin = User::create([
             'name' => 'Admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'ayniforestperu@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('admin123'),
+            'password' => Hash::make('Ayni_2026-Fores7'),
         ]);
         $admin->assignRole('Admin');
 
         // Crear un usuario con rol Vendedor
         $vendedor = User::create([
             'name' => 'vendedor',
-            'email' => 'vendedor@gmail.com',
+            'email' => 'Aynivendedor@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('vendedor123'),
+            'password' => Hash::make('20.Vendedor.26'),
         ]);
         $vendedor->assignRole('Vendedor');
 

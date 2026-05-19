@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Guias')
 
@@ -88,3 +88,4 @@
         });
     </script>
 @stop
+

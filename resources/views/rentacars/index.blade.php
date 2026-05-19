@@ -2,6 +2,12 @@
 
 @section('title', 'Renta de Autos')
 
+@section('meta_description', 'Alquila movilidades turísticas en La Libertad: vans, sprinters y buses para excursiones y eventos. Reserva fácil con Ayniforest.')
+@section('canonical_url', url()->current())
+@section('og_title', 'Alquiler de Movilidades - Ayniforest')
+@section('og_description', 'Flota moderna para viajes, excursiones y eventos. Opciones de 6 a 50 pasajeros.')
+@section('og_image', asset('imagenes/og-image.jpg'))
+
 @section('head')
 <link rel="stylesheet" href="{{ asset('css/rentacars.css?v=' . time()) }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">

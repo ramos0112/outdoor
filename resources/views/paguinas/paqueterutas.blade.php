@@ -10,7 +10,7 @@
                     
                     default => ['descripcion' => 'Explora todas las rutas disponibles desde Trujillo',],
                 };
-            @endphp
+            @endphp 
             {{ $explora['descripcion'] }}
         </h2>
         <section class="packages-grid">

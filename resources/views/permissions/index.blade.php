@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Asignar Permisos a Roles')
 
@@ -118,3 +118,4 @@
         }
     </script>
 @stop
+

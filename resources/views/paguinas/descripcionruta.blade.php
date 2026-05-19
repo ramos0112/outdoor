@@ -1,7 +1,45 @@
 <!-- resources/views/paguinas/descripcionruta.blade.php -->
 @extends('layouts.app')
 
-@section('title', 'descripcionruta de rutas')
+@section('title')
+    {{ $ruta->nombre_ruta }} | Tour desde Trujillo - Ayniforest
+@endsection
+
+@section('meta_description')
+    Reserva el tour {{ $ruta->nombre_ruta }} desde Trujillo. Full Day en La Libertad con transporte, guía y experiencia local. Precio desde S/ {{ $ruta->precio_actual }}.
+@endsection
+
+@section('meta_keywords')
+    {{ strtolower($ruta->nombre_ruta) }}, tour Trujillo, paquetes turísticos La Libertad, Full Day Trujillo, reserva online
+@endsection
+
+@section('og_title')
+    {{ $ruta->nombre_ruta }} | Tour desde Trujillo
+@endsection
+
+@section('og_description')
+    Disfruta {{ $ruta->nombre_ruta }} con Ayniforest. Tour desde Trujillo en La Libertad con guía, transporte y comidas incluidas.
+@endsection
+
+@section('og_image')
+    {{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/og-image.jpg') }}
+@endsection
+
+@section('og_url')
+    {{ route('rutas.descripcion', ['id_ruta' => $ruta->id_ruta]) }}
+@endsection
+
+@section('canonical_url')
+    {{ route('rutas.descripcion', ['id_ruta' => $ruta->id_ruta]) }}
+@endsection
+
+@section('twitter_title')
+    {{ $ruta->nombre_ruta }} - Tour desde Trujillo
+@endsection
+
+@section('twitter_description')
+    {{ substr($ruta->descripcion_general, 0, 120) }}...
+@endsection
 
 @section('plantilla')
     <link rel="stylesheet" href="{{ asset('css/paquetes.css') }}">
@@ -10,7 +48,7 @@
     <section class="hero">
         <h1 class="text-3xl font-bold sm:text-2xl md:text-4xl">tour <span
                 class="hero-highligh">{{ $ruta->nombre_ruta }}</span>
-                
+                 
         </h1>
         <p class="text-white">{{ $ruta->descripcion_general }}</p>
     </section>
@@ -42,7 +80,7 @@
         <div class="row g-4">
             <div class="col-md-7 mb-4">
                 <div class="info-card p-4 rounded shadow-lg mb-4">
-                    <h1 class="h4 adventure-title mb-4 text-center text-uppercase">
+                    <h2 class="h4 adventure-title mb-4 text-center text-uppercase">
                         <i class="fas fa-info-circle me-2 text-warning"></i>
                         Detalles del tour 
                         <span class="hero-highligh">{{ $ruta->nombre_ruta }}</span>
@@ -191,6 +229,8 @@
 
     @include('paguinas.paqueterutas') <!-- Aquí ya estará disponible $rutas como colección -->
 @endsection
+
+    {!! \App\Helpers\SeoHelper::seoSchemaTouristAttraction($ruta) !!}
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

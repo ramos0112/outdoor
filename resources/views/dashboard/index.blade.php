@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Dashboard')
 
@@ -276,3 +276,4 @@
         });
     </script>
 @stop
+

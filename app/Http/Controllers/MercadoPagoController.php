@@ -199,12 +199,20 @@ class MercadoPagoController extends Controller
                 DB::commit();
                 Log::info('Pago exitoso:', ['payment_id' => $paymentId, 'external_reference' => $externalReference]);
 
-                Mail::to($cliente->email)->send(new ConfirmacionReserva(
-                    $cliente,
-                    $reserva,
-                    $ruta,
-                    $reserva->fechaDisponible
-                ));
+                try {
+                    Mail::to($cliente->email)->send(new ConfirmacionReserva(
+                        $cliente,
+                        $reserva,
+                        $ruta,
+                        $reserva->fechaDisponible
+                    ));
+                } catch (\Throwable $e) {
+                    Log::error('Error enviando confirmación de pago: ' . $e->getMessage(), [
+                        'cliente_id' => $cliente->id_cliente,
+                        'reserva_id' => $reserva->id_reserva,
+                        'email' => $cliente->email,
+                    ]);
+                }
 
                 // ✅ Limpiar sesión
                 session()->forget('datos_reserva');

@@ -2,6 +2,12 @@
 
 @section('title', 'Detalle de unidad')
 
+@section('meta_description', isset($slug) ? \Illuminate\Support\Str::title(str_replace('-', ' ', $slug)) . ' — alquiler de movilidades turísticas: características, capacidad y tarifas.' : 'Alquiler de movilidades turísticas. Información y reservas.')
+@section('canonical_url', url()->current())
+@section('og_title', isset($slug) ? \Illuminate\Support\Str::title(str_replace('-', ' ', $slug)) : 'Detalle de unidad')
+@section('og_description', isset($slug) ? \Illuminate\Support\Str::title(str_replace('-', ' ', $slug)) . ' — alquiler de movilidades turísticas: características, capacidad y tarifas.' : 'Alquiler de movilidades turísticas. Información y reservas.')
+@section('og_image', asset('imagenes/og-image.jpg'))
+
 @section('head')
 <link rel="stylesheet" href="{{ asset('css/rentacars.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">

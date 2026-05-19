@@ -1,23 +1,22 @@
-<!-- Modal de Confirmación -->
-<div class="modal fade" id="confirmDelete{{ $imagen->id_imagen }}" tabindex="-1"
-    aria-labelledby="confirmDeleteLabel{{ $imagen->id_imagen }}" aria-hidden="true">
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteLabel{{ $imagen->id_imagen }}">Confirmar Eliminación</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <h5 class="modal-title">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas eliminar esta imagen? Esta acción no se puede deshacer.
-            </div>
-            <div class="modal-footer">
-                <form action="{{ route('imagen.destroy', $imagen->id_imagen) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+            <form action="" method="POST" id="formDelete">
+                @csrf
+                @method('DELETE')
+                <div class="modal-body text-center">
+                    <p>¿Estás seguro de eliminar esta imagen de la ruta <strong id="delete_ruta_nombre"></strong>?</p>
+                    <img id="delete_img_preview" src="" width="150" class="img-thumbnail">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('title', 'Blog')
+
+@section('meta_description', 'Artículos, noticias y consejos sobre turismo en La Libertad y Trujillo. Encuentra guías, recomendaciones y novedades de Ayniforest.')
+@section('canonical_url', url()->current())
+@section('og_title', 'Blog - Ayniforest')
+@section('og_description', 'Noticias y artículos sobre rutas, turismo y consejos en La Libertad.')
+@section('og_image', asset('imagenes/logo.webp'))
 <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
  
 <section class="hero hero-nosotros text-center">
@@ -8,7 +14,7 @@
     Descubre quiénes somos
     <span>y por qué elegimos</span>
     </h1>
-    <p>
+    <p> 
     Descubre la historia, esencia y pasión que nos inspira
     a mostrar los paisajes más increíbles del norte peruano.
     </p>

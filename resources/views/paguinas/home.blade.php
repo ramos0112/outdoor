@@ -1,10 +1,23 @@
 <!-- resources/views/paguinas/home.blade.php -->
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Ayniforest | Agencia de Viajes y Turismo en Trujillo, Perú')
+
+@section('meta_description', 'Ayniforest ofrece paquetes turísticos y Full Days desde Trujillo. Descubre rutas de aventura y cultura en La Libertad con reserva segura y pagos por Mercado Pago.')
+
+@section('meta_keywords', 'tours Trujillo, paquetes turísticos Trujillo, Full Day La Libertad, agencia de viajes, reservas online')
+
+@section('og_title', 'Ayniforest - Tours y Full Days desde Trujillo')
+@section('og_description', 'Reserva tours y paquetes turísticos desde Trujillo en Ayniforest. Experiencias de naturaleza, cultura y aventura en La Libertad.')
+@section('og_image', asset('imagenes/og-image.jpg'))
+@section('og_url', url()->current())
+@section('canonical_url', url()->current())
+
+@section('twitter_title', 'Ayniforest - Agencia de Viajes en Trujillo')
+@section('twitter_description', 'Tours y paquetes turísticos desde Trujillo. Reserva Full Days y aventuras en La Libertad con Ayniforest.')
 
 @section('plantilla')
-
+ 
     <link rel="stylesheet" href="{{ asset('css/paquetes.css') }}">
 
     <!-- Sección Hero -->

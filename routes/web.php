@@ -43,7 +43,7 @@ Route::get('/rutas/{id_ruta}/descripcion', [HomeController::class, 'mostrarDescr
 
 // Formulario de reserva
 Route::get('/reserva/{ruta}', [ReservaClienteController::class, 'formulario'])->name('reserva.formulario');
-
+ 
 // Renta de autos estática
 Route::get('/renta-cars', function () {
     return view('rentacars.index');
@@ -67,6 +67,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    \App\Http\Middleware\InjectNoindexMeta::class,
 ])->group(function () {
 
     // Dashboard y perfil de usuario

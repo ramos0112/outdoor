@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Services\ClienteDataTableService;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -17,11 +18,15 @@ class ClienteController extends Controller
         $this->middleware('can:clientes.eliminar')->only(['destroy']);
     }
 
-    public function index()
+    public function index(Request $request, ClienteDataTableService $dataTableService)
     {
-        $clientes = Cliente::all();
-        return view('clientes.index', compact('clientes'));
+        if ($request->ajax()) {
+            return response()->json($dataTableService->procesar($request));
+        }
+
+        return view('clientes.index');
     }
+    
 
     public function create()
     {

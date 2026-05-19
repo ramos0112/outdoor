@@ -1,11 +1,10 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Pagos')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Lista de Pagos</h1>
-        <!--<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#create">Agregar Pago</button>-->
     </div>
 @stop
 
@@ -38,33 +37,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pagos as $pago)
-                            <tr>
-                                <td class="text-center">{{ $pago->id_pago }}</td>
-                                <td class="text-center">{{ $pago->id_reserva }}</td>
-                                <td class="text-center">{{ $pago->metodo_pago }}</td>
-                                <td class="text-center">{{ $pago->monto_pagado }}</td>
-                                <td class="text-center">{{ $pago->fecha_pago }}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#show{{ $pago->id_pago }}" title="Ver">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </button>
-                                    {{-- <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit{{ $pago->id_pago }}">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $pago->id_pago }}" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button> --}}
-                                </td>
-                            </tr>
-                            {{-- @include('pagos.edit') --}}
-                            @include('pagos.show')
-                        @endforeach
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
-            {{-- @include('pagos.create') --}}
+            
+            {{-- MODAL ÚNICO: Se incluye una sola vez fuera del bucle --}}
+            @include('pagos.show')
         </div>
     </div>
 @stop
@@ -84,17 +62,42 @@
     <script>
         $(document).ready(function() {
             $('#tablaPagos').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('pagos.index') }}",
+                    type: 'GET'
+                },
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
                 },
                 paging: true,
-                ordering: true,
+                ordering: false, // Mapeado por ID descendente en backend
                 searching: true,
                 responsive: true,
-                order: [
-                    [0, 'desc']
+                autoWidth: false,
+                columnDefs: [
+                    { targets: '_all', className: 'text-center' }
                 ]
             });
         });
+    </script>
+
+    <script>
+        // JS para cargar dinámicamente el modal 'show' único
+        const modalShowPago = document.getElementById('modalShowPago');
+        if(modalShowPago) {
+            modalShowPago.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
+                const pago = JSON.parse(button.getAttribute('data-pago'));
+                
+                // Asegúrate de cambiar los IDs dentro de tu archivo 'pagos.show' para que coincidan con estos:
+                if(document.getElementById('verIdPago')) document.getElementById('verIdPago').innerText = pago.id_pago;
+                if(document.getElementById('verIdReserva')) document.getElementById('verIdReserva').innerText = pago.id_reserva;
+                if(document.getElementById('verMetodoPago')) document.getElementById('verMetodoPago').innerText = pago.metodo_pago;
+                if(document.getElementById('verMontoPagado')) document.getElementById('verMontoPagado').innerText = 'S/. ' + parseFloat(pago.monto_pagado).toFixed(2);
+                if(document.getElementById('verFechaPago')) document.getElementById('verFechaPago').innerText = pago.fecha_pago;
+            });
+        }
     </script>
 @stop

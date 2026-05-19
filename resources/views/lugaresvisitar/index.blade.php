@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.admin-base')
 
 @section('title', 'Lugares Disponibles')
 
@@ -10,14 +10,14 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             @can('lugares.crear')
-            <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#create">
-               <i class="fas fa-plus"></i> Agregar
-            </button>
+                {{-- Importante: Mantener data-bs-target="#create" como tenías originalmente --}}
+                <button type="button" class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#create">
+                    <i class="fas fa-plus"></i> Agregar
+                </button>
             @endcan
         </div>
 
         <div class="card-body">
-            {{-- Tabla --}}
             <div class="table-responsive">
                 <table id="tablaLugares" class="table table-striped table-bordered table-hover w-100 text-center">
                     <thead class="table-dark">
@@ -29,37 +29,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($lugares as $lugar)
-                            <tr>
-                                <td>{{ $lugar->id_lugar }}</td>
-                                <td>{{ $lugar->ruta->nombre_ruta }}</td>
-                                <td>{{ $lugar->nombre_lugar }}</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#show{{ $lugar->id_lugar }}">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    @can('lugares.editar')
-                                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#edit{{ $lugar->id_lugar }}">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
-                                    @endcan
-                                </td>
-                            </tr>
-                            @include('lugaresvisitar.show')
-                            @include('lugaresvisitar.edit')
-                        @endforeach
+                        {{-- Vacío para que DataTables cargue los datos --}}
                     </tbody>
                 </table>
             </div>
         </div>
 
+        {{-- Modales: Asegúrate de que los archivos dentro de la carpeta coincidan --}}
         @include('lugaresvisitar.create')
+        @include('lugaresvisitar.show')
+        @include('lugaresvisitar.edit')
+        @include('lugaresvisitar.delete')
     </div>
 @stop
 
 @section('css')
+    {{-- Mantengo tus librerías originales --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -68,45 +53,99 @@
 @section('js')
     @include('partials.toastr')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+@section('js')
+    @include('partials.toastr')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            $('#tablaLugares').DataTable({
+            // Inicialización de DataTable con sintaxis limpia
+            var table = $('#tablaLugares').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('lugares.index') }}",
+                    type: 'GET'
+                },
+                columns: [{
+                        data: 0
+                    }, // ID
+                    {
+                        data: 1
+                    }, // Ruta
+                    {
+                        data: 2
+                    }, // Lugar
+                    {
+                        data: 3,
+                        orderable: false,
+                        searchable: false
+                    } // Botones
+                ],
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
                 },
-                paging: true,
-                ordering: true,
-                searching: true,
                 responsive: true,
-                lengthMenu: [10, 25, 50, 100],
-                order : [[0, 'desc']]
+                order: [
+                    [0, 'desc']
+                ]
             });
 
-            // Select2 en modales
-            $('#create').on('shown.bs.modal', function() {
-                $('#id_ruta').select2({
-                    dropdownParent: $('#create')
-                });
+            // Lógica para que el modal de AGREGAR funcione (evita conflictos de versión)
+            $('[data-bs-target="#create"]').on('click', function() {
+                $('#create').modal('show');
             });
 
-            $('.modal').on('shown.bs.modal hidden.bs.modal', function(event) {
-                var modalId = $(this).attr('id');
-                var selectId = '#id_ruta_edit' + modalId.replace('edit', '');
+            // Lógica para llenar Modales de Ver y Editar
+            // Lógica para el Modal de VER
+            $('#modalShow').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var lugar = button.data('cliente'); // Extrae el objeto JSON enviado desde el Service
+                var modal = $(this);
 
-                if (event.type === 'shown') {
-                    if (!$(selectId).hasClass('select2-hidden-accessible')) {
-                        $(selectId).select2({
-                            dropdownParent: $(this)
-                        });
-                    }
-                } else {
-                    $(selectId).select2('destroy');
-                }
+                modal.find('#show_id_lugar').text(lugar.id_lugar);
+                modal.find('#show_nombre_ruta').text(lugar.ruta ? lugar.ruta.nombre_ruta : 'N/A');
+                modal.find('#show_nombre_lugar').text(lugar.nombre_lugar);
+            });
+
+            // Lógica para el Modal de EDITAR
+            $('#modalEdit').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var lugar = button.data('cliente');
+                var modal = $(this);
+
+                // Actualiza la URL del formulario con el ID correcto
+                var url = "{{ route('lugares.update', ':id') }}".replace(':id', lugar.id_lugar);
+                modal.find('#formEdit').attr('action', url);
+
+                // Llena los campos
+                modal.find('#edit_nombre_lugar').val(lugar.nombre_lugar);
+                modal.find('#edit_id_ruta').val(lugar.id_ruta).trigger('change');
+            });
+
+            // Lógica para el Modal de ELIMINAR
+            $('#modalDelete').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var lugar = button.data('cliente'); // Extraemos el objeto JSON
+                var modal = $(this);
+
+                // Construimos la URL dinámica para el destroy
+                var url = "{{ route('lugares.destroy', ':id') }}".replace(':id', lugar.id_lugar);
+                
+                // Asignamos la URL al action del formulario
+                modal.find('#formDelete').attr('action', url);
+                
+                // Mostramos información visual al usuario
+                modal.find('#delete_nombre_lugar').text(lugar.nombre_lugar);
+                modal.find('#delete_nombre_ruta').text(lugar.ruta ? lugar.ruta.nombre_ruta : 'N/A');
             });
         });
     </script>
 @stop
+@stop
+

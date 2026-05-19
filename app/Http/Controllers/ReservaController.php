@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reserva;
 use App\Models\Ruta;
 use App\Models\Cliente;
+use App\Services\GestionReservaDataTableService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -19,15 +20,13 @@ class ReservaController extends Controller
         $this->middleware('can:reservas.editar')->only(['edit', 'update']);
         $this->middleware('can:reservas.eliminar')->only(['destroy']);
     }
-    public function index()
+    public function index(Request $request, GestionReservaDataTableService $dataTableService)
     {
-        // Obtener las últimas 5 reservas actualizadas
-        $reservas = Reserva::with(['fechaDisponible.ruta', 'clientes', 'movilidads.guias', 'pagos'])
-            ->orderBy('updated_at', 'desc') // Ordenar por la fecha de la última actualización
-            ->take(5) // Limitar a las 5 más recientes
-            ->get();
+        if ($request->ajax()) {
+            return response()->json($dataTableService->procesar($request));
+        }
 
-        return view('reservas.index', compact('reservas'));
+        return view('reservas.index');
     }
     
 

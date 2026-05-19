@@ -35,12 +35,12 @@ Tu reserva ha sido confirmada exitosamente.
 
 ### Nota importante:
 <div style="text-align: center; font-weight: bold; margin-bottom: 15px;">
-    Asegúrate de recibir todas las recomendaciones y detalles de esta aventura al 961358621
+    Asegúrate de recibir todas las recomendaciones y detalles de esta aventura
 </div>
 
 <div style="text-align: center; margin: 20px 0;">
-    <a href="https://wa.me/51961358621" 
-       style="background-color: red; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+    <a href="https://wa.me/+51933329650" 
+       style="background-color: rgb(230, 103, 0); color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
         Escríbenos por WhatsApp
     </a>
 </div>
@@ -53,14 +53,14 @@ Puedes revisar nuestros [Términos y Condiciones](https://n9.cl/1bkel) haciendo 
 <!-- Botón rojo centrado -->
 <div style="text-align: center; margin: 30px 0;">
     <a href="{{ config('app.url') }}" 
-       style="background-color: red; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+       style="background-color: rgb(230, 103, 0); color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
         Ver más en nuestro sitio
     </a>
 </div>
 
 <!-- Texto final centrado y en negrita -->
 <div style="text-align: center; font-weight: bold; margin-top: 20px;">
-    Gracias por confiar en el equipo Outdoor Expeditions
+    Gracias por confiar en el equipo Ayni Forest, ¡te esperamos para vivir esta aventura juntos!
 </div>
 
 @endcomponent
