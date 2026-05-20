@@ -87,7 +87,7 @@ function brandingImage($campo, $fallback = null)
         'favicon_url' => 'favicon.ico',
         'hero_background_url' => 'imagenes/hero-background.jpg',
         'social_banner_url' => 'imagenes/social-banner.jpg',
-        'og_image_url' => 'imagenes/og-image.jpg',
+        'og_image_url' => 'imagenes/logo.webp',
     ];
 
     return asset($mapeo[$campo] ?? 'imagenes/logo.png');

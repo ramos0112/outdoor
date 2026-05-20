@@ -55,7 +55,7 @@ Route::get('/renta-cars/{slug}', function ($slug) {
 
 // Procesar reserva
 Route::post('/reserva', [ReservaClienteController::class, 'store'])->name('reservas.store');
-
+ 
 // ** MercadoPago **
 Route::post('/checkout', [MercadoPagoController::class, 'checkout'])->name('mercadopago.checkout');
 Route::get('/mercadopago/success', [MercadoPagoController::class, 'success'])->name('mercadopago.success');

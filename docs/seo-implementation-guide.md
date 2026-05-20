@@ -137,7 +137,7 @@ Este archivo muestra cómo estructurar correctamente una página de detalle de t
 @endsection
 
 @section('og_image')
-    {{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/og-image.jpg') }}
+    {{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/logo.webp') }}
 @endsection
 ```
 

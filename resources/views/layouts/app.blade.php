@@ -3,25 +3,27 @@
     $branding = \App\Models\Configuracion::obtener();
     // Valores por defecto para SEO
     $defaultTitle = $branding->nombre_empresa ?? 'Ayniforest | Agencia de Viajes y Turismo en Trujillo, Perú';
-    $defaultDescription = $branding->meta_descripcion ?? 'Tours y Full Days en La Libertad, Trujillo. Descubre experiencias turísticas auténticas con Ayniforest, agencia especializada en aventura y cultura.';
-    $defaultImage = $branding->og_image_url ?? asset('imagenes/og-image.jpg');
+    $defaultDescription =
+        $branding->meta_descripcion ??
+        'Tours y Full Days en La Libertad, Trujillo. Descubre experiencias turísticas auténticas con Ayniforest, agencia especializada en aventura y cultura.';
+    $defaultImage = $branding->og_image_url ?? asset('imagenes/logo.webp');
     $canonicalUrl = url()->current();
 @endphp
 
 <!DOCTYPE html>
 <html lang="es">
- 
+
 <head>
     <!-- Meta etiquetas básicas -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="@yield('meta_robots', 'index, follow')">
-    
+
     <!-- Título y descripción dinámicos -->
     <title>@yield('title', $defaultTitle)</title>
     <meta name="description" content="@yield('meta_description', $defaultDescription)">
     <meta name="keywords" content="@yield('meta_keywords', $branding->meta_keywords ?? 'tours, viajes, agencia de viajes, Trujillo, La Libertad, aventura')">
-    
+
     <!-- Open Graph - Redes Sociales -->
     <meta property="og:title" content="@yield('og_title', $defaultTitle)">
     <meta property="og:description" content="@yield('og_description', $defaultDescription)">
@@ -29,16 +31,16 @@
     <meta property="og:url" content="@yield('og_url', $canonicalUrl)">
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:locale" content="es_PE">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('twitter_title', $defaultTitle)">
     <meta name="twitter:description" content="@yield('twitter_description', $defaultDescription)">
     <meta name="twitter:image" content="@yield('twitter_image', $defaultImage)">
-    
+
     <!-- Enlace canónico -->
     <link rel="canonical" href="@yield('canonical_url', $canonicalUrl)">
-    
+
     <!-- Favicon -->
     <link rel="icon" href="{{ brandingImage('favicon_url', 'favicon.ico') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ brandingImage('favicon_url', 'favicon.ico') }}">
@@ -94,11 +96,12 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item" href="{{ route('rutas.tipo', ['tipo' => 'Diarios']) }}">Diarios</a>
+                                <a class="dropdown-item"
+                                    href="{{ route('rutas.tipo', ['tipo' => 'Diarios']) }}">Diarios</a>
                             </li>
                             <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('rutas.tipo', ['tipo' => 'Weekend']) }}">Fin de semana</a>
+                                <a class="dropdown-item" href="{{ route('rutas.tipo', ['tipo' => 'Weekend']) }}">Fin de
+                                    semana</a>
                             </li>
                         </ul>
                     </li>
@@ -125,102 +128,130 @@
                 href="{{ route('rutas.tipo', ['tipo' => 'Weekend']) }}">Fin de semana</a></div>
         <!--<div class="menu-item"><i class="fas fa-envelope"></i><a href="#">Contacto</a></div>-->
     </div>
+    <hr class="text-black-50 mt-10 mb-15"> <!-- Línea divisoria sutil -->
+    <!-- NUEVA SECCIÓN DE CERTIFICADOS EN FILA HORIZONTAL -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 certification-container mb-4">
+                <img src="{{ asset('imagenes/gercetur.png') }}" alt="Gercetur logo" class="img-fluid"
+                    style="height: 90px; width: auto; object-fit: contain;">
+                <img src="{{ asset('imagenes/esnna.png') }}" alt="Esnna logo" class="img-fluid"
+                    style="height: 90px; width: auto; object-fit: contain;">
+
+                <img src="{{ asset('imagenes/caltur.png') }}" alt="Caltur logo" class="img-fluid"
+                    style="height: 90px; width: auto; object-fit: contain;">
+                    
+                <img src="{{ brandingImage('certificacion_url') }}" alt="Certificado" class="img-fluid"
+                    style="height: 90px; width: auto; object-fit: contain;">
+            </div>
+        </div>
+    </div>
     <!-- Pie de página -->
     <section class="packages">
         <div class="container">
             <footer class="footer mt-auto">
                 <div class="container">
                     <div class="row">
+                        <!-- COLUMNA 1: LOGO Y DATOS DE LA EMPRESA -->
                         <div class="col-md-4">
-                            <!-- Logo -->
-                            <div class="logo-container text-center">
+                            <!-- Logo Principal Solo -->
+                            <div class="logo-container text-center mb-3">
                                 <img src="{{ brandingImage('logo_animation_url') }}"
                                     alt="{{ $branding->nombre_empresa }}" class="img-fluid"
-                                    style="max-width: 100px; height: auto;">
-                                <img src="{{ brandingImage('certificacion_url') }}" alt="Certificado" class="img-fluid"
-                                    style="max-width: 70px; height: auto;">
+                                    style="max-width: 120px; height: auto;">
                             </div>
 
                             <!-- Llamado a la acción -->
                             <div class="cta-container text-center mt-1">
-                                <h3 class="text-xl font-bold">Ayni Forest</h3>
-                                <a class="text-white block mb-2">¡Diceñando tu próxima aventura!</a>
-
+                                <h3 class="text-xl font-bold fw-bold">Ayni Forest</h3>
+                                <a class="text-white d-block mb-2">¡Diseñando tu próxima aventura!</a>
                                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branding->whatsapp_numero) }}"
-                                    target="_blank" class="btn text-white inline-block mt-4"
+                                    target="_blank" class="btn text-white inline-block mt-2 location-link"
                                     style="background-color: {{ $branding->color_secundario }}; border-color: {{ $branding->color_secundario }};">
                                     <i class="fab fa-whatsapp"></i> ¡Reserva ahora!
                                 </a>
                             </div>
-                        </div>
 
-                        <div class="col-md-4">
-                            <h3 class="text-xl font-bold mt-4">Soporte</h3>
-                            <ul class="list-unstyled">
-                                <p><a href="https://n9.cl/1bkel">Términos y condiciones</a></p>
-                                <p><a href="#" class="text-white">Políticas de privacidad</a></p>
-                                <p><a href="https://reclamos.outdoorexpeditionspe.com/">Libro de reclamaciones</a></p>
-                                <p><a href="#">Código ESNNA</a></p>
-                                <p><a href="#">Certificaciones</a></p>
-                            </ul>
-                        </div>
-                        <div class="col-md-4">
-                            <h3 class="text-xl font-bold mt-4">Contáctanos</h3>
-                            <p>
-                                <<i class="fas fa-phone text-white "></i>
-                                    <a href="https://acortar.link/vcswna" target="_blank">+51-933 329 650</a>
-                            </p>
-
-                            <p>
-                                <i class="fas fa-envelope"></i>
-                                <a href="mailto:{{ $branding->email_contacto }}">{{ $branding->email_contacto }}</a>
-                            </p>
-
-                            <p>
-                                <i class="fab fa-whatsapp"></i>
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branding->whatsapp_numero) }}"
-                                    target="_blank">Escríbenos al WhatsApp</a>
-                            </p>
-
-                            <h6 class="text-xl font-bold mt-4">Síguenos en:</h6>
-
-                            <div class="d-flex justify-content-center gap-4 fs-4">
-                                @if ($branding->facebook_url)
-                                    <a href="{{ $branding->facebook_url }}" target="_blank" title="Facebook">
-                                        <i class="fab fa-facebook text-primary"></i>
-                                    </a>
-                                @endif
-                                @if ($branding->instagram_url)
-                                    <a href="{{ $branding->instagram_url }}" target="_blank" title="Instagram">
-                                        <i class="fab fa-instagram text-danger"></i>
-                                    </a>
-                                @endif
-                                @if ($branding->tiktok_url)
-                                    <a href="{{ $branding->tiktok_url }}" target="_blank" title="TikTok">
-                                        <i class="fab fa-tiktok" style="color: white;"></i>
-                                    </a>
-                                @endif
-                                @if ($branding->youtube_url)
-                                    <a href="{{ $branding->youtube_url }}" target="_blank" title="YouTube">
-                                        <i class="fab fa-youtube text-danger"></i>
-                                    </a>
-                                @endif
-
+                            <!-- Ubicación -->
+                            <div class="cta-container text-center mt-3">
+                                <h3 class="fw-bold">Lugar de Embarque</h3>
+                                <a href="https://maps.app.goo.gl/w6kCDUBhcJJvLgjv9" target="_blank"
+                                    class="text-white location-link">
+                                    <i class="fas fa-map-marker-alt me-2"></i> Av. Geronimo de 253, Trujillo 13007
+                                </a>
                             </div>
                         </div>
 
-                    </div>
-                </div>
-                <p style="font-size: 10px;" class="text-white-100 mt-4">
-                    <span class="text-white">&copy; {{ $branding->nombre_empresa ?? 'Outdoor Expeditions' }}. Todos
-                        los derechos reservados | Desarrollado por:J & M Developers</span>
-                </p>
+                        <!-- COLUMNA 2: SOPORTE -->
+                        <div class="col-md-4">
+                            <h3 class="text-xl font-bold mt-4 fw-bold">Soporte</h3>
+                            <ul class="list-unstyled">
+                                <p><a href="https://drive.google.com/file/d/14eyORI6Lh2xKVCpgLNtDQBl-YqDAvG0q/view?usp=drivesdk"
+                                        target="_blank" class="location-link">Términos &amp; Condiciones</a></p>
+                                <p><a href="https://aynicorp.s3.us-east-1.amazonaws.com/ayniforest/politicas_privacidad.pdf"
+                                        target="_blank" class="location-link">Políticas de privacidad</a></p>
+                                <p><a href="https://reclamos.ayniforest.com/" target="_blank"
+                                        class="location-link">Libro de reclamaciones</a></p>
+                                <p><a href="https://aynicorp.s3.us-east-1.amazonaws.com/ayniforest/codigo-esna.pdf"
+                                        target="_blank" class="location-link">Código ESNNA</a></p>
+                                <p><a href="https://aynicorp.s3.us-east-1.amazonaws.com/ayniforest/constancia_inscripcion.pdf"
+                                        target="_blank" class="location-link">Certificaciones</a></p>
+                            </ul>
+                        </div>
+                        <!-- COLUMNA 3: CONTACTO -->
+                        <div class="col-md-4">
+                            <h3 class="text-xl font-bold mt-4 fw-bold">Contáctanos</h3>
+                            <p>
+                                <i class="fas fa-phone text-white"></i>
+                                <a href="https://acortar.link/vcswna" target="_blank" class="location-link">+51-933
+                                    329 650</a>
+                            </p>
+                            <p>
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:{{ $branding->email_contacto }}"
+                                    class="location-link">{{ $branding->email_contacto }}</a>
+                            </p>
+                            <p>
+                                <i class="fab fa-whatsapp"></i>
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branding->whatsapp_numero) }}"
+                                    target="_blank" class="location-link">Escríbenos al WhatsApp</a>
+                            </p>
+                            <h6 class="text-xl fw-bold mt-4">Síguenos en:</h6>
+                            <div class="d-flex justify-content-center gap-4 fs-4 social-icons">
+                                @if ($branding->facebook_url)
+                                    <a href="{{ $branding->facebook_url }}" target="_blank" title="Facebook"><i
+                                            class="fab fa-facebook text-primary"></i></a>
+                                @endif
+                                @if ($branding->instagram_url)
+                                    <a href="{{ $branding->instagram_url }}" target="_blank" title="Instagram"><i
+                                            class="fab fa-instagram text-danger"></i></a>
+                                @endif
+                                @if ($branding->tiktok_url)
+                                    <a href="{{ $branding->tiktok_url }}" target="_blank" title="TikTok"><i
+                                            class="fab fa-tiktok" style="color: white;"></i></a>
+                                @endif
+                                @if ($branding->youtube_url)
+                                    <a href="{{ $branding->youtube_url }}" target="_blank" title="YouTube"><i
+                                            class="fab fa-youtube text-danger"></i></a>
+                                @endif
+                            </div>
 
+                        </div>
+                    </div> <!-- Fin de la fila principal -->
+
+                    <!-- Copyright -->
+                    <p style="font-size: 10px;" class="text-white-100 text-center mt-2">
+                        <span class="text-white">&copy; {{ $branding->nombre_empresa ?? 'Ayni Forest' }}. Todos los
+                            derechos reservados | Desarrollador: J & M Developers</span>
+                    </p>
+
+                </div>
             </footer>
         </div>
     </section>
 
-    <!-- Scripts --><script src="https://elfsightcdn.com/platform.js" async></script>
+    <!-- Scripts -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>

@@ -35,7 +35,7 @@
 @endsection
 
 @section('og_image')
-    {{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/og-image.jpg') }}
+    {{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/logo.webp') }}
 @endsection
 
 @section('og_url')
@@ -258,7 +258,7 @@
                         "@type": "TouristAttraction",
                         "name": "{{ $ruta->nombre_ruta }}",
                         "description": "{{ strip_tags($ruta->descripcion_general) }}",
-                        "image": "{{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/og-image.jpg') }}",
+                        "image": "{{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/logo.webp') }}",
                         "address": {
                             "@type": "PostalAddress",
                             "addressLocality": "Trujillo",

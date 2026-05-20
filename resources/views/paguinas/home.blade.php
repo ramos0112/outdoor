@@ -9,7 +9,7 @@
 
 @section('og_title', 'Ayniforest - Tours y Full Days desde Trujillo')
 @section('og_description', 'Reserva tours y paquetes turísticos desde Trujillo en Ayniforest. Experiencias de naturaleza, cultura y aventura en La Libertad.')
-@section('og_image', asset('imagenes/og-image.jpg'))
+@section('og_image', asset('imagenes/logo.webp'))
 @section('og_url', url()->current())
 @section('canonical_url', url()->current())
 

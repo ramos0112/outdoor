@@ -6,7 +6,7 @@
 @section('canonical_url', url()->current())
 @section('og_title', 'Rutas - Ayniforest')
 @section('og_description', isset($tipo) ? ucfirst($tipo) . ' desde Trujillo. Encuentra paquetes, fechas y reserva.' : 'Explora nuestras rutas y tours desde Trujillo.')
-@section('og_image', asset('imagenes/og-image.jpg'))
+@section('og_image', asset('imagenes/logo.webp'))
 
 @section('plantilla')
     <link rel="stylesheet" href="{{ asset('css/paquetes.css') }}">

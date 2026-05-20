@@ -6,7 +6,7 @@
 @section('canonical_url', url()->current())
 @section('og_title', isset($slug) ? \Illuminate\Support\Str::title(str_replace('-', ' ', $slug)) : 'Detalle de unidad')
 @section('og_description', isset($slug) ? \Illuminate\Support\Str::title(str_replace('-', ' ', $slug)) . ' — alquiler de movilidades turísticas: características, capacidad y tarifas.' : 'Alquiler de movilidades turísticas. Información y reservas.')
-@section('og_image', asset('imagenes/og-image.jpg'))
+@section('og_image', asset('imagenes/logo.webp'))
 
 @section('head')
 <link rel="stylesheet" href="{{ asset('css/rentacars.css') }}">

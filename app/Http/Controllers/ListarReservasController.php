@@ -42,15 +42,17 @@ class ListarReservasController extends Controller
         return view('listareservas.index', compact('rutas', 'movilidades'));
     }
 
-
-    public function obtenerFechasPorRuta($id)
+/*#########################################*/
+   public function obtenerFechasPorRuta($id)
     {
         $fechas = FechaDisponible::where('id_ruta', $id)
+            ->whereDate('fecha', '>=', Carbon::today()) // solo fechas futuras
             ->orderBy('fecha', 'asc')
             ->get(['id_fecha', 'fecha']);
 
         return response()->json($fechas);
     }
+
     public function store(Request $request)
     {
         DB::beginTransaction();

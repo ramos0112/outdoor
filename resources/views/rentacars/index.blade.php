@@ -6,7 +6,7 @@
 @section('canonical_url', url()->current())
 @section('og_title', 'Alquiler de Movilidades - Ayniforest')
 @section('og_description', 'Flota moderna para viajes, excursiones y eventos. Opciones de 6 a 50 pasajeros.')
-@section('og_image', asset('imagenes/og-image.jpg'))
+@section('og_image', asset('imagenes/logo.webp'))
 
 @section('head')
 <link rel="stylesheet" href="{{ asset('css/rentacars.css?v=' . time()) }}">

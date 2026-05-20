@@ -45,7 +45,7 @@ class ConfiguracionSeeder extends Seeder
             // ===================== REDES SOCIALES =====================
             'facebook_url'    => 'https://facebook.com/OutdoorExpeditions',
             'instagram_url'   => 'https://instagram.com/OutdoorExpeditions',
-            'youtube_url'     => 'https://youtube.com/@OutdoorExpeditions',
+            'youtube_url'     => 'https://www.youtube.com/@outdoorexpeditions_pe',
             'whatsapp_numero' => '51 961358621',
             'tiktok_url'      => 'https://tiktok.com/@outdoorexp',
             // ===================== SEO Y METADATOS =====================

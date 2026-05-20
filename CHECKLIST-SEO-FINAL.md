@@ -122,7 +122,7 @@ Usar como referencia: `resources/views/paguinas/paquete-seo-ejemplo.blade.php`
 @endsection
 
 @section('og_image')
-    {{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/og-image.jpg') }}
+    {{ $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/logo.webp') }}
 @endsection
 
 @section('plantilla')

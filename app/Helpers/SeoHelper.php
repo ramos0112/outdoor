@@ -125,7 +125,7 @@ class SeoHelper
             "@type" => "TouristAttraction",
             "name" => $ruta->nombre_ruta ?? "Tour",
             "description" => strip_tags($ruta->descripcion_general ?? ""),
-            "image" => $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/og-image.jpg'),
+            "image" => $ruta->imagenes->first() ? asset($ruta->imagenes->first()->url_imagen) : asset('imagenes/logo.webp'),
             "address" => [
                 "@type" => "PostalAddress",
                 "addressLocality" => "Trujillo",

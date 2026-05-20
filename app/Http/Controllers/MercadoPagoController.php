@@ -223,7 +223,7 @@ class MercadoPagoController extends Controller
                     'external_reference' => $externalReference,
                 ]);
             }
-
+ 
             return view('mercadopago.fallo', [
                 'error' => 'El pago no fue aprobado. Por favor, inténtalo nuevamente.',
             ]);
